@@ -1,8 +1,8 @@
 # # # Distribution Statement A. Approved for public release. Distribution unlimited.
-# # # 
+# # #
 # # # Author:
 # # # Naval Research Laboratory, Marine Meteorology Division
-# # # 
+# # #
 # # # This program is free software: you can redistribute it and/or modify it under
 # # # the terms of the NRLMMD License included with this program. This program is
 # # # distributed WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,66 +12,89 @@
 
 # Please identify all instances of "@" within this file, and update appropriately.
 
-'''Installation instructions for @package@ package'''
+"""Installation instructions for geoips_clavrx package."""
 
 from os.path import realpath, join, dirname
 
 import setuptools
 
 # NOTE: VERSION file must contain ONLY the version number, no comments, etc.
-# You may set the initial version to any value you desire, just update VERSION appropriately.
-with open(join(dirname(realpath(__file__)), 'VERSION'), encoding='utf-8') as version_file:
+# You may set the initial version to any value you desire, just update VERSION
+# appropriately.
+with open(
+    join(dirname(realpath(__file__)), "VERSION"), encoding="utf-8"
+) as version_file:
     version = version_file.read().strip()
 
-# Info on Python package_data: https://setuptools.pypa.io/en/latest/userguide/datafiles.html
-# Info on Python entry points: https://setuptools.pypa.io/en/latest/userguide/entry_point.html
+# Info on Python package_data:
+# https://setuptools.pypa.io/en/latest/userguide/datafiles.html
+# Info on Python entry points:
+# https://setuptools.pypa.io/en/latest/userguide/entry_point.html
 setuptools.setup(
-    name='@package@',
+    name="geoips_clavrx",
     version=version,
     packages=setuptools.find_packages(),
     include_package_data=True,
-    package_data={"@package@": [
-                                "yaml_configs/*",
-                                "yaml_configs/*/*",
-                                "yaml_configs/*/*/*",
-                                ],
-                  },
-    install_requires=[
-                      # Include required external Python packages (ie, packages that are installable via pip)
-                      ],
+    package_data={
+        "geoips_clavrx": [
+            "yaml_configs/*",
+            "yaml_configs/*/*",
+            "yaml_configs/*/*/*",
+        ],
+    },
     entry_points={
-
-        # Add entry points as needed for your particular @package
-        # Uncomment and update appropriately for each module you will be implementing.
-        # You can have more than one module per module type (ie, arbirary numbers of readers, algorithms, etc)
-
-        # 'geoips.readers': [
-        #     '@my_reader@=@package@.interface_modules.readers.@myreader@:@myreader@',
-        # ],
-        # 'geoips.output_formats': [
-        #     '@my_output_format_1@=@package@.interface_modules.output_formats.@my_output_format_1@:@my_output_format_1@',
-        #     '@my_output_format_2@=@package@.interface_modules.output_formats.@my_output_format_2@:@my_output_format_2@',
-        # ],
-        # 'geoips.algorithms': [
-        #     '@my_alg@=@package@.interface_modules.algorithms.@my_alg@:@my_alg@',
-        # ],
-        # 'geoips.trackfile_parsers': [
-        #     '@my_parser@=@package@.interface_modules.trackfile_parsers.@my_parser@:@my_parser@'
-        # ],
-        # 'geoips.interpolation': [
-        #     '@my_interp@=@package@.interface_modules.interpolation.@my_interp@:@my_interp@'
-        # ],
-        # 'geoips.user_colormaps': [
-        #     '@my_cmap@=@package@.interface_modules.user_colormaps.@my_cmap@:@my_cmap@',
-        # ],
-        # 'geoips.filename_formats': [
-        #     '@my_fname@=@package@.interface_modules.filename_formats.@my_fname@:@my_fname@',
-        # ],
-        # 'geoips.title_formats': [
-        #     '@my_title@=@package@.interface_modules.title_formats.@my_title@:@my_title@',
-        # ],
-        # 'geoips.coverage_checks': [
-        #     '@my_covg@=@package@.interface_modules.coverage_checks.@my_covg@:@my_covg@',
-        # ],
-    }
+        "geoips.algorithms": [
+            "cloud.cldFraction=geoips_clavrx.interface_modules.algorithms.cloud"
+            ".cldFraction:cldFraction",
+            "cloud.cldType=geoips_clavrx.interface_modules.algorithms.cloud.cldType"
+            ":cldType",
+            "cloud.cldMask=geoips_clavrx.interface_modules.algorithms.cloud.cldMask"
+            ":cldMask",
+            "cloud.cldHeightBase=geoips_clavrx.interface_modules.algorithms.cloud"
+            ".cldHeightBase:cldHeightBase",
+            "cloud.cldHeightTop=geoips_clavrx.interface_modules.algorithms.cloud"
+            ".cldHeightTop:cldHeightTop",
+            "cloud.cldHeight=geoips_clavrx.interface_modules.algorithms.cloud.cldHeight"
+            ":cldHeight",
+            "cloud.cldOpd=geoips_clavrx.interface_modules.algorithms.cloud.cldOpd"
+            ":cldOpd",
+            "cloud.cldPhase=geoips_clavrx.interface_modules.algorithms.cloud.cldPhase"
+            ":cldPhase",
+            "cloud.cldTemp=geoips_clavrx.interface_modules.algorithms.cloud.cldTemp"
+            ":cldTemp",
+            "cloud.Temp3p75=geoips_clavrx.interface_modules.algorithms.cloud.Temp3p75"
+            ":Temp3p75",
+            "cloud.Temp11p0=geoips_clavrx.interface_modules.algorithms.cloud.Temp11p0"
+            ":Temp11p0",
+            "cloud.cldReff=geoips_clavrx.interface_modules.algorithms.cloud.cldReff"
+            ":cldReff",
+        ],
+        "geoips.readers": [
+            "clavrx_hdf4=geoips_clavrx.interface_modules.readers"
+            ".clavrx_hdf4:clavrx_hdf4",
+        ],
+        "geoips.user_colormaps": [
+            "cmap_cldFraction=geoips_clavrx.interface_modules.user_colormaps"
+            ".cmap_cldFraction:cmap_cldFraction",
+            "cmap_cldType=geoips_clavrx.interface_modules.user_colormaps.cmap_cldType"
+            ":cmap_cldType",
+            "cmap_cldMask=geoips_clavrx.interface_modules.user_colormaps.cmap_cldMask"
+            ":cmap_cldMask",
+            "cmap_cldHeightBase=geoips_clavrx.interface_modules.user_colormaps"
+            ".cmap_cldHeightBase:cmap_cldHeightBase",
+            "cmap_cldHeightTop=geoips_clavrx.interface_modules.user_colormaps"
+            ".cmap_cldHeightTop:cmap_cldHeightTop",
+            "cmap_cldHeight=geoips_clavrx.interface_modules.user_colormaps"
+            ".cmap_cldHeight:cmap_cldHeight",
+            "cmap_cldOpd=geoips_clavrx.interface_modules.user_colormaps.cmap_cldOpd"
+            ":cmap_cldOpd",
+            "cmap_cldPhase=geoips_clavrx.interface_modules.user_colormaps.cmap_cldPhase"
+            ":cmap_cldPhase",
+            "cmap_cldTemp=geoips_clavrx.interface_modules.user_colormaps.cmap_cldTemp"
+            ":cmap_cldTemp",
+            "cmap_IR=geoips_clavrx.interface_modules.user_colormaps.cmap_IR:cmap_IR",
+            "cmap_cldReff=geoips_clavrx.interface_modules.user_colormaps.cmap_cldReff"
+            ":cmap_cldReff",
+        ],
+    },
 )
