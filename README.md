@@ -32,7 +32,7 @@ System Requirements
 ---------------------
 
 * geoips >= 1.6.1
-* test_data_clavrx repo contained in $GEOIPS_TESTDATA_DIR for tests to pass.
+* Test data repos contained in $GEOIPS_TESTDATA_DIR for tests to pass.
 
 IF REQUIRED: Install base geoips package
 ------------------------------------------------------------
@@ -48,7 +48,7 @@ Install geoips_clavrx package
     # Assuming you followed the fully supported installation,
     # using $GEOIPS_PACKAGES_DIR and $GEOIPS_CONFIG_FILE:
     source $GEOIPS_CONFIG_FILE
-    git clone https://github.com/NRLMMD-GEOIPS/geoips_clavrx.git $GEOIPS_PACKAGES_DIR/geoips_clavrx
+    git clone -b $GEOIPS_ACTIVE_BRANCH $GEOIPS_REPO_URL $GEOIPS_PACKAGES_DIR/geoips_clavrx
     pip install -e $GEOIPS_PACKAGES_DIR/geoips_clavrx
 ```
 
