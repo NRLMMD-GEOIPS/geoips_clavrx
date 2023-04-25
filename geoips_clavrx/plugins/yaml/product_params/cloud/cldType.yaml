@@ -1,0 +1,11 @@
+cldType:
+    product_type: interp_alg_cmap
+    alg_func: cloud.cldType 
+    alg_args:
+        output_data_range: [0, 13]
+    mtif_type: cloud
+    cmap_func: cmap_cldType
+    cmap_args: 
+        data_range: [0, 13]
+    interp_func: pyresample_wrappers.interp_nearest
+    interp_args: {}

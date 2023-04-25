@@ -20,7 +20,7 @@ run_procflow \
     --procflow single_source \
     --reader_name clavrx_hdf4 \
     --product_name cldFraction \
-    --output_format imagery_clean \
+    --output_formatter imagery_clean \
     --compare_path "$output_dir/abi.<product>.imagery_clean" \
     --minimum_coverage 0 \
     --sector_list goes16 \

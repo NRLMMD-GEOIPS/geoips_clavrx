@@ -19,7 +19,7 @@ run_procflow $GEOIPS_TESTDATA_DIR/test_data_clavrx/data/himawari8_20201201_0900/
     --procflow single_source \
     --reader_name clavrx_hdf4 \
     --product_name cldHeightBase \
-    --output_format imagery_clean \
+    --output_formatter imagery_clean \
     --compare_path "$output_dir/ahi.<product>.imagery_clean" \
     --minimum_coverage 0 \
     --sector_list himawari8 \
