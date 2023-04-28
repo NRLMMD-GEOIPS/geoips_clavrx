@@ -1,5 +1,6 @@
 *diff_test_output*
 .vscode
+version.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
