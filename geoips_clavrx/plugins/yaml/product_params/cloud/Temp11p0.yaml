@@ -1,11 +1,21 @@
-Temp11p0:
-    product_type: interp_alg_cmap
-    alg_func: cloud.Temp11p0 
-    alg_args:
-        output_data_range: [180, 340]
+interface: product_defaults
+family: interpolator_algorithm_colormap
+name: Temp11p0
+docstring: |
+    The Temp11p0 product_defaults geoips_clavrx configuration.
+spec:
+    interpolator:
+        plugin:
+            name: pyresample_wrappers.interp_nearest
+            arguments: {}
+    algorithm:
+        plugin:
+            name: cloud.Temp11p0
+            arguments:
+                output_data_range: [180, 340]
+    colormap:
+        plugin:
+            name: cmap_IR
+            arguments:
+                data_range: [180, 340]
     mtif_type: cloud
-    cmap_func: cmap_IR
-    cmap_args: 
-        data_range: [180, 340]
-    interp_func: pyresample_wrappers.interp_nearest
-    interp_args: {}

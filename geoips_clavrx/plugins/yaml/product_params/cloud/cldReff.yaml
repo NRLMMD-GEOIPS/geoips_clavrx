@@ -1,11 +1,21 @@
-cldReff:
-    product_type: interp_alg_cmap
-    alg_func: cloud.cldReff 
-    alg_args:
-        output_data_range: [0, 160]
+interface: product_defaults
+family: interpolator_algorithm_colormap
+name: cldReff
+docstring: |
+    The cldReff product_defaults geoips_clavrx configuration.
+spec:
+    interpolator:
+        plugin:
+            name: pyresample_wrappers.interp_nearest
+            arguments: {}
+    algorithm:
+        plugin:
+            name: cloud.cldReff
+            arguments:
+                output_data_range: [0, 160]
+    colormap:
+        plugin:
+            name: cmap_cldReff
+            arguments:
+                data_range: [0, 160]
     mtif_type: cloud
-    cmap_func: cmap_cldReff
-    cmap_args: 
-        data_range: [0, 160]
-    interp_func: pyresample_wrappers.interp_nearest
-    interp_args: {}

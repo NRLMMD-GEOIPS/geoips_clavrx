@@ -1,11 +1,21 @@
-cldPhase:
-    product_type: interp_alg_cmap
-    alg_func: cloud.cldPhase 
-    alg_args:
-        output_data_range: [0, 5]
+interface: product_defaults
+family: interpolator_algorithm_colormap
+name: cldPhase
+docstring: |
+    The cldPhase product_defaults geoips_clavrx configuration.
+spec:
+    interpolator:
+        plugin:
+            name: pyresample_wrappers.interp_nearest
+            arguments: {}
+    algorithm:
+        plugin:
+            name: cloud.cldPhase
+            arguments:
+                output_data_range: [0, 5]
+    colormap:
+        plugin:
+            name: cmap_cldPhase
+            arguments:
+                data_range: [0, 5]
     mtif_type: cloud
-    cmap_func: cmap_cldPhase
-    cmap_args: 
-        data_range: [0, 5]
-    interp_func: pyresample_wrappers.interp_nearest
-    interp_args: {}

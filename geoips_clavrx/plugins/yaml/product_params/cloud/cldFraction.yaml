@@ -1,11 +1,21 @@
-cldFraction:
-    product_type: interp_alg_cmap
-    alg_func: cloud.cldFraction 
-    alg_args:
-        output_data_range: [0.0, 1.0]
+interface: product_defaults
+family: interpolator_algorithm_colormap
+name: cldFraction
+docstring: |
+    The cldFraction product_defaults geoips_clavrx configuration.
+spec:
+    interpolator:
+        plugin:
+            name: pyresample_wrappers.interp_nearest
+            arguments: {}
+    algorithm:
+        plugin:
+            name: cloud.cldFraction
+            arguments:
+                output_data_range: [0.0, 1.0]
+    colormap:
+        plugin:
+            name: cmap_cldFraction
+            arguments:
+                data_range: [0.0, 1.0]
     mtif_type: cloud
-    cmap_func: cmap_cldFraction
-    cmap_args: 
-        data_range: [0.0, 1.0]
-    interp_func: pyresample_wrappers.interp_nearest
-    interp_args: {}

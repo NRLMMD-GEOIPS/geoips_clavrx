@@ -1,11 +1,21 @@
-cldOpd:
-    product_type: interp_alg_cmap
-    alg_func: cloud.cldOpd 
-    alg_args:
-        output_data_range: [-0.2, 8]
+interface: product_defaults
+family: interpolator_algorithm_colormap
+name: cldOpd
+docstring: |
+    The cldOpd product_defaults geoips_clavrx configuration.
+spec:
+    interpolator:
+        plugin:
+            name: pyresample_wrappers.interp_nearest
+            arguments: {}
+    algorithm:
+        plugin:
+            name: cloud.cldOpd
+            arguments:
+                output_data_range: [-0.2, 8]
+    colormap:
+        plugin:
+            name: cmap_cldOpd
+            arguments:
+                data_range: [-0.2, 8]
     mtif_type: cloud
-    cmap_func: cmap_cldOpd
-    cmap_args: 
-        data_range: [-0.2, 8]
-    interp_func: pyresample_wrappers.interp_nearest
-    interp_args: {}
