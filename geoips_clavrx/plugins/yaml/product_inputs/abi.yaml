@@ -1,25 +1,91 @@
-abi:
-  cldFraction:
-    variables: ['cloud_fraction', 'latitude', 'longitude']
-  cldType:
-    variables: ['cloud_type', 'latitude', 'longitude']
-  cldMask:
-    variables: ['cloud_mask', 'latitude', 'longitude']
-  cldHeightBase:
-    variables: ['cld_height_base_acha', 'latitude', 'longitude']
-  cldHeightTop:
-    variables: ['cld_height_top_acha', 'latitude', 'longitude']
-  cldHeight:
-    variables: ['cld_height_acha', 'latitude', 'longitude']
-  cldOpd:
-    variables: ['cld_opd_acha', 'latitude', 'longitude']
-  cldPhase:
-    variables: ['cloud_phase', 'latitude', 'longitude']
-  cldTemp:
-    variables: ['cld_temp_acha', 'latitude', 'longitude']
-  Temp3p75:
-    variables: ['temp_3_75um_nom', 'latitude', 'longitude']
-  Temp11p0:
-    variables: ['temp_11_0um_nom', 'latitude', 'longitude']
-  cldReff:
-    variables: ['cld_reff_acha', 'latitude', 'longitude']
+interface: products
+family: list
+name: abi
+docstring: |
+  The abi products geoips_clavrx default configuration.
+spec:
+  products:
+    - name: cldFraction
+      docstring: |
+        The cldFraction geoips_clavrx product
+      product_defaults: cldFraction
+      spec:
+        source_name: abi
+        variables: ["cloud_fraction", "latitude", "longitude"]
+    - name: cldType
+      docstring: |
+        The cldType geoips_clavrx product
+      product_defaults: cldType
+      spec:
+        source_name: abi
+        variables: ["cloud_type", "latitude", "longitude"]
+    - name: cldMask
+      docstring: |
+        The cldMask geoips_clavrx product
+      product_defaults: cldMask
+      spec:
+        source_name: abi
+        variables: ["cloud_mask", "latitude", "longitude"]
+    - name: cldHeightBase
+      docstring: |
+        The cldHeightBase geoips_clavrx product
+      product_defaults: cldHeightBase
+      spec:
+        source_name: abi
+        variables: ["cld_height_base_acha", "latitude", "longitude"]
+    - name: cldHeightTop
+      docstring: |
+        The cldHeightTop geoips_clavrx product
+      product_defaults: cldHeightTop
+      spec:
+        source_name: abi
+        variables: ["cld_height_top_acha", "latitude", "longitude"]
+    - name: cldHeight
+      docstring: |
+        The cldHeight geoips_clavrx product
+      product_defaults: cldHeight
+      spec:
+        source_name: abi
+        variables: ["cld_height_acha", "latitude", "longitude"]
+    - name: cldOpd
+      docstring: |
+        The cldOpd geoips_clavrx product
+      product_defaults: cldOpd
+      spec:
+        source_name: abi
+        variables: ["cld_opd_acha", "latitude", "longitude"]
+    - name: cldPhase
+      docstring: |
+        The cldPhase geoips_clavrx product
+      product_defaults: cldPhase
+      spec:
+        source_name: abi
+        variables: ["cloud_phase", "latitude", "longitude"]
+    - name: cldTemp
+      docstring: |
+        The cldTemp geoips_clavrx product
+      product_defaults: cldTemp
+      spec:
+        source_name: abi
+        variables: ["cld_temp_acha", "latitude", "longitude"]
+    - name: Temp3p75
+      docstring: |
+        The Temp3p75 geoips_clavrx product
+      product_defaults: Temp3p75
+      spec:
+        source_name: abi
+        variables: ["temp_3_75um_nom", "latitude", "longitude"]
+    - name: Temp11p0
+      docstring: |
+        The Temp11p0 geoips_clavrx product
+      product_defaults: Temp11p0
+      spec:
+        source_name: abi
+        variables: ["temp_11_0um_nom", "latitude", "longitude"]
+    - name: cldReff
+      docstring: |
+        The cldReff geoips_clavrx product
+      product_defaults: cldReff
+      spec:
+        source_name: abi
+        variables: ["cld_reff_acha", "latitude", "longitude"]
