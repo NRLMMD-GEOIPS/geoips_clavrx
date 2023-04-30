@@ -56,6 +56,12 @@ Add required attributes to module-based plugins
 * Rename callable from <plugin_name> to "call"
 * Update pyproject.toml to point to module vs function
 
+geoips_clavrx plugins updated in the following interfaces:
+
+* algorithms
+* colormaps
+* readers
+
 ::
 
   modified: pyproject.toml
