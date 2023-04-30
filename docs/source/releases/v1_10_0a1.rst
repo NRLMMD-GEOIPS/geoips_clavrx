@@ -26,9 +26,17 @@ Add missing geoips_clavrx/__init__.py file
 
 This was causing file discovery with importlib.resources to fail.
 
+Other inits would be a problem for future module-based interface
+updates.
+
 ::
 
   new: geoips_clavrx/__init__.py
+  new: geoips_clavrx/plugins/__init__.py
+  new: geoips_clavrx/plugins/modules/__init__.py
+  new: geoips_clavrx/plugins/modules/algorithms/__init__.py
+  new: geoips_clavrx/plugins/modules/colormaps/__init__.py
+  new: geoips_clavrx/plugins/modules/readers/__init__.py
 
 Breaking Changes
 ================
