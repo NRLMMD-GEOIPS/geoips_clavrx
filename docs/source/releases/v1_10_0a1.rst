@@ -13,7 +13,22 @@
 Version 1.10.0a1 (2023-04-29)
 *****************************
 
+* Add missing geoips_clavrx/__init__.py file
 * Update YAML plugin formatting for products and product_defaults
+
+Bug Fixes
+=========
+
+Add missing geoips_clavrx/__init__.py file
+------------------------------------------
+
+*From NRLMMD-GEOIPS/geoips#206: 2023-04-30, update plugin format*
+
+This was causing file discovery with importlib.resources to fail.
+
+::
+
+  new: geoips_clavrx/__init__.py
 
 Breaking Changes
 ================
@@ -21,7 +36,7 @@ Breaking Changes
 Update to new style YAML plugin formatting
 ------------------------------------------
 
-*From NRLMMD-GEOIPS/geoips_clavrx#7: 2023-04-29, update YAML format*
+*From NRLMMD-GEOIPS/geoips#206: 2023-04-30, update plugin format*
 
 Finalize YAML plugin formatting for products and product_defaults
 YAML plugins.
