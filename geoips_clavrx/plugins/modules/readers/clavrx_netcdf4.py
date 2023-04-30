@@ -21,5 +21,6 @@ name = "clavrx_netcdf4"
 
 
 def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=False):
+    """Unsupported CLAVR-x NetCDF4 reader."""
     LOG.exception("READER NOT IMPLEMENTED")
     return None
