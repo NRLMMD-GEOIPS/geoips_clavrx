@@ -24,7 +24,7 @@ run_procflow \
     --compare_path "$output_dir/abi.<product>.imagery_clean" \
     --minimum_coverage 0 \
     --sector_list goes16 \
-    --sectorfiles $GEOIPS_PACKAGES_DIR/geoips/tests/sectors/static/goes16.yaml
+    --sectorfiles $GEOIPS_PACKAGES_DIR/geoips/geoips/plugins/yaml/sectors/static/goes16.yaml
 retval=$?
 
 exit $retval

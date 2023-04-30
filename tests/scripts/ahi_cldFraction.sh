@@ -24,7 +24,7 @@ run_procflow \
     --compare_path "$output_dir/ahi.<product>.imagery_clean" \
     --minimum_coverage 0 \
     --sector_list himawari8 \
-    --sectorfiles $GEOIPS_PACKAGES_DIR/geoips/tests/sectors/static/himawari8.yaml
+    --sectorfiles $GEOIPS_PACKAGES_DIR/geoips/geoips/plugins/yaml/sectors/static/himawari8.yaml
 retval=$?
 
 exit $retval
