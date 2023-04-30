@@ -15,10 +15,12 @@ import logging
 
 LOG = logging.getLogger(__name__)
 
-cmap_type = "linear_segmented"
+interface = "colormaps"
+family = "linear_segmented"
+name = "cmap_cldHeightTop"
 
 
-def cmap_cldHeightTop(data_range=[0, 20]):
+def call(data_range=[0, 20]):
     """Cloud Top Height Colormap.
 
     Parameters

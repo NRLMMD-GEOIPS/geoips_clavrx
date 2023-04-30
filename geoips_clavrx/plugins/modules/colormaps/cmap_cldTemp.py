@@ -15,10 +15,12 @@ import logging
 
 LOG = logging.getLogger(__name__)
 
-cmap_type = "linear_segmented"
+interface = "colormaps"
+family = "linear_segmented"
+name = "cmap_cldTemp"
 
 
-def cmap_cldTemp(data_range=[160, 320]):
+def call(data_range=[160, 320]):
     """Cloud Top Temperature Colormap for ABI and AHI data.
 
     Parameters

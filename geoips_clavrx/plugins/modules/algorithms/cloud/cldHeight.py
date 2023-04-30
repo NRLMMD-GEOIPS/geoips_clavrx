@@ -16,7 +16,9 @@ import logging
 
 log = logging.getLogger(__name__)
 
-alg_func_type = "xarray_to_numpy"
+interface = "algorithms"
+family = "xarray_to_numpy"
+name = "cldHeight"
 
 
 def normalize(val, minval, maxval):
@@ -27,7 +29,7 @@ def normalize(val, minval, maxval):
     return val
 
 
-def cldHeight(xobj, output_data_range=None):
+def call(xobj, output_data_range=None):
     """ABI or AHI Cloud Height Cloud Property Data.
 
     Designed for Cloud Height products from AHI or ABI cloud property data

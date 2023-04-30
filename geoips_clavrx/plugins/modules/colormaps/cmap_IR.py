@@ -15,10 +15,12 @@ import logging
 
 LOG = logging.getLogger(__name__)
 
-cmap_type = "linear_segmented"
+interface = "colormaps"
+family = "linear_segmented"
+name = "cmap_IR"
 
 
-def cmap_IR(data_range=[180, 340]):
+def call(data_range=[180, 340]):
     """Brightness Temperatures Colormap for IR frequency channel data.
 
     Parameters

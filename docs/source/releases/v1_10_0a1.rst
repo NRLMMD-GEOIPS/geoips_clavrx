@@ -13,8 +13,13 @@
 Version 1.10.0a1 (2023-04-29)
 *****************************
 
-* Add missing geoips_clavrx/__init__.py file
+* Add missing geoips_clavrx __init__.py files
 * Update YAML plugin formatting for products and product_defaults
+* Update module-based plugins to include required attributes
+
+  * algorithms
+  * colormaps
+  * readers
 
 Bug Fixes
 =========
@@ -40,6 +45,45 @@ updates.
 
 Breaking Changes
 ================
+
+Add required attributes to module-based plugins
+-----------------------------------------------
+
+*From NRLMMD-GEOIPS/geoips#206: 2023-04-30, update plugin format*
+
+* Add interface, family, name to all python module plugins
+* Ensure module-level docstring exists
+* Rename callable from <plugin_name> to "call"
+* Update pyproject.toml to point to module vs function
+
+::
+
+  modified: pyproject.toml
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/Temp11p0.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/Temp3p75.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldFraction.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldHeight.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldHeightBase.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldHeightTop.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldMask.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldOpd.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldPhase.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldReff.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldTemp.py
+  modified: geoips_clavrx/plugins/modules/algorithms/cloud/cldType.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_IR.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldFraction.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldHeight.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldHeightBase.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldHeightTop.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldMask.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldOpd.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldPhase.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldReff.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldTemp.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldType.py
+  modified: geoips_clavrx/plugins/modules/readers/clavrx_hdf4.py
+  modified: geoips_clavrx/plugins/modules/readers/clavrx_netcdf4.py
 
 Update to new style YAML plugin formatting
 ------------------------------------------

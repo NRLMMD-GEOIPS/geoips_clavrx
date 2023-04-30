@@ -14,12 +14,14 @@
 # Python Standard Libraries
 import logging
 
-alg_func_type = "xarray_to_numpy"
+interface = "algorithms"
+family = "xarray_to_numpy"
+name = "Temp11p0"
 
 log = logging.getLogger(__name__)
 
 
-def Temp11p0(xobj, output_data_range=None):
+def call(xobj, output_data_range=None):
     """11um Brightness Temperature CLAVR-x Product.
 
     It is designed for brightness temperature product at 3.75 um from AHI or

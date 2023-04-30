@@ -14,12 +14,14 @@
 # Python Standard Libraries
 import logging
 
-alg_func_type = "xarray_to_numpy"
+interface = "algorithms"
+family = "xarray_to_numpy"
+name = "cldType"
 
 log = logging.getLogger(__name__)
 
 
-def cldType(xobj, output_data_range=None):
+def call(xobj, output_data_range=None):
     """Cloud Type CLAVR-x Cloud Properties Product Processing.
 
     It is designed for Cloud Type product from AHI or ABI cloud property

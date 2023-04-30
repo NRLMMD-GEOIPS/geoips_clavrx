@@ -15,10 +15,12 @@ import logging
 
 LOG = logging.getLogger(__name__)
 
-cmap_type = "linear_segmented"
+interface = "colormaps"
+family = "linear_segmented"
+name = "cmap_cldType"
 
 
-def cmap_cldType(data_range=[0, 13]):
+def call(data_range=[0, 13]):
     """Cloud Type Colormap for ABI and AHI data.
 
     Parameters

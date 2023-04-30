@@ -15,10 +15,12 @@ import logging
 
 LOG = logging.getLogger(__name__)
 
-cmap_type = "linear_segmented"
+interface = "colormaps"
+family = "linear_segmented"
+name = "cmap_cldMask"
 
 
-def cmap_cldMask(data_range=[0, 3]):
+def call(data_range=[0, 3]):
     """Cloud Mask Colormap.
 
     Parameters

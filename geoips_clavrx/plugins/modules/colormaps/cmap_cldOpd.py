@@ -15,10 +15,12 @@ import logging
 
 LOG = logging.getLogger(__name__)
 
-cmap_type = "linear_segmented"
+interface = "colormaps"
+family = "linear_segmented"
+name = "cmap_cldOpd"
 
 
-def cmap_cldOpd(data_range=[-0.2, 8]):
+def call(data_range=[-0.2, 8]):
     """Cloud Optical Depth Colormap.
 
     Parameters
