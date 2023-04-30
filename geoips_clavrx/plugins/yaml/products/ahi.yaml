@@ -13,7 +13,7 @@ spec:
         source_name: ahi
         variables: ["cloud_fraction", "latitude", "longitude"]
     - name: cldType
-      ocstring: |
+      docstring: |
         The cldType geoips_clavrx ahi product
       product_defaults: cldType
       spec:
