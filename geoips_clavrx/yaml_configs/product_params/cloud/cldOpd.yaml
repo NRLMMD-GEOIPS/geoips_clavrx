@@ -1,6 +1,6 @@
 cldOpd:
     product_type: interp_alg_cmap
-    alg_func: cloud.cldOpd 
+    alg_func: cldOpd 
     alg_args:
         output_data_range: [-0.2, 8]
     mtif_type: cloud

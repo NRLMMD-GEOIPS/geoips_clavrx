@@ -1,6 +1,6 @@
 cldHeightTop:
     product_type: interp_alg_cmap
-    alg_func: cloud.cldHeightTop 
+    alg_func: cldHeightTop 
     alg_args:
         output_data_range: [0, 20]
     mtif_type: cloud

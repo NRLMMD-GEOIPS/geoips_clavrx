@@ -1,6 +1,6 @@
 Temp11p0:
     product_type: interp_alg_cmap
-    alg_func: cloud.Temp11p0 
+    alg_func: Temp11p0 
     alg_args:
         output_data_range: [180, 340]
     mtif_type: cloud

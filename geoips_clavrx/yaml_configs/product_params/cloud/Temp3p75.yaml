@@ -1,6 +1,6 @@
 Temp3p75:
     product_type: interp_alg_cmap
-    alg_func: cloud.Temp3p75 
+    alg_func: Temp3p75 
     alg_args:
         output_data_range: [180, 340]
     mtif_type: cloud

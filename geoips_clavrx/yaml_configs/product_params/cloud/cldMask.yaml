@@ -1,6 +1,6 @@
 cldMask:
     product_type: interp_alg_cmap
-    alg_func: cloud.cldMask 
+    alg_func: cldMask 
     alg_args:
         output_data_range: [0, 3]
     mtif_type: cloud

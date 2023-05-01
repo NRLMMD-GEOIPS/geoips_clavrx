@@ -1,6 +1,6 @@
 cldReff:
     product_type: interp_alg_cmap
-    alg_func: cloud.cldReff 
+    alg_func: cldReff 
     alg_args:
         output_data_range: [0, 160]
     mtif_type: cloud
