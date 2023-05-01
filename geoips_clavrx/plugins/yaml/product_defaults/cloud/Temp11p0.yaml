@@ -6,7 +6,7 @@ docstring: |
 spec:
     interpolator:
         plugin:
-            name: pyresample_wrappers.interp_nearest
+            name: interp_nearest
             arguments: {}
     algorithm:
         plugin:
