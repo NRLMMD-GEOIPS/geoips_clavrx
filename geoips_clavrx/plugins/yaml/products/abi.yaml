@@ -1,6 +1,6 @@
 interface: products
 family: list
-name: abi
+name: clavrx-abi
 docstring: |
   The abi products geoips_clavrx default configuration.
 spec:

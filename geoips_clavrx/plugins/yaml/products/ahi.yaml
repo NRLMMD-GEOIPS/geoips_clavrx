@@ -1,6 +1,6 @@
 interface: products
 family: list
-name: ahi
+name: clavrx-ahi
 docstring: |
   The ahi products geoips_clavrx default configuration.
 spec:
