@@ -8,17 +8,6 @@ find = {namespaces = false}
 [tool.setuptools.package-dir]
 "" = "."
 
-[tool.setuptools.package-data]
-"*" = [
-    "*.txt",
-    "*.py",
-    "*.yaml",
-    "yaml_configs/*",
-    "yaml_configs/*/*",
-    "yaml_configs/*/*/*",
-    "image_utils/ascii_palettes/*",
-]
-
 [tool.setuptools.dynamic]
 entry-points = {file = ["entry-points.ini"]}
 
@@ -39,6 +28,9 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dynamic = ["version"]
+
+[project.entry-points."geoips.plugin_packages"]
+"geoips_clavrx" = "geoips_clavrx"
 
 [project.entry-points."geoips.algorithms"]
 "cldFraction" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldFraction"
