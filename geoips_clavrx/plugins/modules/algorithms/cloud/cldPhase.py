@@ -14,12 +14,14 @@
 # Python Standard Libraries
 import logging
 
-alg_func_type = "xarray_to_numpy"
+interface = "algorithms"
+family = "xarray_to_numpy"
+name = "cldPhase"
 
 log = logging.getLogger(__name__)
 
 
-def cldPhase(xobj, output_data_range=None):
+def call(xobj, output_data_range=None):
     """CLAVR-x Cloud Phase Product Process.
 
     It is designed for Cloud Phase product from AHI or ABI cloud property

@@ -14,12 +14,14 @@
 # Python Standard Libraries
 import logging
 
-alg_func_type = "xarray_to_numpy"
+interface = "algorithms"
+family = "xarray_to_numpy"
+name = "cldReff"
 
 log = logging.getLogger(__name__)
 
 
-def cldReff(xobj, output_data_range=None):
+def call(xobj, output_data_range=None):
     """CLAVR-x Cloud Particles Product Processing.
 
     It is designed for effective radius of Cloud particles product from AHI or

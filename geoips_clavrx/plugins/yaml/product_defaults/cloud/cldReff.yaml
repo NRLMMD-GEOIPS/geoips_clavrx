@@ -1,0 +1,21 @@
+interface: product_defaults
+family: interpolator_algorithm_colormap
+name: cldReff
+docstring: |
+    The cldReff product_defaults geoips_clavrx configuration.
+spec:
+    interpolator:
+        plugin:
+            name: interp_nearest
+            arguments: {}
+    algorithm:
+        plugin:
+            name: cldReff
+            arguments:
+                output_data_range: [0, 160]
+    colormap:
+        plugin:
+            name: cmap_cldReff
+            arguments:
+                data_range: [0, 160]
+    mtif_type: cloud

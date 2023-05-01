@@ -14,12 +14,14 @@
 # Python Standard Libraries
 import logging
 
-alg_func_type = "xarray_to_numpy"
+interface = "algorithms"
+family = "xarray_to_numpy"
+name = "cldMask"
 
 log = logging.getLogger(__name__)
 
 
-def cldMask(xobj, output_data_range=None):
+def call(xobj, output_data_range=None):
     """CLAVR-x Cloud Mask Processing.
 
     It is designed for Cloud Mask product from AHI or ABI cloud property

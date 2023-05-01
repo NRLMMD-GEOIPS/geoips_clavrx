@@ -42,7 +42,9 @@ except ImportError:
         "Failed import pyhdf error in clavrx_hdf4.py " + "If you need it, install it."
     )
 
-reader_type = "standard"
+interface = "readers"
+family = "standard"
+name = "clavrx_hdf4"
 
 
 def parse_metadata(metadatadict):
@@ -181,9 +183,7 @@ def read_cloudprops(fname, metadata_only=False):
     return xarrays
 
 
-def clavrx_hdf4(
-    fnames, metadata_only=False, chans=None, area_def=None, self_register=False
-):
+def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=False):
     """Read CLAVR-x hdf4 cloud properties."""
     fname = fnames[0]
     # path='$GEOIPS_TESTDATA_DIR/test_data_cloud/data/himawari8/20201201/'

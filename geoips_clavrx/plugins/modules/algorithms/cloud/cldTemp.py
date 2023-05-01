@@ -10,18 +10,19 @@
 # # # for more details. If you did not receive the license, for more information see:
 # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
 
-#!/bin/env python
 """Cloud Top Temperature CLAVR-x Product Processing."""
 
 # Python Standard Libraries
 import logging
 
-alg_func_type = "xarray_to_numpy"
+interface = "algorithms"
+family = "xarray_to_numpy"
+name = "cldTemp"
 
 log = logging.getLogger(__name__)
 
 
-def cldTemp(xobj, output_data_range=None):
+def call(xobj, output_data_range=None):
     """Cloud Top Temperature CLAVR-x Product Processing.
 
     It is designed for Cloud top temperature product from AHI or ABI cloud

@@ -1,0 +1,91 @@
+interface: products
+family: list
+name: clavrx-ahi
+docstring: |
+  The ahi products geoips_clavrx default configuration.
+spec:
+  products:
+    - name: cldFraction
+      docstring: |
+        The cldFraction geoips_clavrx ahi product
+      product_defaults: cldFraction
+      spec:
+        source_name: ahi
+        variables: ["cloud_fraction", "latitude", "longitude"]
+    - name: cldType
+      docstring: |
+        The cldType geoips_clavrx ahi product
+      product_defaults: cldType
+      spec:
+        source_name: ahi
+        variables: ["cloud_type", "latitude", "longitude"]
+    - name: cldMask
+      docstring: |
+        The cldMask geoips_clavrx ahi product
+      product_defaults: cldMask
+      spec:
+        source_name: ahi
+        variables: ["cloud_mask", "latitude", "longitude"]
+    - name: cldHeightBase
+      docstring: |
+        The cldHeightBase geoips_clavrx ahi product
+      product_defaults: cldHeightBase
+      spec:
+        source_name: ahi
+        variables: ["cld_height_base_acha", "latitude", "longitude"]
+    - name: cldHeightTop
+      docstring: |
+        The cldHeightTop geoips_clavrx ahi product
+      product_defaults: cldHeightTop
+      spec:
+        source_name: ahi
+        variables: ["cld_height_top_acha", "latitude", "longitude"]
+    - name: cldHeight
+      docstring: |
+        The cldHeight geoips_clavrx ahi product
+      product_defaults: cldHeight
+      spec:
+        source_name: ahi
+        variables: ["cld_height_acha", "latitude", "longitude"]
+    - name: cldOpd
+      docstring: |
+        The cldOpd geoips_clavrx ahi product
+      product_defaults: cldOpd
+      spec:
+        source_name: ahi
+        variables: ["cld_opd_acha", "latitude", "longitude"]
+    - name: cldPhase
+      docstring: |
+        The cldPhase geoips_clavrx ahi product
+      product_defaults: cldPhase
+      spec:
+        source_name: ahi
+        variables: ["cloud_phase", "latitude", "longitude"]
+    - name: cldTemp
+      docstring: |
+        The cldTemp geoips_clavrx ahi product
+      product_defaults: cldTemp
+      spec:
+        source_name: ahi
+        variables: ["cld_temp_acha", "latitude", "longitude"]
+    - name: Temp3p75
+      docstring: |
+        The Temp3p75 geoips_clavrx ahi product
+      product_defaults: Temp3p75
+      spec:
+        source_name: ahi
+        variables: ["temp_3_75um_nom", "latitude", "longitude"]
+    - name: Temp11p0
+      docstring: |
+        The Temp11p0 geoips_clavrx ahi product
+      product_defaults: Temp11p0
+      spec:
+        source_name: ahi
+        variables: ["temp_11_0um_nom", "latitude", "longitude"]
+    - name: cldReff
+      docstring: |
+        The cldReff geoips_clavrx ahi product
+      product_defaults: cldReff
+      spec:
+        source_name: ahi
+        variables: ["cld_reff_acha", "latitude", "longitude"]

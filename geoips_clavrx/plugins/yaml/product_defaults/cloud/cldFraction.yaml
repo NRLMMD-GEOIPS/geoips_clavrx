@@ -1,0 +1,21 @@
+interface: product_defaults
+family: interpolator_algorithm_colormap
+name: cldFraction
+docstring: |
+    The cldFraction product_defaults geoips_clavrx configuration.
+spec:
+    interpolator:
+        plugin:
+            name: interp_nearest
+            arguments: {}
+    algorithm:
+        plugin:
+            name: cldFraction
+            arguments:
+                output_data_range: [0.0, 1.0]
+    colormap:
+        plugin:
+            name: cmap_cldFraction
+            arguments:
+                data_range: [0.0, 1.0]
+    mtif_type: cloud

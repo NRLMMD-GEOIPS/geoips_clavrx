@@ -15,10 +15,12 @@ import logging
 
 LOG = logging.getLogger(__name__)
 
-cmap_type = "linear_segmented"
+interface = "colormaps"
+family = "linear_segmented"
+name = "cmap_cldFraction"
 
 
-def cmap_cldFraction(data_range=[0.0, 1.0]):
+def call(data_range=[0.0, 1.0]):
     """Cloud Fraction Colormap.
 
     Colormap for displaying Cloud_Fraction retrieved from satellite such as AHI or ABI.
