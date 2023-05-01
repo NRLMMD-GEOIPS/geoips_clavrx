@@ -10,7 +10,7 @@ spec:
             arguments: {}
     algorithm:
         plugin:
-            name: cloud.Temp3p75
+            name: Temp3p75
             arguments:
                 output_data_range: [180, 340]
     colormap:

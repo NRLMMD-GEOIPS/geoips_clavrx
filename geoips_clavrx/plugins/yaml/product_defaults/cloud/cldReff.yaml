@@ -10,7 +10,7 @@ spec:
             arguments: {}
     algorithm:
         plugin:
-            name: cloud.cldReff
+            name: cldReff
             arguments:
                 output_data_range: [0, 160]
     colormap:

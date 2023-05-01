@@ -10,7 +10,7 @@ spec:
             arguments: {}
     algorithm:
         plugin:
-            name: cloud.cldHeight
+            name: cldHeight
             arguments:
                 output_data_range: [0, 20]
     colormap:

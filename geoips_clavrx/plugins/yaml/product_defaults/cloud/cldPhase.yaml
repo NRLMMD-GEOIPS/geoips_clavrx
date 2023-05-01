@@ -10,7 +10,7 @@ spec:
             arguments: {}
     algorithm:
         plugin:
-            name: cloud.cldPhase
+            name: cldPhase
             arguments:
                 output_data_range: [0, 5]
     colormap:

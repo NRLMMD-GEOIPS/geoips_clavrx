@@ -10,7 +10,7 @@ spec:
             arguments: {}
     algorithm:
         plugin:
-            name: cloud.cldType
+            name: cldType
             arguments:
                 output_data_range: [0, 13]
     colormap:
