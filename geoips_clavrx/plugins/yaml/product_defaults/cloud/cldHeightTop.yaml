@@ -6,11 +6,11 @@ docstring: |
 spec:
     interpolator:
         plugin:
-            name: pyresample_wrappers.interp_nearest
+            name: interp_nearest
             arguments: {}
     algorithm:
         plugin:
-            name: cloud.cldHeightTop
+            name: cldHeightTop
             arguments:
                 output_data_range: [0, 20]
     colormap:
