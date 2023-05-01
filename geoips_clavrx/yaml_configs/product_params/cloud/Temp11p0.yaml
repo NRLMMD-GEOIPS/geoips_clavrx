@@ -7,5 +7,5 @@ Temp11p0:
     cmap_func: cmap_IR
     cmap_args: 
         data_range: [180, 340]
-    interp_func: pyresample_wrappers.interp_nearest
+    interp_func: interp_nearest
     interp_args: {}

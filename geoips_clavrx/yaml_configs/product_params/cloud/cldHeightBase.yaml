@@ -7,5 +7,5 @@ cldHeightBase:
     cmap_func: cmap_cldHeightBase
     cmap_args: 
         data_range: [0, 20]
-    interp_func: pyresample_wrappers.interp_nearest
+    interp_func: interp_nearest
     interp_args: {}

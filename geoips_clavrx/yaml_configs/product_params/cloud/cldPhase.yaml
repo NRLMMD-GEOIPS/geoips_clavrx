@@ -7,5 +7,5 @@ cldPhase:
     cmap_func: cmap_cldPhase
     cmap_args: 
         data_range: [0, 5]
-    interp_func: pyresample_wrappers.interp_nearest
+    interp_func: interp_nearest
     interp_args: {}
