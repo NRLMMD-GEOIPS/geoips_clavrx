@@ -8,6 +8,15 @@ find = {namespaces = false}
 [tool.setuptools.package-dir]
 "" = "."
 
+[tool.setuptools.package-data]
+"*" = [
+    "plugins/*.yaml",
+    "plugins/*/*.yaml",
+    "plugins/*/*/*.yaml",
+    "plugins/*/*/*/*.yaml",
+    "plugins/*/*/*/*/*.yaml",
+]
+
 [tool.setuptools.dynamic]
 entry-points = {file = ["entry-points.ini"]}
 
