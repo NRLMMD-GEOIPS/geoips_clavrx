@@ -1,1 +1,1 @@
-"""Init file."""
+"""Algorithms init file."""
