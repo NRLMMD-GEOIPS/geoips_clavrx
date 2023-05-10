@@ -2,20 +2,20 @@ interface: product_defaults
 family: interpolator_algorithm_colormap
 name: cldHeightBase
 docstring: |
-    The cldHeightBase product_defaults geoips_clavrx configuration.
+  The cldHeightBase product_defaults geoips_clavrx configuration.
 spec:
-    interpolator:
-        plugin:
-            name: interp_nearest
-            arguments: {}
-    algorithm:
-        plugin:
-            name: cldHeightBase
-            arguments:
-                output_data_range: [0, 20]
-    colormap:
-        plugin:
-            name: cmap_cldHeightBase
-            arguments:
-                data_range: [0, 20]
-    mtif_type: cloud
+  interpolator:
+    plugin:
+      name: interp_nearest
+      arguments: {}
+  algorithm:
+    plugin:
+      name: cldHeightBase
+      arguments:
+        output_data_range: [0, 20]
+  colormap:
+    plugin:
+      name: cmap_cldHeightBase
+      arguments:
+        data_range: [0, 20]
+  mtif_type: cloud

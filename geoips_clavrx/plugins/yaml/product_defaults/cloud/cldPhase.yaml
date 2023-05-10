@@ -2,20 +2,20 @@ interface: product_defaults
 family: interpolator_algorithm_colormap
 name: cldPhase
 docstring: |
-    The cldPhase product_defaults geoips_clavrx configuration.
+  The cldPhase product_defaults geoips_clavrx configuration.
 spec:
-    interpolator:
-        plugin:
-            name: interp_nearest
-            arguments: {}
-    algorithm:
-        plugin:
-            name: cldPhase
-            arguments:
-                output_data_range: [0, 5]
-    colormap:
-        plugin:
-            name: cmap_cldPhase
-            arguments:
-                data_range: [0, 5]
-    mtif_type: cloud
+  interpolator:
+    plugin:
+      name: interp_nearest
+      arguments: {}
+  algorithm:
+    plugin:
+      name: cldPhase
+      arguments:
+        output_data_range: [0, 5]
+  colormap:
+    plugin:
+      name: cmap_cldPhase
+      arguments:
+        data_range: [0, 5]
+  mtif_type: cloud

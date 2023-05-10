@@ -89,4 +89,3 @@ spec:
       product_defaults: cldReff
       spec:
         variables: ["cld_reff_acha", "latitude", "longitude"]
-
