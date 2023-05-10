@@ -15,6 +15,11 @@ find = {namespaces = false}
     "plugins/*/*/*.yaml",
     "plugins/*/*/*/*.yaml",
     "plugins/*/*/*/*/*.yaml",
+    "plugins/*.txt",
+    "plugins/*/*.txt",
+    "plugins/*/*/*.txt",
+    "plugins/*/*/*/*.txt",
+    "plugins/*/*/*/*/*.txt",
 ]
 
 [tool.setuptools.dynamic]
