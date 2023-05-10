@@ -1,0 +1,72 @@
+ | # # # Distribution Statement A. Approved for public release. Distribution unlimited.
+ | # # #
+ | # # # Author:
+ | # # # Naval Research Laboratory, Marine Meteorology Division
+ | # # #
+ | # # # This program is free software: you can redistribute it and/or modify it under
+ | # # # the terms of the NRLMMD License included with this program. This program is
+ | # # # distributed WITHOUT ANY WARRANTY; without even the implied warranty of
+ | # # # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the included license
+ | # # # for more details. If you did not receive the license, for more information see:
+ | # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
+
+Version 1.10.0a2 (2023-05-04)
+*****************************
+
+* Change colormap families to "matplotlib"
+* Removed sectorfiles argument from all test scripts.
+* Added missing docstring to init file.
+
+Breaking Changes
+================
+
+Removed sectorfiles argument from all test scripts
+--------------------------------------------------
+
+No longer require explicit path to YAML sector files - pass
+only sector_list, since sectors are now fully fledged plugins.
+
+::
+
+  modified: tests/scripts/abi_cldFraction.sh
+  modified: tests/scripts/ahi_Temp11p0.sh
+  modified: tests/scripts/ahi_Temp3p75.sh
+  modified: tests/scripts/ahi_cldFraction.sh
+  modified: tests/scripts/ahi_cldHeight.sh
+  modified: tests/scripts/ahi_cldHeightBase.sh
+  modified: tests/scripts/ahi_cldHeightTop.sh
+  modified: tests/scripts/ahi_cldMask.sh
+  modified: tests/scripts/ahi_cldOpd.sh
+  modified: tests/scripts/ahi_cldPhase.sh
+  modified: tests/scripts/ahi_cldReff.sh
+  modified: tests/scripts/ahi_cldTemp.sh
+  modified: tests/scripts/ahi_cldType.sh
+
+Change all colormap families to "matplotlib"
+--------------------------------------------
+
+Redefining plugin familes as a collection of required_parameters,
+required_kwargs, and allowable_kwargs.  This allows us to have a
+collections of keyword arguments that *can* be specified for
+matplotlib-based colormaps, but do not *have* to be specified.
+So rather than having a different family for every combination of
+tuning parameters for color specifications, have a general "matplotlib" family
+that all return the "mpl_colors_info" dictionary, but can have a variable set
+of arguments (depending on requirements for a specific colormap).
+
+All matplotlib families now have NO required params or kwargs, and a list of
+available_kwargs.
+
+::
+
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_IR.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldFraction.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldHeight.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldHeightBase.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldHeightTop.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldMask.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldOpd.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldPhase.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldReff.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldTemp.py
+  modified: geoips_clavrx/plugins/modules/colormaps/cmap_cldType.py

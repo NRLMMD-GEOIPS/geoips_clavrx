@@ -36,6 +36,7 @@ echo ""
 for call in \
 \
     "$GEOIPS_PACKAGES_DIR/geoips/tests/utils/check_code.sh all `dirname $0`/../" \
+    "test_interfaces" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/abi_cldFraction.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldFraction.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldHeightBase.sh" \
