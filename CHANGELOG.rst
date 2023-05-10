@@ -12,12 +12,13 @@
 
 
 Testing Updates
-============
+===============
 
 Update test outputs for all tests
---------------------------------
+---------------------------------
 
-* The test files in test_data_clavrx were updated requiring that the comparison outputs also be updated
+* The test files in test_data_clavrx were updated requiring that the comparison
+  outputs also be updated
 
 ::
     new: tests/outputs/abi.cldFraction.imagery_clean/20230411.160200.goes-16.abi.cldFraction.goes16.71p70.cira.10p0.png
@@ -61,7 +62,7 @@ Code Formatting and Style Updates
 =================================
 
 Fix formatting in YAML files
----------------------------
+----------------------------
 
 ::
     deleted: geoips_clavrx/yaml_configs/product_inputs/abi.yaml
