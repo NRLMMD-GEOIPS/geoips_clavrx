@@ -24,12 +24,6 @@ import xarray as xr
 LOG = logging.getLogger(__name__)
 
 try:
-    from pyhdf.HDF import ishdf
-except ImportError:
-    print(
-        "Failed import pyhdf.ishdf in clavrx_hdf4.py " + "If you need it, install it."
-    )
-try:
     from pyhdf.SD import SD, SDC
 except ImportError:
     print(
@@ -67,12 +61,11 @@ def parse_metadata(metadatadict):
 
 def read_cloudprops(fname, chans=None, metadata_only=False):
     """Read CLAVR-x Cloud Properties Data."""
-    if ishdf(fname):
-        try:
-            data = SD(fname, SDC.READ)  # read in all data fields
-        except HDF4Error:
-            LOG.info("wrong input hdf file %s", fname)
-            raise
+    try:
+        data = SD(fname, SDC.READ)  # read in all data fields
+    except HDF4Error:
+        LOG.info("wrong input hdf file %s", fname)
+        raise
 
     # selected cloud variables
     # definiation of variables
@@ -106,7 +99,6 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
     # process of all variables
     xarrays = {}
 
-    data = SD(fname, SDC.READ)
     data_metadata = parse_metadata(data.attributes())
 
     # setup attributes
@@ -141,32 +133,29 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
         LOG.info("metadata_only requested, returning without reading data")
         return xarrays
 
-    list_vars = list(data.datasets())
-
-    for var in list_vars:
-        if var in vars_sel:
-            data_select = data.select(var)  # select this var
-            attrs = data_select.attributes()  # get attributes for this var
-            data_get = data_select.get()  # get all data of this var
-            # mask grids with missing or bad values
-            limit1 = attrs["valid_range"][0]
-            limit2 = attrs["valid_range"][1]
-            if var == "cloud_type":
-                limit1 = 0
-                limit2 = 13
-            if var == "cloud_mask":
-                limit1 = 0
-                limit2 = 3
-            data_get_mask = np.ma.masked_outside(data_get, limit1, limit2, copy=True)
-            # convert the scaled/ofset values into the actual values
-            data_get_actualvalue = (
-                data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
-            )
-            xarrays[var] = xr.DataArray(data_get_actualvalue)
-            # setup attributes for this var (will be applied later from the
-            #     extracted files
-            # for attrname in attrs:
-            #    xarrays[var].attrs[attrname]=attrs[attrname]
+    for var in vars_sel:
+        data_select = data.select(var)  # select this var
+        attrs = data_select.attributes()  # get attributes for this var
+        data_get = data_select.get()  # get all data of this var
+        # mask grids with missing or bad values
+        limit1 = attrs["valid_range"][0]
+        limit2 = attrs["valid_range"][1]
+        if var == "cloud_type":
+            limit1 = 0
+            limit2 = 13
+        if var == "cloud_mask":
+            limit1 = 0
+            limit2 = 3
+        data_get_mask = np.ma.masked_outside(data_get, limit1, limit2, copy=True)
+        # convert the scaled/ofset values into the actual values
+        data_get_actualvalue = (
+            data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
+        )
+        xarrays[var] = xr.DataArray(data_get_actualvalue)
+        # setup attributes for this var (will be applied later from the
+        #     extracted files
+        # for attrname in attrs:
+        #    xarrays[var].attrs[attrname]=attrs[attrname]
 
     return xarrays
 
