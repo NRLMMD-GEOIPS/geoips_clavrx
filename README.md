@@ -16,7 +16,7 @@ CLAVR-x GeoIPS Plugin Package
 The geoips_clavrx package is a GeoIPS-compatible plugin, intended to be used
 within the GeoIPS ecosystem.
 Please see the 
-[GeoIPS Documentation](https://github.com/NRLMMD-GEOIPS/geoips/blob/main/README.md)
+[GeoIPS Documentation](https://github.com/NRLMMD-GEOIPS/geoips#readme)
 for more information on the GeoIPS plugin architecture and base infrastructure.
 
 Package Overview
@@ -31,7 +31,7 @@ expects you are able to produce CLAVR-x outputs for ingest into geoips_clavrx.
 System Requirements
 ---------------------
 
-* geoips >= 1.6.1
+* geoips >= 1.10.0
 * Test data repos contained in $GEOIPS_TESTDATA_DIR for tests to pass.
 
 IF REQUIRED: Install base geoips package
@@ -39,25 +39,24 @@ IF REQUIRED: Install base geoips package
 SKIP IF YOU HAVE ALREADY INSTALLED BASE GEOIPS ENVIRONMENT 
 
 If GeoIPS Base is not yet installed, follow the
-[installation instructions](https://github.com/NRLMMD-GEOIPS/geoips/blob/main/docs/installation.rst)
+[installation instructions](https://github.com/NRLMMD-GEOIPS/geoips#installation)
 within the geoips source repo documentation.
 
 Install geoips_clavrx package
 ----------------------------
 ```bash
-    # Assuming you followed the fully supported installation,
-    # using $GEOIPS_PACKAGES_DIR and $GEOIPS_CONFIG_FILE:
-    source $GEOIPS_CONFIG_FILE
-    git clone -b $GEOIPS_ACTIVE_BRANCH $GEOIPS_REPO_URL $GEOIPS_PACKAGES_DIR/geoips_clavrx
+
+    # Ensure GeoIPS Python environment is enabled.
+
+    git clone https://github.com/NRLMMD-GEOIPS/geoips_clavrx $GEOIPS_PACKAGES_DIR/geoips_clavrx
     pip install -e $GEOIPS_PACKAGES_DIR/geoips_clavrx
 ```
 
 Test geoips_clavrx installation
 -----------------------------
 ```bash
-    # Assuming you followed the fully supported installation,
-    # using $GEOIPS_PACKAGES_DIR and $GEOIPS_CONFIG_FILE:
-    source $GEOIPS_CONFIG_FILE
+
+    # Ensure GeoIPS Python environment is enabled.
 
     # If you have all test data repos available:
     $GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/test_all.sh

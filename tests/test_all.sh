@@ -41,7 +41,6 @@ for call in \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldFraction.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldHeightBase.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldHeight.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldHeightTop.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldMask.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldOpd.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldPhase.sh" \

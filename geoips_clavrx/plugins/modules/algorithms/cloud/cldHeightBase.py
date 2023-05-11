@@ -44,7 +44,7 @@ def call(xobj, output_data_range=None):
     cldHeightBase_min = output_data_range[0]
     cldHeightBase_max = output_data_range[1]
     cldHeightBase = (
-        xobj["cld_height_base_acha"].to_masked_array() / 1000.0
+        xobj["cld_height_base"].to_masked_array() / 1000.0
     )  # cloud height_base/convert to km)
 
     from geoips.data_manipulations.corrections import apply_data_range

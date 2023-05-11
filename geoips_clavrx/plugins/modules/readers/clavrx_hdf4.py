@@ -24,12 +24,6 @@ import xarray as xr
 LOG = logging.getLogger(__name__)
 
 try:
-    from pyhdf.HDF import ishdf
-except ImportError:
-    print(
-        "Failed import pyhdf.ishdf in clavrx_hdf4.py " + "If you need it, install it."
-    )
-try:
     from pyhdf.SD import SD, SDC
 except ImportError:
     print(
@@ -65,14 +59,13 @@ def parse_metadata(metadatadict):
 #########################################################################
 
 
-def read_cloudprops(fname, metadata_only=False):
+def read_cloudprops(fname, chans=None, metadata_only=False):
     """Read CLAVR-x Cloud Properties Data."""
-    if ishdf(fname):
-        try:
-            data = SD(fname, SDC.READ)  # read in all data fields
-        except HDF4Error:
-            LOG.info("wrong input hdf file %s", fname)
-            raise
+    try:
+        data = SD(fname, SDC.READ)  # read in all data fields
+    except HDF4Error:
+        LOG.info("wrong input hdf file %s", fname)
+        raise
 
     # selected cloud variables
     # definiation of variables
@@ -96,29 +89,16 @@ def read_cloudprops(fname, metadata_only=False):
     #        cloud_phase(?) are not valid.
     #        They should be specified with their definitions.
 
-    vars_sel = [
-        "latitude",
-        "longitude",
-        "cloud_type",
-        "cloud_mask",
-        "cloud_phase",
-        "cloud_fraction",
-        "cld_height_acha",
-        "cld_height_base_acha",
-        "cld_height_top_acha",
-        "cld_temp_acha",
-        "cloud_water_path",
-        "cld_opd_acha",
-        "cld_reff_acha",
-        "temp_3_75um_nom",
-        "temp_11_0um_nom",
-        "solar_zenith_angle",
-    ]
+    if chans is None:
+        vars_sel = sorted(data.datasets().keys())
+    elif chans:
+        vars_sel = chans
+    else:
+        metadata_only = True
 
     # process of all variables
     xarrays = {}
 
-    data = SD(fname, SDC.READ)
     data_metadata = parse_metadata(data.attributes())
 
     # setup attributes
@@ -142,7 +122,7 @@ def read_cloudprops(fname, metadata_only=False):
     xarrays = xr.Dataset()
     xarrays.attrs["start_datetime"] = sdt
     xarrays.attrs["end_datetime"] = edt
-    xarrays.attrs["source_name"] = data_metadata["sensor"].lower()
+    xarrays.attrs["source_name"] = "clavrx"
     xarrays.attrs["platform_name"] = data_metadata["platform"].lower()
     xarrays.attrs["data_provider"] = "cira"
     xarrays.attrs["original_source_filenames"] = data_metadata["FILENAME"]
@@ -151,34 +131,31 @@ def read_cloudprops(fname, metadata_only=False):
 
     if metadata_only:
         LOG.info("metadata_only requested, returning without reading data")
-        return {"METADATA": xarrays}
+        return xarrays
 
-    list_vars = list(data.datasets())
-
-    for var in list_vars:
-        if var in vars_sel:
-            data_select = data.select(var)  # select this var
-            attrs = data_select.attributes()  # get attributes for this var
-            data_get = data_select.get()  # get all data of this var
-            # mask grids with missing or bad values
-            limit1 = attrs["valid_range"][0]
-            limit2 = attrs["valid_range"][1]
-            if var == "cloud_type":
-                limit1 = 0
-                limit2 = 13
-            if var == "cloud_mask":
-                limit1 = 0
-                limit2 = 3
-            data_get_mask = np.ma.masked_outside(data_get, limit1, limit2, copy=True)
-            # convert the scaled/ofset values into the actual values
-            data_get_actualvalue = (
-                data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
-            )
-            xarrays[var] = xr.DataArray(data_get_actualvalue)
-            # setup attributes for this var (will be applied later from the
-            #     extracted files
-            # for attrname in attrs:
-            #    xarrays[var].attrs[attrname]=attrs[attrname]
+    for var in vars_sel:
+        data_select = data.select(var)  # select this var
+        attrs = data_select.attributes()  # get attributes for this var
+        data_get = data_select.get()  # get all data of this var
+        # mask grids with missing or bad values
+        limit1 = attrs["valid_range"][0]
+        limit2 = attrs["valid_range"][1]
+        if var == "cloud_type":
+            limit1 = 0
+            limit2 = 13
+        if var == "cloud_mask":
+            limit1 = 0
+            limit2 = 3
+        data_get_mask = np.ma.masked_outside(data_get, limit1, limit2, copy=True)
+        # convert the scaled/ofset values into the actual values
+        data_get_actualvalue = (
+            data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
+        )
+        xarrays[var] = xr.DataArray(data_get_actualvalue)
+        # setup attributes for this var (will be applied later from the
+        #     extracted files
+        # for attrname in attrs:
+        #    xarrays[var].attrs[attrname]=attrs[attrname]
 
     return xarrays
 
@@ -196,5 +173,5 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
     # for the 40deg x 50deg W. Pacific region:
     # minlon, maxlon, minlat, maxlat = [100-150E,10-50N]
     # istat, outputs= read_cloudprops(fname, minlon, maxlon, minlat, maxlat)
-    xarrays = read_cloudprops(fname, metadata_only=False)
+    xarrays = read_cloudprops(fname, chans=chans, metadata_only=metadata_only)
     return {"DATA": xarrays, "METADATA": xarrays[[]]}
