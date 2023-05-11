@@ -26,18 +26,18 @@ spec:
       product_defaults: cldMask
       spec:
         variables: ["cloud_mask", "latitude", "longitude"]
-    - name: cldHeightBase
+    - name: Cloud-Base-Height
       source_name: clavrx
       docstring: |
-        The cldHeightBase geoips_clavrx product
-      product_defaults: cldHeightBase
+        GeoIPS CLAVR-x Cloud Base Height product
+      product_defaults: Cloud-Height
       spec:
         variables: ["cld_height_base", "latitude", "longitude"]
-    - name: cldHeight
+    - name: Cloud-Top-Height
       source_name: clavrx
       docstring: |
-        The cldHeight geoips_clavrx product
-      product_defaults: cldHeight
+        GeoIPS CLAVR-x Cloud Top Height product
+      product_defaults: Cloud-Height
       spec:
         variables: ["cld_height_acha", "latitude", "longitude"]
     - name: cldOpd

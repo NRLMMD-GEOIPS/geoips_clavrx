@@ -16,9 +16,37 @@ Version 1.10.0a3 (2023-05-11)
 * Update hdf4 reader to handle current variables
 * Update test outputs for all tests to use updated data file
 * Fix tabs in YAML files and remove old YAML files
+* Clean up product/algorithm specifications
 
 Breaking Changes
 ================
+
+Consolidate product specifications
+----------------------------------
+
+* Remove all algorithms (these should all just be "single_channel" algorithms)
+
+  * from plugins/modules/algorithms
+  * from pyproject.toml
+* Remove duplicate colormaps
+
+  * from plugins/modules/colormaps
+  * from pyproject.toml
+  * cmap_cldHeightBase and cmap_cldHeightTop (cmap_cldHeight duplicates)
+* Remove duplicate product_defaults from plugins/yaml/product_defaults
+
+  * cldHeightBase.yaml
+  * cldHeight.yaml -> Cloud-Height.yaml
+* Standardize product names in plugins/yaml/products/clavrx.yaml
+
+  * Cloud-Base-Height <-- cldHeightBase
+  * Cloud-Top-Height <-- cldHeight
+* Consolidate test script/output names
+
+  * in tests/scripts/*.sh, tests/outputs/*, and test_all.sh
+  * ahi.Cloud-Top-Height.imagery_clean <-- ahi.cldHeight.imagery_clean
+  * ahi.Cloud-Base-Height.imagery_clean <-- ahi.cldHeightBase.imagery_clean
+
 
 Update hdf4 reader to handle current variables
 ----------------------------------------------
