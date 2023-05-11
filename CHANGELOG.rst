@@ -11,6 +11,21 @@
  | # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
 
 
+Breaking Changes
+================
+
+Update to handle current variables
+----------------------------------
+
+* Update reader to read any available variables
+* Update cld_height_base_acha to cloud_height_base
+* Update cld_height_top_acha to cld_height_acha
+* Update source_name to clavrx everywhere
+
+    deleted: geoips_clavrx/plugins/yaml/products/ahi.yaml
+    deleted: tests/scripts/ahi_cldHeightTop.sh
+    renamed: geoips_clavrx/plugins/yaml/products/abi.yaml geoips_clavrx/plugins/yaml/products/clavrx.yaml
+
 Testing Updates
 ===============
 
@@ -21,17 +36,18 @@ Update test outputs for all tests
   outputs also be updated
 
 ::
-    new: tests/outputs/abi.cldFraction.imagery_clean/20230411.160200.goes-16.abi.cldFraction.goes16.71p70.cira.10p0.png
-    new: tests/outputs/ahi.Temp11p0.imagery_clean/20230411.030000.him9.ahi.Temp11p0.himawari8.71p70.cira.10p0.png
-    new: tests/outputs/ahi.Temp3p75.imagery_clean/20230411.030000.him9.ahi.Temp3p75.himawari8.71p70.cira.10p0.png
-    new: tests/outputs/ahi.cldFraction.imagery_clean/20230411.030000.him9.ahi.cldFraction.himawari8.71p70.cira.10p0.png
-    new: tests/outputs/ahi.cldHeight.imagery_clean/20230411.030000.him9.ahi.cldHeight.himawari8.48p00.cira.10p0.png
-    new: tests/outputs/ahi.cldMask.imagery_clean/20230411.030000.him9.ahi.cldMask.himawari8.71p70.cira.10p0.png
-    new: tests/outputs/ahi.cldOpd.imagery_clean/20230411.030000.him9.ahi.cldOpd.himawari8.69p44.cira.10p0.png
-    new: tests/outputs/ahi.cldPhase.imagery_clean/20230411.030000.him9.ahi.cldPhase.himawari8.33p41.cira.10p0.png
-    new: tests/outputs/ahi.cldReff.imagery_clean/20230411.030000.him9.ahi.cldReff.himawari8.48p00.cira.10p0.png
-    new: tests/outputs/ahi.cldTemp.imagery_clean/20230411.030000.him9.ahi.cldTemp.himawari8.48p00.cira.10p0.png
-    new: tests/outputs/ahi.cldType.imagery_clean/20230411.030000.him9.ahi.cldType.himawari8.71p70.cira.10p0.png
+    added: tests/outputs/abi.cldFraction.imagery_clean/20230411.160200.goes-16.clavrx.cldFraction.goes16.71p70.cira.10p0.png
+    added: tests/outputs/ahi.Temp11p0.imagery_clean/20230411.030000.him9.clavrx.Temp11p0.himawari8.71p70.cira.10p0.png
+    added: tests/outputs/ahi.Temp3p75.imagery_clean/20230411.030000.him9.clavrx.Temp3p75.himawari8.71p70.cira.10p0.png
+    added: tests/outputs/ahi.cldFraction.imagery_clean/20230411.030000.him9.clavrx.cldFraction.himawari8.71p70.cira.10p0.png
+    added: tests/outputs/ahi.cldHeight.imagery_clean/20230411.030000.him9.clavrx.cldHeight.himawari8.48p00.cira.10p0.png
+    added: tests/outputs/ahi.cldHeightBase.imagery_clean/20230411.030000.him9.clavrx.cldHeightBase.himawari8.47p95.cira.10p0.png
+    added: tests/outputs/ahi.cldMask.imagery_clean/20230411.030000.him9.clavrx.cldMask.himawari8.71p70.cira.10p0.png
+    added: tests/outputs/ahi.cldOpd.imagery_clean/20230411.030000.him9.clavrx.cldOpd.himawari8.69p44.cira.10p0.png
+    added: tests/outputs/ahi.cldPhase.imagery_clean/20230411.030000.him9.clavrx.cldPhase.himawari8.33p41.cira.10p0.png
+    added: tests/outputs/ahi.cldReff.imagery_clean/20230411.030000.him9.clavrx.cldReff.himawari8.48p00.cira.10p0.png
+    added: tests/outputs/ahi.cldTemp.imagery_clean/20230411.030000.him9.clavrx.cldTemp.himawari8.48p00.cira.10p0.png
+    added: tests/outputs/ahi.cldType.imagery_clean/20230411.030000.him9.clavrx.cldType.himawari8.71p70.cira.10p0.png
     deleted: tests/outputs/abi.cldFraction.imagery_clean/20230113.000000.goes-16.abi.cldFraction.goes16.63p31.cira.10p0.png
     deleted: tests/outputs/ahi.Temp11p0.imagery_clean/20201201.090000.him8.ahi.Temp11p0.himawari8.71p70.cira.10p0.png
     deleted: tests/outputs/ahi.Temp3p75.imagery_clean/20201201.090000.him8.ahi.Temp3p75.himawari8.71p70.cira.10p0.png
@@ -50,19 +66,19 @@ Update test outputs for all tests
     modified: tests/scripts/ahi_cldFraction.sh
     modified: tests/scripts/ahi_cldHeight.sh
     modified: tests/scripts/ahi_cldHeightBase.sh
-    modified: tests/scripts/ahi_cldHeightTop.sh
     modified: tests/scripts/ahi_cldMask.sh
     modified: tests/scripts/ahi_cldOpd.sh
     modified: tests/scripts/ahi_cldPhase.sh
     modified: tests/scripts/ahi_cldReff.sh
     modified: tests/scripts/ahi_cldTemp.sh
     modified: tests/scripts/ahi_cldType.sh
+    modified: tests/test_all.sh
 
 Code Formatting and Style Updates
 =================================
 
-Fix formatting in YAML files
-----------------------------
+Fix tabs in YAML files and remove old YAML files
+------------------------------------------------------
 
 ::
     deleted: geoips_clavrx/yaml_configs/product_inputs/abi.yaml
@@ -91,6 +107,3 @@ Fix formatting in YAML files
     modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldReff.yaml
     modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldTemp.yaml
     modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldType.yaml
-    modified: geoips_clavrx/plugins/yaml/products/abi.yaml
-    modified: geoips_clavrx/plugins/yaml/products/ahi.yaml
-
