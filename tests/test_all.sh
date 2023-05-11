@@ -39,8 +39,8 @@ for call in \
     "test_interfaces" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/abi_cldFraction.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldFraction.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldHeightBase.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldHeight.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_Cloud-Top-Height" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_Cloud-Base-Height" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldMask.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldOpd.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldPhase.sh" \
