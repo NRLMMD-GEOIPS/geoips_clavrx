@@ -65,7 +65,7 @@ def parse_metadata(metadatadict):
 #########################################################################
 
 
-def read_cloudprops(fname, metadata_only=False):
+def read_cloudprops(fname, chans=None, metadata_only=False):
     """Read CLAVR-x Cloud Properties Data."""
     if ishdf(fname):
         try:
@@ -96,24 +96,12 @@ def read_cloudprops(fname, metadata_only=False):
     #        cloud_phase(?) are not valid.
     #        They should be specified with their definitions.
 
-    vars_sel = [
-        "latitude",
-        "longitude",
-        "cloud_type",
-        "cloud_mask",
-        "cloud_phase",
-        "cloud_fraction",
-        "cld_height_acha",
-        "cld_height_base_acha",
-        "cld_height_top_acha",
-        "cld_temp_acha",
-        "cloud_water_path",
-        "cld_opd_acha",
-        "cld_reff_acha",
-        "temp_3_75um_nom",
-        "temp_11_0um_nom",
-        "solar_zenith_angle",
-    ]
+    if chans is None:
+        vars_sel = sorted(data.datasets().keys())
+    elif chans:
+        vars_sel = chans
+    else:
+        metadata_only = True
 
     # process of all variables
     xarrays = {}
@@ -142,7 +130,7 @@ def read_cloudprops(fname, metadata_only=False):
     xarrays = xr.Dataset()
     xarrays.attrs["start_datetime"] = sdt
     xarrays.attrs["end_datetime"] = edt
-    xarrays.attrs["source_name"] = data_metadata["sensor"].lower()
+    xarrays.attrs["source_name"] = "clavrx"
     xarrays.attrs["platform_name"] = data_metadata["platform"].lower()
     xarrays.attrs["data_provider"] = "cira"
     xarrays.attrs["original_source_filenames"] = data_metadata["FILENAME"]
@@ -151,7 +139,7 @@ def read_cloudprops(fname, metadata_only=False):
 
     if metadata_only:
         LOG.info("metadata_only requested, returning without reading data")
-        return {"METADATA": xarrays}
+        return xarrays
 
     list_vars = list(data.datasets())
 
@@ -196,5 +184,5 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
     # for the 40deg x 50deg W. Pacific region:
     # minlon, maxlon, minlat, maxlat = [100-150E,10-50N]
     # istat, outputs= read_cloudprops(fname, minlon, maxlon, minlat, maxlat)
-    xarrays = read_cloudprops(fname, metadata_only=False)
+    xarrays = read_cloudprops(fname, chans=chans, metadata_only=metadata_only)
     return {"DATA": xarrays, "METADATA": xarrays[[]]}
