@@ -41,7 +41,7 @@ for call in \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Fraction.imagery_clean.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Top-Height.imagery_clean.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Base-Height.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Maske.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Mask.imagery_clean.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Optical-Depth.imagery_clean.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Phase.imagery_clean.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Effective-Radius.imagery_clean.sh" \
