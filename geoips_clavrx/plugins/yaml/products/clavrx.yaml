@@ -74,7 +74,7 @@ spec:
               scale_factor: 1.0
         colormap:
           plugin:
-            name: cmap_cldType
+            name: cmap_cldMask
             arguments:
               data_range: [0, 3]
 
@@ -151,6 +151,8 @@ spec:
         colormap:
           plugin:
             name: cmap_cldTemp
+            arguments:
+              data_range: [160, 320]
 
     - name: Temp-3p75
       source_name: clavrx
