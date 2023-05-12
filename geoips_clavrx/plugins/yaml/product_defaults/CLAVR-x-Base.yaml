@@ -15,7 +15,7 @@ spec:
     plugin:
       name: single_channel
       arguments:
-        output_data_range: [] # Specify in product list
+        output_data_range: [0, 1.0] # Specify in product list
         scale_factor: 1.0  # Specify in product list if needed
         min_outbounds: "crop"
         max_outbounds: "crop"
@@ -25,4 +25,4 @@ spec:
     plugin:
       name: veridis # Specify in product list
       arguments:
-        data_range: [] # Specify in product list
+        data_range: [0, 1.0] # Specify in product list
