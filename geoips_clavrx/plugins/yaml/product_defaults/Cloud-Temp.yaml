@@ -1,8 +1,8 @@
 interface: product_defaults
 family: interpolator_algorithm_colormap
-name: cldTemp
+name: Cloud-Temp
 docstring: |
-  The cldTemp product_defaults geoips_clavrx configuration.
+  The geoips_clavrx Cloud Temp product_defaults.
 spec:
   interpolator:
     plugin:
@@ -10,13 +10,16 @@ spec:
       arguments: {}
   algorithm:
     plugin:
-      name: cldTemp
+      name: single_channel
       arguments:
         output_data_range: [160, 320]
+        scale_factor: 1.0
+        min_outbounds: "crop"
+        max_outbounds: "crop"
+        norm: False
+        inverse: False
   colormap:
     plugin:
       name: cmap_cldTemp
       arguments:
         data_range: [160, 320]
-
-  mtif_type: cloud
