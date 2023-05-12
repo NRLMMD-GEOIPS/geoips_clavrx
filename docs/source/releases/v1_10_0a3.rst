@@ -24,7 +24,7 @@ Breaking Changes
 Consolidate product specifications
 ----------------------------------
 
-* Remove all algorithms (these are all just be "single_channel" algorithms)
+* Remove all algorithms (these are all just "single_channel" algorithms)
 
   * from plugins/modules/algorithms
   * from pyproject.toml
