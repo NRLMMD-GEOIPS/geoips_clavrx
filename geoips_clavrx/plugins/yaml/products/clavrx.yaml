@@ -5,6 +5,7 @@ docstring: |
   The products geoips_clavrx default configuration.
 spec:
   products:
+
     - name: cldFraction
       source_name: clavrx
       docstring: |
@@ -12,6 +13,7 @@ spec:
       product_defaults: cldFraction
       spec:
         variables: ["cloud_fraction", "latitude", "longitude"]
+
     - name: cldType
       source_name: clavrx
       docstring: |
@@ -19,6 +21,7 @@ spec:
       product_defaults: cldType
       spec:
         variables: ["cloud_type", "latitude", "longitude"]
+
     - name: cldMask
       source_name: clavrx
       docstring: |
@@ -26,6 +29,7 @@ spec:
       product_defaults: cldMask
       spec:
         variables: ["cloud_mask", "latitude", "longitude"]
+
     - name: Cloud-Base-Height
       source_name: clavrx
       docstring: |
@@ -33,6 +37,7 @@ spec:
       product_defaults: Cloud-Height
       spec:
         variables: ["cld_height_base", "latitude", "longitude"]
+
     - name: Cloud-Top-Height
       source_name: clavrx
       docstring: |
@@ -40,6 +45,7 @@ spec:
       product_defaults: Cloud-Height
       spec:
         variables: ["cld_height_acha", "latitude", "longitude"]
+
     - name: cldOpd
       source_name: clavrx
       docstring: |
@@ -54,27 +60,38 @@ spec:
       product_defaults: cldPhase
       spec:
         variables: ["cloud_phase", "latitude", "longitude"]
-    - name: cldTemp
+
+    - name: Cloud-Temp-ACHA
       source_name: clavrx
       docstring: |
-        The cldTemp geoips_clavrx product
-      product_defaults: cldTemp
+        The geoips_clavrx Cloud Temp product.
+      product_defaults: Cloud-Temp
       spec:
         variables: ["cld_temp_acha", "latitude", "longitude"]
-    - name: Temp3p75
+        algorithm:
+          plugin:
+            arguments:
+              output_data_range: [160, 320]
+        colormap:
+          plugin:
+            name: cmap_cldTemp
+
+    - name: Cloud-Temp-3p75
       source_name: clavrx
       docstring: |
         The Temp3p75 geoips_clavrx product
-      product_defaults: Temp3p75
+      product_defaults: Cloud-Temp
       spec:
         variables: ["temp_3_75um_nom", "latitude", "longitude"]
-    - name: Temp11p0
+
+    - name: Cloud-Temp-11p0
       source_name: clavrx
       docstring: |
         The Temp11p0 geoips_clavrx product
-      product_defaults: Temp11p0
+      product_defaults: Cloud-Temp
       spec:
         variables: ["temp_11_0um_nom", "latitude", "longitude"]
+
     - name: cldReff
       source_name: clavrx
       docstring: |

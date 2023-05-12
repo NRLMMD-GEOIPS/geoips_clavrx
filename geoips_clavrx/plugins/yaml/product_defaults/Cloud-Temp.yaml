@@ -12,7 +12,6 @@ spec:
     plugin:
       name: single_channel
       arguments:
-        # output_data_range: [160, 320] # cldTemp
         output_data_range: [180, 340]
         scale_factor: 1.0
         min_outbounds: "crop"
@@ -21,7 +20,6 @@ spec:
         inverse: False
   colormap:
     plugin:
-      # name: cmap_cldTemp  # cldTemp
       name: cmap_IR
       arguments:
         data_range: [180, 340]
