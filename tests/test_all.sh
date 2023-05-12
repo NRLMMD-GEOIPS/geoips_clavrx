@@ -39,16 +39,16 @@ for call in \
     "test_interfaces" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/abi_cldFraction.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldFraction.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_Cloud-Top-Height" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_Cloud-Base-Height" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Top-Height.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Base-Height.imagery_clean.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldMask.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldOpd.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldPhase.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldReff.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldTemp.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Temp-ACHA.imagery_clean.sh" \
     "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldType.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_Temp11p0.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_Temp3p75.sh"
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Temp-11p0.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Temp-3p75.imagery_clean.sh"
 do
     . $GEOIPS_PACKAGES_DIR/geoips/tests/utils/test_all_run.sh
 done
