@@ -1,8 +1,8 @@
 interface: product_defaults
 family: interpolator_algorithm_colormap
-name: Cloud-Temp
+name: Temp
 docstring: |
-  The geoips_clavrx Cloud Temp product_defaults.
+  The geoips_clavrx Temp product_defaults.
 spec:
   interpolator:
     plugin:
