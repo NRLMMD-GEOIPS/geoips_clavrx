@@ -46,19 +46,6 @@ dynamic = ["version"]
 [project.entry-points."geoips.plugin_packages"]
 "geoips_clavrx" = "geoips_clavrx"
 
-[project.entry-points."geoips.algorithms"]
-"cldFraction" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldFraction"
-"cldType" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldType"
-"cldMask" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldMask"
-"cldHeightBase" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldHeightBase"
-"cldHeight" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldHeight"
-"cldOpd" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldOpd"
-"cldPhase" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldPhase"
-"cldTemp" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldTemp"
-"Temp3p75" = "geoips_clavrx.plugins.modules.algorithms.cloud.Temp3p75"
-"Temp11p0" = "geoips_clavrx.plugins.modules.algorithms.cloud.Temp11p0"
-"cldReff" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldReff"
-
 [project.entry-points."geoips.readers"]
 clavrx_hdf4 = "geoips_clavrx.plugins.modules.readers.clavrx_hdf4"
 
@@ -66,7 +53,6 @@ clavrx_hdf4 = "geoips_clavrx.plugins.modules.readers.clavrx_hdf4"
 cmap_cldFraction = "geoips_clavrx.plugins.modules.colormaps.cmap_cldFraction"
 cmap_cldType = "geoips_clavrx.plugins.modules.colormaps.cmap_cldType"
 cmap_cldMask = "geoips_clavrx.plugins.modules.colormaps.cmap_cldMask"
-cmap_cldHeightBase = "geoips_clavrx.plugins.modules.colormaps.cmap_cldHeightBase"
 cmap_cldHeight = "geoips_clavrx.plugins.modules.colormaps.cmap_cldHeight"
 cmap_cldOpd = "geoips_clavrx.plugins.modules.colormaps.cmap_cldOpd"
 cmap_cldPhase = "geoips_clavrx.plugins.modules.colormaps.cmap_cldPhase"

@@ -16,9 +16,41 @@ Version 1.10.0a3 (2023-05-11)
 * Update hdf4 reader to handle current variables
 * Update test outputs for all tests to use updated data file
 * Fix tabs in YAML files and remove old YAML files
+* Clean up product/algorithm specifications
 
 Breaking Changes
 ================
+
+Consolidate product specifications
+----------------------------------
+
+* Remove all algorithms (these are all just "single_channel" algorithms)
+
+  * from plugins/modules/algorithms
+  * from pyproject.toml
+* Remove duplicate colormaps, cmap_cldHeightBase and cmap_cldHeightTop
+
+  * from plugins/modules/colormaps
+  * from pyproject.toml
+* Remove duplicate product_defaults from plugins/yaml/product_defaults
+
+  * cldHeightBase.yaml -> CLAVR-x-Base.yaml
+  * cldHeight.yaml -> Cloud-Height.yaml
+  * cldFraction.yaml -> CLAVR-x-Base.yaml
+  * cldMask.yaml -> CLAVR-x-Base.yaml
+  * cldOpd.yaml -> CLAVR-x-Base.yaml
+  * cldPhase.yaml -> CLAVR-x-Base.yaml
+  * cldReff.yaml -> CLAVR-x-Base.yaml
+  * cldType.yaml -> CLAVR-x-Base.yaml
+  * cldTemp.yaml -> Temp.yaml
+  * Temp11p0.yaml -> Temp.yaml
+  * Temp3p75.yaml -> Temp.yaml
+* Standardize product names in plugins/yaml/products/clavrx.yaml,
+  and use new product defaults
+* Consolidate test script/output names to use new product names
+  and standard formatting
+
+  * in tests/scripts/*.sh, tests/outputs/*, and test_all.sh
 
 Update hdf4 reader to handle current variables
 ----------------------------------------------

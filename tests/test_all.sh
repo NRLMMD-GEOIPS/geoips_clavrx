@@ -22,7 +22,7 @@
 
 # The $GEOIPS tests modules sourced within this script handle:
    # setting up the appropriate associative arrays for tracking the overall return value,
-   # calling the test scripts appropriately, and 
+   # calling the test scripts appropriately, and
    # setting the final return value.
 
 # Note you must use the variable "call" in the for the loop
@@ -37,18 +37,18 @@ for call in \
 \
     "$GEOIPS_PACKAGES_DIR/geoips/tests/utils/check_code.sh all `dirname $0`/../" \
     "test_interfaces" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/abi_cldFraction.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldFraction.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldHeightBase.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldHeight.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldMask.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldOpd.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldPhase.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldReff.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldTemp.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_cldType.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_Temp11p0.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi_Temp3p75.sh"
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/abi.Cloud-Fraction.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Fraction.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Top-Height.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Base-Height.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Mask.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Optical-Depth.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Phase.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Effective-Radius.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Temp-ACHA.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Type.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Temp-11p0.imagery_clean.sh" \
+    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Temp-3p75.imagery_clean.sh"
 do
     . $GEOIPS_PACKAGES_DIR/geoips/tests/utils/test_all_run.sh
 done
