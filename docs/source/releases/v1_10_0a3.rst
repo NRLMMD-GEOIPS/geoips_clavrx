@@ -24,29 +24,33 @@ Breaking Changes
 Consolidate product specifications
 ----------------------------------
 
-* Remove all algorithms (these should all just be "single_channel" algorithms)
+* Remove all algorithms (these are all just be "single_channel" algorithms)
 
   * from plugins/modules/algorithms
   * from pyproject.toml
-* Remove duplicate colormaps
+* Remove duplicate colormaps, cmap_cldHeightBase and cmap_cldHeightTop
 
   * from plugins/modules/colormaps
   * from pyproject.toml
-  * cmap_cldHeightBase and cmap_cldHeightTop (cmap_cldHeight duplicates)
 * Remove duplicate product_defaults from plugins/yaml/product_defaults
 
-  * cldHeightBase.yaml
+  * cldHeightBase.yaml -> CLAVR-x-Base.yaml
   * cldHeight.yaml -> Cloud-Height.yaml
-* Standardize product names in plugins/yaml/products/clavrx.yaml
-
-  * Cloud-Base-Height <-- cldHeightBase
-  * Cloud-Top-Height <-- cldHeight
-* Consolidate test script/output names
+  * cldFraction.yaml -> CLAVR-x-Base.yaml
+  * cldMask.yaml -> CLAVR-x-Base.yaml
+  * cldOpd.yaml -> CLAVR-x-Base.yaml
+  * cldPhase.yaml -> CLAVR-x-Base.yaml
+  * cldReff.yaml -> CLAVR-x-Base.yaml
+  * cldType.yaml -> CLAVR-x-Base.yaml
+  * cldTemp.yaml -> Temp.yaml
+  * Temp11p0.yaml -> Temp.yaml
+  * Temp3p75.yaml -> Temp.yaml
+* Standardize product names in plugins/yaml/products/clavrx.yaml,
+  and use new product defaults
+* Consolidate test script/output names to use new product names
+  and standard formatting
 
   * in tests/scripts/*.sh, tests/outputs/*, and test_all.sh
-  * ahi.Cloud-Top-Height.imagery_clean <-- ahi.cldHeight.imagery_clean
-  * ahi.Cloud-Base-Height.imagery_clean <-- ahi.cldHeightBase.imagery_clean
-
 
 Update hdf4 reader to handle current variables
 ----------------------------------------------
