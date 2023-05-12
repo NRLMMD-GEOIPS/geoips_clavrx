@@ -65,7 +65,7 @@ spec:
       source_name: clavrx
       docstring: |
         The geoips_clavrx Cloud Temp product.
-      product_defaults: Cloud-Temp
+      product_defaults: Temp
       spec:
         variables: ["cld_temp_acha", "latitude", "longitude"]
         algorithm:
@@ -76,19 +76,19 @@ spec:
           plugin:
             name: cmap_cldTemp
 
-    - name: Cloud-Temp-3p75
+    - name: Temp-3p75
       source_name: clavrx
       docstring: |
         The Temp3p75 geoips_clavrx product
-      product_defaults: Cloud-Temp
+      product_defaults: Temp
       spec:
         variables: ["temp_3_75um_nom", "latitude", "longitude"]
 
-    - name: Cloud-Temp-11p0
+    - name: Temp-11p0
       source_name: clavrx
       docstring: |
         The Temp11p0 geoips_clavrx product
-      product_defaults: Cloud-Temp
+      product_defaults: Temp
       spec:
         variables: ["temp_11_0um_nom", "latitude", "longitude"]
 
