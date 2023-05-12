@@ -111,7 +111,7 @@ spec:
           plugin:
             name: cmap_cldOpd
             arguments:
-              data_range: [-0.3, 8]
+              data_range: [-0.2, 8]
 
     - name: Cloud-Phase
       source_name: clavrx
