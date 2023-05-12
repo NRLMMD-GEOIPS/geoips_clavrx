@@ -52,9 +52,6 @@ dynamic = ["version"]
 "cldMask" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldMask"
 "cldOpd" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldOpd"
 "cldPhase" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldPhase"
-"cldTemp" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldTemp"
-"Temp3p75" = "geoips_clavrx.plugins.modules.algorithms.cloud.Temp3p75"
-"Temp11p0" = "geoips_clavrx.plugins.modules.algorithms.cloud.Temp11p0"
 "cldReff" = "geoips_clavrx.plugins.modules.algorithms.cloud.cldReff"
 
 [project.entry-points."geoips.readers"]
