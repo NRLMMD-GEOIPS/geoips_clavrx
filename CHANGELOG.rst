@@ -16,14 +16,3 @@ CHANGELOG appropriately with each PR
 Release notes for previous/upcoming versions can be found in docs/source/releases,
 for reference.
 
-Installation Updates
-====================
-
-Updating installation and testing instructions to include test_data_clavrx repository
--------------------------------------------------------------------------------------
-
-* Updating README.md to include instruction to install test_data_clavrx before testing
-
-::
-
-    modified: README.md
