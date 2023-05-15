@@ -15,7 +15,7 @@ CLAVR-x GeoIPS Plugin Package
 
 The geoips_clavrx package is a GeoIPS-compatible plugin, intended to be used
 within the GeoIPS ecosystem.
-Please see the 
+Please see the
 [GeoIPS Documentation](https://github.com/NRLMMD-GEOIPS/geoips#readme)
 for more information on the GeoIPS plugin architecture and base infrastructure.
 
@@ -36,7 +36,7 @@ System Requirements
 
 IF REQUIRED: Install base geoips package
 ------------------------------------------------------------
-SKIP IF YOU HAVE ALREADY INSTALLED BASE GEOIPS ENVIRONMENT 
+SKIP IF YOU HAVE ALREADY INSTALLED BASE GEOIPS ENVIRONMENT
 
 If GeoIPS Base is not yet installed, follow the
 [installation instructions](https://github.com/NRLMMD-GEOIPS/geoips#installation)
@@ -57,6 +57,9 @@ Test geoips_clavrx installation
 ```bash
 
     # Ensure GeoIPS Python environment is enabled.
+
+    # Install the clavrx test data repo
+    git clone https://github.com/NRLMMD-GEOIPS/test_data_clavrx $GEOIPS_TESTDATA_DIR/
 
     # If you have all test data repos available:
     $GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/test_all.sh

@@ -66,6 +66,53 @@ Update hdf4 reader to handle current variables
     deleted: tests/scripts/ahi_cldHeightTop.sh
     renamed: geoips_clavrx/plugins/yaml/products/abi.yaml geoips_clavrx/plugins/yaml/products/clavrx.yaml
 
+Installation Updates
+====================
+
+Updating installation and testing instructions to include test_data_clavrx repository
+-------------------------------------------------------------------------------------
+
+* Updating README.md to include instruction to install test_data_clavrx before testing
+
+::
+
+    modified: README.md
+
+Code Formatting and Style Updates
+=================================
+
+Fix tabs in YAML files and remove old YAML files
+------------------------------------------------
+
+::
+
+    deleted: geoips_clavrx/yaml_configs/product_inputs/abi.yaml
+    deleted: geoips_clavrx/yaml_configs/product_inputs/ahi.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/Temp11p0.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/Temp3p75.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldFraction.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldHeight.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldHeightBase.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldHeightTop.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldMask.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldOpd.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldPhase.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldReff.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldTemp.yaml
+    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldType.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/Temp11p0.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/Temp3p75.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldFraction.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldHeight.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldHeightBase.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldHeightTop.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldMask.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldOpd.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldPhase.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldReff.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldTemp.yaml
+    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldType.yaml
+
 Testing Updates
 ===============
 
@@ -114,38 +161,3 @@ Update test outputs for all tests to use updated data file
     modified: tests/scripts/ahi_cldTemp.sh
     modified: tests/scripts/ahi_cldType.sh
     modified: tests/test_all.sh
-
-Code Formatting and Style Updates
-=================================
-
-Fix tabs in YAML files and remove old YAML files
-------------------------------------------------
-
-::
-
-    deleted: geoips_clavrx/yaml_configs/product_inputs/abi.yaml
-    deleted: geoips_clavrx/yaml_configs/product_inputs/ahi.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/Temp11p0.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/Temp3p75.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldFraction.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldHeight.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldHeightBase.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldHeightTop.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldMask.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldOpd.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldPhase.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldReff.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldTemp.yaml
-    deleted: geoips_clavrx/yaml_configs/product_params/cloud/cldType.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/Temp11p0.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/Temp3p75.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldFraction.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldHeight.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldHeightBase.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldHeightTop.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldMask.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldOpd.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldPhase.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldReff.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldTemp.yaml
-    modified: geoips_clavrx/plugins/yaml/product_defaults/cloud/cldType.yaml
