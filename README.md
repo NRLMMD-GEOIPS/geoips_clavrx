@@ -59,7 +59,7 @@ Test geoips_clavrx installation
     # Ensure GeoIPS Python environment is enabled.
 
     # Install the clavrx test data repo
-    git clone https://github.com/NRLMMD-GEOIPS/test_data_clavrx $GEOIPS_TESTDATA_DIR/
+    git clone https://github.com/NRLMMD-GEOIPS/test_data_clavrx $GEOIPS_TESTDATA_DIR/test_data_clavrx
 
     # If you have all test data repos available:
     $GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/test_all.sh
