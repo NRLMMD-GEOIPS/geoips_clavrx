@@ -19,7 +19,7 @@ Breaking Changes
 Update interface naming and move to plugins directory
 -----------------------------------------------------
 
-*From issue GEOIPS/geoips_clavrx#4: 2023-04-25*
+*From issue GEOIPS#4: 2023-04-25*
 
 * Moved interface_modules to plugins/modules
 
@@ -41,7 +41,7 @@ Test Repo Updates
 Update paths to static sectors in test scripts
 ----------------------------------------------
 
-*From GEOIPS/geoips#195: 2023-04-28, update to sector_spec/metadata_generator*
+*From GEOIPS#195: 2023-04-28, update to sector_spec/metadata_generator*
 
 Moved test static sectors from
 tests/sectors/static -> geoips/plugins/yaml/sectors/static

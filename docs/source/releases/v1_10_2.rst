@@ -1,0 +1,84 @@
+ | # # # Distribution Statement A. Approved for public release. Distribution unlimited.
+ | # # #
+ | # # # Author:
+ | # # # Naval Research Laboratory, Marine Meteorology Division
+ | # # #
+ | # # # This program is free software: you can redistribute it and/or modify it under
+ | # # # the terms of the NRLMMD License included with this program. This program is
+ | # # # distributed WITHOUT ANY WARRANTY; without even the implied warranty of
+ | # # # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the included license
+ | # # # for more details. If you did not receive the license, for more information see:
+ | # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
+
+Version 1.10.2 (2023-06-13)
+***************************
+
+* Add v1_10_2.rst release note
+* Move colormaps -> colormappers plugin directory
+* Update python code for colormaps -> colormappers
+* Finalize setup/install
+
+  * Update setuptools_scm to write to _version.py
+  * Update README.md to 1.10.2 geoips requirement
+* Finalize test_all.sh - check_code, and $GEOIPS checks
+
+*From issue GEOIPS#251: 2023-05-17, version update*
+
+Breaking Changes
+================
+
+Rename colormaps->colormappers plugin directory
+-----------------------------------------------
+
+::
+
+  renamed: plugins/modules/colormaps -> plugins/modules/colormappers
+
+Update colormap->colormapper interface name throughout code base
+----------------------------------------------------------------
+
+* colormap -> colormapper
+
+::
+
+  modified: geoips_clavrx/plugins/yaml/product_defaults/CLAVR-x-Base.yaml
+  modified: geoips_clavrx/plugins/yaml/product_defaults/Cloud-Height.yaml
+  modified: geoips_clavrx/plugins/yaml/product_defaults/Temp.yaml
+  modified: geoips_clavrx/plugins/yaml/products/clavrx.yaml
+  modified: geoips_clavrx/plugins/modules/colormappers/cmap_IR.py
+  modified: geoips_clavrx/plugins/modules/colormappers/cmap_cldFraction.py
+  modified: geoips_clavrx/plugins/modules/colormappers/cmap_cldHeight.py
+  modified: geoips_clavrx/plugins/modules/colormappers/cmap_cldMask.py
+  modified: geoips_clavrx/plugins/modules/colormappers/cmap_cldOpd.py
+  modified: geoips_clavrx/plugins/modules/colormappers/cmap_cldPhase.py
+  modified: geoips_clavrx/plugins/modules/colormappers/cmap_cldReff.py
+  modified: geoips_clavrx/plugins/modules/colormappers/cmap_cldTemp.py
+  modified: geoips_clavrx/plugins/modules/colormappers/cmap_cldType.py
+
+Refactoring Updates
+===================
+
+Update setuptools_scm to write to _version.py vs version.py
+-----------------------------------------------------------
+
+This is a more accepted and standard usage. Ensure we ignore the _version.py
+file, import from __init__.py, as well as adding to pyproject.toml.
+
+::
+
+  .gitignore
+  geoips_clavrx/__init__.py
+  pyproject.toml
+
+Testing Updates
+===============
+
+Update test_all.sh to include $GEOIPS check and code_check test
+---------------------------------------------------------------
+
+Standardize test_all.sh to ensure $GEOIPS is cloned locally, and to
+call the "code_check" test script by default.
+
+::
+
+  tests/test_all.sh

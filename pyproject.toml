@@ -28,7 +28,7 @@ entry-points = {file = ["entry-points.ini"]}
 [tool.setuptools_scm]
 "version_scheme" = "post-release"  # Use current version .postN vs incrementing
 "local_scheme" = "no-local-version"  # Don't include hash, or date, just postN
-"write_to" = "geoips_clavrx/version.py"  # Write an actual file
+"write_to" = "geoips_clavrx/_version.py"  # Write an actual file
 
 [project]
 name = "geoips_clavrx"
@@ -49,13 +49,13 @@ dynamic = ["version"]
 [project.entry-points."geoips.readers"]
 clavrx_hdf4 = "geoips_clavrx.plugins.modules.readers.clavrx_hdf4"
 
-[project.entry-points."geoips.colormaps"]
-cmap_cldFraction = "geoips_clavrx.plugins.modules.colormaps.cmap_cldFraction"
-cmap_cldType = "geoips_clavrx.plugins.modules.colormaps.cmap_cldType"
-cmap_cldMask = "geoips_clavrx.plugins.modules.colormaps.cmap_cldMask"
-cmap_cldHeight = "geoips_clavrx.plugins.modules.colormaps.cmap_cldHeight"
-cmap_cldOpd = "geoips_clavrx.plugins.modules.colormaps.cmap_cldOpd"
-cmap_cldPhase = "geoips_clavrx.plugins.modules.colormaps.cmap_cldPhase"
-cmap_cldTemp = "geoips_clavrx.plugins.modules.colormaps.cmap_cldTemp"
-cmap_IR = "geoips_clavrx.plugins.modules.colormaps.cmap_IR"
-cmap_cldReff = "geoips_clavrx.plugins.modules.colormaps.cmap_cldReff"
+[project.entry-points."geoips.colormappers"]
+cmap_cldFraction = "geoips_clavrx.plugins.modules.colormappers.cmap_cldFraction"
+cmap_cldType = "geoips_clavrx.plugins.modules.colormappers.cmap_cldType"
+cmap_cldMask = "geoips_clavrx.plugins.modules.colormappers.cmap_cldMask"
+cmap_cldHeight = "geoips_clavrx.plugins.modules.colormappers.cmap_cldHeight"
+cmap_cldOpd = "geoips_clavrx.plugins.modules.colormappers.cmap_cldOpd"
+cmap_cldPhase = "geoips_clavrx.plugins.modules.colormappers.cmap_cldPhase"
+cmap_cldTemp = "geoips_clavrx.plugins.modules.colormappers.cmap_cldTemp"
+cmap_IR = "geoips_clavrx.plugins.modules.colormappers.cmap_IR"
+cmap_cldReff = "geoips_clavrx.plugins.modules.colormappers.cmap_cldReff"

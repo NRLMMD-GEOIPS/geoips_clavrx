@@ -11,7 +11,7 @@
     # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
 
 CLAVR-x GeoIPS Plugin Package
-===========================================
+=============================
 
 The geoips_clavrx package is a GeoIPS-compatible plugin, intended to be used
 within the GeoIPS ecosystem.
@@ -20,7 +20,7 @@ Please see the
 for more information on the GeoIPS plugin architecture and base infrastructure.
 
 Package Overview
------------------
+----------------
 
 The geoips_clavrx package provides the capability for reading and plotting
 data files produced from the Clouds for AVHRR Extended package.
@@ -29,13 +29,13 @@ This package does not currently include installation of clavrx itself, but
 expects you are able to produce CLAVR-x outputs for ingest into geoips_clavrx.
 
 System Requirements
----------------------
+-------------------
 
-* geoips >= 1.10.0
+* geoips >= 1.10.2
 * Test data repos contained in $GEOIPS_TESTDATA_DIR for tests to pass.
 
 IF REQUIRED: Install base geoips package
-------------------------------------------------------------
+----------------------------------------
 SKIP IF YOU HAVE ALREADY INSTALLED BASE GEOIPS ENVIRONMENT
 
 If GeoIPS Base is not yet installed, follow the
@@ -43,7 +43,7 @@ If GeoIPS Base is not yet installed, follow the
 within the geoips source repo documentation.
 
 Install geoips_clavrx package
-----------------------------
+-----------------------------
 ```bash
 
     # Ensure GeoIPS Python environment is enabled.
@@ -53,7 +53,7 @@ Install geoips_clavrx package
 ```
 
 Test geoips_clavrx installation
------------------------------
+-------------------------------
 ```bash
 
     # Ensure GeoIPS Python environment is enabled.
@@ -61,6 +61,7 @@ Test geoips_clavrx installation
     # Install the clavrx test data repo
     git clone https://github.com/NRLMMD-GEOIPS/test_data_clavrx $GEOIPS_TESTDATA_DIR/test_data_clavrx
 
-    # If you have all test data repos available:
+    # Run all tests
     $GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/test_all.sh
 ```
+
