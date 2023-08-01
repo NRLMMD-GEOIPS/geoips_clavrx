@@ -10,13 +10,16 @@ find = {namespaces = false}
 
 [tool.setuptools.package-data]
 "*" = [
-    "*.txt",
-    "*.py",
-    "*.yaml",
-    "yaml_configs/*",
-    "yaml_configs/*/*",
-    "yaml_configs/*/*/*",
-    "image_utils/ascii_palettes/*",
+    "plugins/*.yaml",
+    "plugins/*/*.yaml",
+    "plugins/*/*/*.yaml",
+    "plugins/*/*/*/*.yaml",
+    "plugins/*/*/*/*/*.yaml",
+    "plugins/*.txt",
+    "plugins/*/*.txt",
+    "plugins/*/*/*.txt",
+    "plugins/*/*/*/*.txt",
+    "plugins/*/*/*/*/*.txt",
 ]
 
 [tool.setuptools.dynamic]
@@ -25,7 +28,7 @@ entry-points = {file = ["entry-points.ini"]}
 [tool.setuptools_scm]
 "version_scheme" = "post-release"  # Use current version .postN vs incrementing
 "local_scheme" = "no-local-version"  # Don't include hash, or date, just postN
-"write_to" = "geoips_clavrx/version.py"  # Write an actual file
+"write_to" = "geoips_clavrx/_version.py"  # Write an actual file
 
 [project]
 name = "geoips_clavrx"
@@ -40,32 +43,19 @@ classifiers = [
 ]
 dynamic = ["version"]
 
-[project.entry-points."geoips.algorithms"]
-"cloud.cldFraction" = "geoips_clavrx.interface_modules.algorithms.cloud.cldFraction:cldFraction"
-"cloud.cldType" = "geoips_clavrx.interface_modules.algorithms.cloud.cldType:cldType"
-"cloud.cldMask" = "geoips_clavrx.interface_modules.algorithms.cloud.cldMask:cldMask"
-"cloud.cldHeightBase" = "geoips_clavrx.interface_modules.algorithms.cloud.cldHeightBase:cldHeightBase"
-"cloud.cldHeightTop" = "geoips_clavrx.interface_modules.algorithms.cloud.cldHeightTop:cldHeightTop"
-"cloud.cldHeight" = "geoips_clavrx.interface_modules.algorithms.cloud.cldHeight:cldHeight"
-"cloud.cldOpd" = "geoips_clavrx.interface_modules.algorithms.cloud.cldOpd:cldOpd"
-"cloud.cldPhase" = "geoips_clavrx.interface_modules.algorithms.cloud.cldPhase:cldPhase"
-"cloud.cldTemp" = "geoips_clavrx.interface_modules.algorithms.cloud.cldTemp:cldTemp"
-"cloud.Temp3p75" = "geoips_clavrx.interface_modules.algorithms.cloud.Temp3p75:Temp3p75"
-"cloud.Temp11p0" = "geoips_clavrx.interface_modules.algorithms.cloud.Temp11p0:Temp11p0"
-"cloud.cldReff" = "geoips_clavrx.interface_modules.algorithms.cloud.cldReff:cldReff"
+[project.entry-points."geoips.plugin_packages"]
+"geoips_clavrx" = "geoips_clavrx"
 
 [project.entry-points."geoips.readers"]
-clavrx_hdf4 = "geoips_clavrx.interface_modules.readers.clavrx_hdf4:clavrx_hdf4"
+clavrx_hdf4 = "geoips_clavrx.plugins.modules.readers.clavrx_hdf4"
 
-[project.entry-points."geoips.user_colormaps"]
-cmap_cldFraction = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldFraction:cmap_cldFraction"
-cmap_cldType = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldType:cmap_cldType"
-cmap_cldMask = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldMask:cmap_cldMask"
-cmap_cldHeightBase = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldHeightBase:cmap_cldHeightBase"
-cmap_cldHeightTop = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldHeightTop:cmap_cldHeightTop"
-cmap_cldHeight = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldHeight:cmap_cldHeight"
-cmap_cldOpd = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldOpd:cmap_cldOpd"
-cmap_cldPhase = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldPhase:cmap_cldPhase"
-cmap_cldTemp = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldTemp:cmap_cldTemp"
-cmap_IR = "geoips_clavrx.interface_modules.user_colormaps.cmap_IR:cmap_IR"
-cmap_cldReff = "geoips_clavrx.interface_modules.user_colormaps.cmap_cldReff:cmap_cldReff"
+[project.entry-points."geoips.colormappers"]
+cmap_cldFraction = "geoips_clavrx.plugins.modules.colormappers.cmap_cldFraction"
+cmap_cldType = "geoips_clavrx.plugins.modules.colormappers.cmap_cldType"
+cmap_cldMask = "geoips_clavrx.plugins.modules.colormappers.cmap_cldMask"
+cmap_cldHeight = "geoips_clavrx.plugins.modules.colormappers.cmap_cldHeight"
+cmap_cldOpd = "geoips_clavrx.plugins.modules.colormappers.cmap_cldOpd"
+cmap_cldPhase = "geoips_clavrx.plugins.modules.colormappers.cmap_cldPhase"
+cmap_cldTemp = "geoips_clavrx.plugins.modules.colormappers.cmap_cldTemp"
+cmap_IR = "geoips_clavrx.plugins.modules.colormappers.cmap_IR"
+cmap_cldReff = "geoips_clavrx.plugins.modules.colormappers.cmap_cldReff"
