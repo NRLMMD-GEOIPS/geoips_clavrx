@@ -125,7 +125,7 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
     xarrays.attrs["source_name"] = "clavrx"
     xarrays.attrs["platform_name"] = data_metadata["platform"].lower()
     xarrays.attrs["data_provider"] = "cira"
-    xarrays.attrs["original_source_filenames"] = data_metadata["FILENAME"]
+    xarrays.attrs["source_file_names"] = data_metadata["FILENAME"]
     xarrays.attrs["sample_distance_km"] = data_metadata["RESOLUTION_KM"]  # 2km
     xarrays.attrs["interpolation_radius_of_influence"] = 3000  # 3km
 

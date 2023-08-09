@@ -7,7 +7,7 @@ spec:
   products:
 
     - name: Cloud-Fraction
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x Cloud Fraction product.
       product_defaults: CLAVR-x-Base
@@ -25,7 +25,7 @@ spec:
               data_range: [0, 1.0]
 
     - name: Cloud-Type
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x Cloud Type product.
           0: Clear
@@ -57,7 +57,7 @@ spec:
               data_range: [0, 13]
 
     - name: Cloud-Mask
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x Cloud Mask product.
           0: Clear
@@ -79,7 +79,7 @@ spec:
               data_range: [0, 3]
 
     - name: Cloud-Base-Height
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x Cloud Base Height product
       product_defaults: Cloud-Height
@@ -87,7 +87,7 @@ spec:
         variables: ["cld_height_base", "latitude", "longitude"]
 
     - name: Cloud-Top-Height
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x Cloud Top Height product
       product_defaults: Cloud-Height
@@ -95,7 +95,7 @@ spec:
         variables: ["cld_height_acha", "latitude", "longitude"]
 
     - name: Cloud-Optical-Depth
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x Cloud Optical Depth product
         Cloud optical depth at 0.65um.
@@ -114,7 +114,7 @@ spec:
               data_range: [-0.2, 8]
 
     - name: Cloud-Phase
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x Cloud Phase product
           0: Clear
@@ -138,7 +138,7 @@ spec:
               data_range: [0, 5]
 
     - name: Cloud-Temp-ACHA
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x ACHA Cloud Temperature product.
       product_defaults: Temp
@@ -155,7 +155,7 @@ spec:
               data_range: [160, 320]
 
     - name: Temp-3p75
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x 3p75um Brightness Temperatures product
       product_defaults: Temp
@@ -163,7 +163,7 @@ spec:
         variables: ["temp_3_75um_nom", "latitude", "longitude"]
 
     - name: Temp-11p0
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x 11.0um Brightness Temperatures product
       product_defaults: Temp
@@ -171,7 +171,7 @@ spec:
         variables: ["temp_11_0um_nom", "latitude", "longitude"]
 
     - name: Effective-Radius
-      source_name: clavrx
+      source_names: [clavrx]
       docstring: |
         GeoIPS CLAVR-x cloud particles effective radius product
         NOTE: Values are only available where cloud exists -
