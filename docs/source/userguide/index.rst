@@ -10,38 +10,9 @@
  | # # # for more details. If you did not receive the license, for more information see:
  | # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
 
-.. _release_notes:
-
-*************
-Release Notes
-*************
-
-Version 1.11
-------------
+**********
+User Guide
+**********
 
 .. toctree::
-   :maxdepth: 1
-
-   v1_11_0
-
-Version 1.10
-------------
-
-.. toctree::
-   :maxdepth: 1
-
-   v1_10_3
-   v1_10_2
-   v1_10_0
-   v1_10_0a3
-   v1_10_0a2
-   v1_10_0a1
-   v1_10_0a0
-
-Version 1.9
------------
-
-.. toctree::
-   :maxdepth: 1
-
-   v1_9_1
+   :maxdepth: 2
