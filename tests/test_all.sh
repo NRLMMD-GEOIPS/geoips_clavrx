@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # # # Distribution Statement A. Approved for public release. Distribution unlimited.
 # # #
 # # # Author:
@@ -12,9 +13,9 @@
 # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
 
 # This should contain test calls to cover ALL required functionality tests for
-# the geoips_clavrx repo.
+# this repo.
 
-# The $GEOIPS tests modules sourced within this script handle:
+# The $GEOIPS_PACKAGES_DIR/geoips tests modules sourced within this script handle:
    # setting up the appropriate associative arrays for tracking the overall
    #   return value,
    # calling the test scripts appropriately, and
@@ -30,31 +31,34 @@ if [[ ! -d $GEOIPS_PACKAGES_DIR/geoips ]]; then
     exit 1
 fi
 
+repopath=`dirname $0`/../
+pkgname=geoips_clavrx
 # Argument to test_all_pre.sh ONLY sets the prefix on the log output / filenames.
 # Used for clarity, and to differentiate potentially multiple "test_all.sh" scripts
 # in the same repo.
-. $GEOIPS_PACKAGES_DIR/geoips/tests/utils/test_all_pre.sh geoips_clavrx
+. $GEOIPS_PACKAGES_DIR/geoips/tests/utils/test_all_pre.sh $pkgname
 
 echo ""
 # Note you must use the variable "call" in the for the loop
 # "call" used in test_all_run.sh
 for call in \
 \
-    "$GEOIPS_PACKAGES_DIR/geoips/tests/utils/check_code.sh all `dirname $0`/../" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/abi.Cloud-Fraction.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Fraction.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Top-Height.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Base-Height.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Mask.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Optical-Depth.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Phase.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Effective-Radius.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Temp-ACHA.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Type.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Temp-11p0.imagery_clean.sh" \
-    "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Temp-3p75.imagery_clean.sh"
+  "$GEOIPS_PACKAGES_DIR/geoips/tests/utils/check_code.sh all $repopath no_flake8" \
+  "$GEOIPS_PACKAGES_DIR/geoips/docs/build_docs.sh $repopath $pkgname html_only" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/abi.Cloud-Fraction.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Fraction.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Top-Height.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Base-Height.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Mask.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Optical-Depth.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Phase.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Effective-Radius.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Temp-ACHA.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Cloud-Type.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Temp-11p0.imagery_clean.sh" \
+  "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/scripts/ahi.Temp-3p75.imagery_clean.sh"
 do
-    . $GEOIPS_PACKAGES_DIR/geoips/tests/utils/test_all_run.sh
+  . $GEOIPS_PACKAGES_DIR/geoips/tests/utils/test_all_run.sh
 done
 
 . $GEOIPS_PACKAGES_DIR/geoips/tests/utils/test_all_post.sh
