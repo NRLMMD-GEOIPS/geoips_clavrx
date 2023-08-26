@@ -36,16 +36,16 @@ def call(data_range=[160, 320]):
     mpl_colors_info : dict
         Dictionary of matplotlib plotting parameters, to ensure consistent image output
     """
-    min_tb = data_range[0]
-    max_tb = data_range[1]
+    min_val = data_range[0]
+    max_val = data_range[1]
 
-    if min_tb > 180 or max_tb < 300:
+    if min_val > 180 or max_val < 300:
         raise ("cloud top temperature range MUST include 180 and 300")
 
     from geoips.image_utils.colormap_utils import create_linear_segmented_colormap
 
     transition_vals = [
-        (min_tb, 170),
+        (min_val, 170),
         (170, 180),
         (180, 200),
         (200, 220),
@@ -53,7 +53,7 @@ def call(data_range=[160, 320]):
         (240, 260),
         (260, 280),
         (280, 300),
-        (300, max_tb),
+        (300, max_val),
     ]
     transition_colors = [
         ("darkorange", "yellow"),
@@ -74,18 +74,18 @@ def call(data_range=[160, 320]):
     ticks = [160, 170, 180, 200, 220, 240, 260, 280, 300, 320]
 
     # selection of min and max values for colormap if needed
-    min_tb = transition_vals[0][0]
-    max_tb = transition_vals[-1][1]
+    min_val = transition_vals[0][0]
+    max_val = transition_vals[-1][1]
 
     LOG.info("Setting cmap")
     mpl_cmap = create_linear_segmented_colormap(
-        "cmap_cldTemp", min_tb, max_tb, transition_vals, transition_colors
+        "cmap_cldTemp", min_val, max_val, transition_vals, transition_colors
     )
 
     LOG.info("Setting norm")
     from matplotlib.colors import Normalize
 
-    mpl_norm = Normalize(vmin=min_tb, vmax=max_tb)
+    mpl_norm = Normalize(vmin=min_val, vmax=max_val)
 
     cbar_label = "Cloud Top Temperature (K)"
 

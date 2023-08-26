@@ -35,16 +35,16 @@ def call(data_range=[0, 20]):
     mpl_colors_info : dict
         Dictionary of matplotlib plotting parameters, to ensure consistent image output
     """
-    min_tb = data_range[0]
-    max_tb = data_range[1]
+    min_val = data_range[0]
+    max_val = data_range[1]
 
-    if min_tb >= 1 or max_tb <= 10:
-        raise ("cloud hieght_base range MUST include 1 and 10")
+    if min_val >= 1 or max_val <= 10:
+        raise ("cloud height_base range MUST include 1 and 10")
 
     from geoips.image_utils.colormap_utils import create_linear_segmented_colormap
 
     transition_vals = [
-        (min_tb, 1),
+        (min_val, 1),
         (1, 2),
         (2, 3),
         (3, 4),
@@ -52,7 +52,7 @@ def call(data_range=[0, 20]):
         (6, 8),
         (8, 10),
         (10, 15),
-        (15, max_tb),
+        (15, max_val),
     ]
     transition_colors = [
         ("white", "lightgray"),
@@ -73,20 +73,20 @@ def call(data_range=[0, 20]):
     ticks = [0, 1, 2, 3, 4, 6, 8, 10, 15, 20]
 
     # selection of min and max values for colormap if needed
-    min_tb = transition_vals[0][0]
-    max_tb = transition_vals[-1][1]
+    min_val = transition_vals[0][0]
+    max_val = transition_vals[-1][1]
 
     LOG.info("Setting cmap")
     mpl_cmap = create_linear_segmented_colormap(
-        "cmap_cldHeight", min_tb, max_tb, transition_vals, transition_colors
+        "cmap_cldHeight", min_val, max_val, transition_vals, transition_colors
     )
 
     LOG.info("Setting norm")
     from matplotlib.colors import Normalize
 
-    mpl_norm = Normalize(vmin=min_tb, vmax=max_tb)
+    mpl_norm = Normalize(vmin=min_val, vmax=max_val)
 
-    cbar_label = "Cloud Hieght (km)"
+    cbar_label = "Cloud Height (km)"
 
     # Must be uniform or proportional, None not valid for Python 3
     cbar_spacing = "proportional"

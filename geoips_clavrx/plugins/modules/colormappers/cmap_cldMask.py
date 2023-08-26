@@ -36,12 +36,12 @@ def call(data_range=[0, 3]):
     mpl_colors_info : dict
         Dictionary of matplotlib plotting parameters, to ensure consistent image output
     """
-    min_tb = data_range[0]
-    max_tb = data_range[1]
+    min_val = data_range[0]
+    max_val = data_range[1]
 
-    if min_tb >= 1 or max_tb <= 2:
+    if min_val >= 1 or max_val <= 2:
         raise ("cloud mask must at least gave a range of 0 - 2")
-    ticks = [int(min_tb), 1, 2, int(max_tb)]
+    ticks = [int(min_val), 1, 2, int(max_val)]
     colorlist = ["ghostwhite", "slategray", "yellow", "red"]
 
     from matplotlib.colors import ListedColormap, BoundaryNorm
@@ -49,7 +49,7 @@ def call(data_range=[0, 3]):
     mpl_cmap = ListedColormap(colorlist, N=len(colorlist))
 
     LOG.info("Setting norm")
-    bounds = ticks + [max_tb + 1]
+    bounds = ticks + [max_val + 1]
     mpl_norm = BoundaryNorm(bounds, mpl_cmap.N)
 
     cbar_label = r"Cloud Mask"
@@ -74,5 +74,5 @@ def call(data_range=[0, 3]):
         "cbar_full_width": True,
     }
 
-    # return cbar, min_tb, max_tb
+    # return cbar, min_val, max_val
     return mpl_colors_info

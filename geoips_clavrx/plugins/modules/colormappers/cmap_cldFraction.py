@@ -37,13 +37,13 @@ def call(data_range=[0.0, 1.0]):
     mpl_colors_info : dict
         Dictionary of matplotlib plotting parameters, to ensure consistent image output
     """
-    min_tb = data_range[0]
-    max_tb = data_range[1]
-    print("min_tb, max_tb= ", min_tb, max_tb)
-    if min_tb >= 0.1 or max_tb <= 0.7:
+    min_val = data_range[0]
+    max_val = data_range[1]
+    print("min_val, max_val= ", min_val, max_val)
+    if min_val >= 0.1 or max_val <= 0.7:
         raise ("cloud fraction must at least gave a range of 0.01 - 0.70")
     ticks = [
-        int(min_tb),
+        int(min_val),
         0.05,
         0.1,
         0.2,
@@ -56,7 +56,7 @@ def call(data_range=[0.0, 1.0]):
         0.85,
         0.9,
         0.95,
-        int(max_tb),
+        int(max_val),
     ]
     colorlist = [
         "ghostwhite",
@@ -80,7 +80,7 @@ def call(data_range=[0.0, 1.0]):
     mpl_cmap = ListedColormap(colorlist, N=len(colorlist))
 
     LOG.info("Setting norm")
-    bounds = ticks + [max_tb + 1]
+    bounds = ticks + [max_val + 1]
     mpl_norm = BoundaryNorm(bounds, mpl_cmap.N)
 
     cbar_label = r"Cloud Fraction"
@@ -105,5 +105,5 @@ def call(data_range=[0.0, 1.0]):
         "cbar_full_width": True,
     }
 
-    # return cbar, min_tb, max_tb
+    # return cbar, min_val, max_val
     return mpl_colors_info

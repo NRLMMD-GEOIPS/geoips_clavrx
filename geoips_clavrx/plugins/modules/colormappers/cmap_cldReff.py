@@ -35,16 +35,16 @@ def call(data_range=[0, 160]):
     mpl_colors_info : dict
         Dictionary of matplotlib plotting parameters, to ensure consistent image output
     """
-    min_tb = data_range[0]
-    max_tb = data_range[1]
+    min_val = data_range[0]
+    max_val = data_range[1]
 
-    if min_tb > 1 or max_tb < 150:
+    if min_val > 1 or max_val < 150:
         raise ("effective radius of cloud particles MUST include 1 and 150")
 
     from geoips.image_utils.colormap_utils import create_linear_segmented_colormap
 
     transition_vals = [
-        (min_tb, 5),
+        (min_val, 5),
         (5, 10),
         (10, 15),
         (15, 20),
@@ -52,7 +52,7 @@ def call(data_range=[0, 160]):
         (30, 40),
         (40, 50),
         (50, 100),
-        (100, max_tb),
+        (100, max_val),
     ]
     transition_colors = [
         ("white", "lightgray"),
@@ -73,18 +73,18 @@ def call(data_range=[0, 160]):
     ticks = [0, 10, 20, 30, 40, 50, 75, 100, 120, 160]
 
     # selection of min and max values for colormap if needed
-    min_tb = transition_vals[0][0]
-    max_tb = transition_vals[-1][1]
+    min_val = transition_vals[0][0]
+    max_val = transition_vals[-1][1]
 
     LOG.info("Setting cmap")
     mpl_cmap = create_linear_segmented_colormap(
-        "cmap_cldReff", min_tb, max_tb, transition_vals, transition_colors
+        "cmap_cldReff", min_val, max_val, transition_vals, transition_colors
     )
 
     LOG.info("Setting norm")
     from matplotlib.colors import Normalize
 
-    mpl_norm = Normalize(vmin=min_tb, vmax=max_tb)
+    mpl_norm = Normalize(vmin=min_val, vmax=max_val)
 
     cbar_label = "Effective Radius"
 
