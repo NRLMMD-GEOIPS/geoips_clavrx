@@ -14,6 +14,30 @@ Version 1.11.3a0 (2023-08-24)
 *****************************
 
 * Update test data location
+* Replace min_tb/max_tb with min_val/max_val, fix height typo
+
+Minor Updates
+=============
+
+Replace min_tb/max_tb with min_val/max_val, fix height typo
+-----------------------------------------------------------
+
+Updating naming in colormappers to generically use min_val/max_val, rather
+than the often incorrect min_tb/max_tb.
+
+Also fix hieght->height in cmap_cldHeight.py
+
+::
+
+        modified:   geoips_clavrx/plugins/modules/colormappers/cmap_IR.py
+        modified:   geoips_clavrx/plugins/modules/colormappers/cmap_cldFraction.py
+        modified:   geoips_clavrx/plugins/modules/colormappers/cmap_cldHeight.py
+        modified:   geoips_clavrx/plugins/modules/colormappers/cmap_cldMask.py
+        modified:   geoips_clavrx/plugins/modules/colormappers/cmap_cldOpd.py
+        modified:   geoips_clavrx/plugins/modules/colormappers/cmap_cldPhase.py
+        modified:   geoips_clavrx/plugins/modules/colormappers/cmap_cldReff.py
+        modified:   geoips_clavrx/plugins/modules/colormappers/cmap_cldTemp.py
+        modified:   geoips_clavrx/plugins/modules/colormappers/cmap_cldType.py
 
 Installation Updates
 ====================

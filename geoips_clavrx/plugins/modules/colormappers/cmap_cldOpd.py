@@ -36,11 +36,11 @@ def call(data_range=[-0.2, 8]):
     mpl_colors_info : dict
         Dictionary of matplotlib plotting parameters, to ensure consistent image output
     """
-    min_tb = data_range[0]
-    max_tb = data_range[1]
-    if min_tb >= 1 or max_tb <= 6:
+    min_val = data_range[0]
+    max_val = data_range[1]
+    if min_val >= 1 or max_val <= 6:
         raise ("cloud OPD must at least gave a range of 0 - 6")
-    ticks = [min_tb, 0, 1, 2, 3, 4, 5, 6, 7, max_tb]
+    ticks = [min_val, 0, 1, 2, 3, 4, 5, 6, 7, max_val]
     colorlist = [
         "ghostwhite",
         "slategray",
@@ -59,7 +59,7 @@ def call(data_range=[-0.2, 8]):
     mpl_cmap = ListedColormap(colorlist, N=len(colorlist))
 
     LOG.info("Setting norm")
-    bounds = ticks + [max_tb + 1]
+    bounds = ticks + [max_val + 1]
     mpl_norm = BoundaryNorm(bounds, mpl_cmap.N)
 
     cbar_label = r"Cloud OPD"
@@ -84,5 +84,5 @@ def call(data_range=[-0.2, 8]):
         "cbar_full_width": True,
     }
 
-    # return cbar, min_tb, max_tb
+    # return cbar, min_val, max_val
     return mpl_colors_info

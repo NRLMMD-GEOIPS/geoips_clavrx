@@ -35,12 +35,12 @@ def call(data_range=[0, 13]):
     mpl_colors_info : dict
         Dictionary of matplotlib plotting parameters, to ensure consistent image output
     """
-    min_tb = data_range[0]
-    max_tb = data_range[1]
+    min_val = data_range[0]
+    max_val = data_range[1]
 
-    if min_tb >= 1 or max_tb <= 10:
+    if min_val >= 1 or max_val <= 10:
         raise ("cloud type must at least gave a range of 0 - 10")
-    ticks = [int(min_tb), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, int(max_tb)]
+    ticks = [int(min_val), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, int(max_val)]
     colorlist = [
         "ghostwhite",
         "slategray",
@@ -63,7 +63,7 @@ def call(data_range=[0, 13]):
     mpl_cmap = ListedColormap(colorlist, N=len(colorlist))
 
     LOG.info("Setting norm")
-    bounds = ticks + [max_tb + 1]
+    bounds = ticks + [max_val + 1]
     mpl_norm = BoundaryNorm(bounds, mpl_cmap.N)
 
     cbar_label = r"Cloud Type"
@@ -88,5 +88,5 @@ def call(data_range=[0, 13]):
         "cbar_full_width": True,
     }
 
-    # return cbar, min_tb, max_tb
+    # return cbar, min_val, max_val
     return mpl_colors_info
