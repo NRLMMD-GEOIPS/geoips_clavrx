@@ -64,4 +64,3 @@ Test geoips_clavrx installation
     # Run all tests
     $GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/test_all.sh
 ```
-
