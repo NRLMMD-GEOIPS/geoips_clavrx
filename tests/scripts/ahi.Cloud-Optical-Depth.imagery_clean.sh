@@ -22,7 +22,7 @@ run_procflow $GEOIPS_TESTDATA_DIR/test_data_clavrx/data/himawari9_2023101_0300/c
     --output_formatter imagery_clean \
     --compare_path "$output_dir/ahi.<product>.imagery_clean" \
     --minimum_coverage 0 \
-    --sector_list himawari8
+    --sector_list himawari
 retval=$?
 
 exit $retval

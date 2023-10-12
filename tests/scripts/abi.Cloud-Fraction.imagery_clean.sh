@@ -23,7 +23,7 @@ run_procflow \
     --output_formatter imagery_clean \
     --compare_path "$output_dir/abi.<product>.imagery_clean" \
     --minimum_coverage 0 \
-    --sector_list goes16
+    --sector_list goes_east
 retval=$?
 
 exit $retval
