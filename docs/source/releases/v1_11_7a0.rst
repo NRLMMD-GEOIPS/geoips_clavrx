@@ -53,3 +53,12 @@ these newly named sectors.
     modified: tests/scripts/ahi.Effective-Radius.imagery_clean.sh
     modified: tests/scripts/ahi.Temp-11p0.imagery_clean.sh
     modified: tests/scripts/ahi.Temp-3p75.imagery_clean.sh
+
+Unit testing Updates
+--------------------
+
+Added unit testing for clavrx reader, testing conformity to geoips xarray standards.\
+
+::
+
+    created: /tests/unit_tests/plugins/modules/readers/clavrx_reader_test.py
