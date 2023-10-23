@@ -12,8 +12,6 @@
 
 """Test clarvx readers."""
 
-import os
-from glob import glob
 import pytest
 from geoips.commandline.log_setup import setup_logging
 from geoips_clavrx.plugins.modules.readers import clavrx_hdf4
@@ -26,17 +24,17 @@ LOG = setup_logging()
 class TestClavrxReader:
     """Tests all clavrx readers for GEOIPS xarray conformity."""
 
-    data_dir = os.environ["GEOIPS_TESTDATA_DIR"]
     available_readers = [
-        (
-            clavrx_hdf4,
-            "/test_data_clavrx/data/himawari9_2023101_0300/\
-clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf",
-        ),
-        (clavrx_netcdf4, ""),
+        (clavrx_hdf4),
+        (clavrx_netcdf4),
     ]
 
-    def check_xr(self, inxr):
+    def verify_plugin(self, plugin):
+        """Yeild test xarray and parameters."""
+        test_xr = plugin.yeild_test_files()
+        self.verify_xarray(test_xr)
+
+    def verify_xarray(self, inxr):
         """Check for GEOIPS xarray conformity."""
         assert inxr
         assert inxr["DATA"].latitude.max()
@@ -50,25 +48,9 @@ clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf",
         assert inxr["METADATA"].attrs["end_datetime"]
         assert inxr["METADATA"].attrs["interpolation_radius_of_influence"]
 
-    @pytest.mark.parametrize("key,files", available_readers)
-    def test_standards(self, key, files):
-        """Test all reader plugins, xfails for readers that don't have files.
-
-        Parameters
-        ----------
-        key : string
-           Reader plugin key
-        files : string
-           Wildcard path to data for reader
-
-        Returns
-        -------
-        None
-        """
-        file_path = self.data_dir + files
-        filelist = glob(file_path)
-        if files == "" or len(filelist) == 0:
-            pytest.xfail("No files given")
-
-        inxr = key.call(filelist)
-        self.check_xr(inxr)
+    @pytest.mark.parametrize("reader", available_readers)
+    def test_standards(self, reader):
+        """Unit test clavrx reader plugins, yeild xfail for no unit modules."""
+        if not hasattr(reader, "yeild_test_files"):
+            pytest.xfail(str(reader) + " has no test modules")
+        self.verify_plugin(reader)

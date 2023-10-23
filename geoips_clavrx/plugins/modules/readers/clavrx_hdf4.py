@@ -20,6 +20,8 @@ import logging
 from datetime import datetime
 import numpy as np
 import xarray as xr
+from os import environ
+from glob import glob
 
 LOG = logging.getLogger(__name__)
 
@@ -175,3 +177,17 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
     # istat, outputs= read_cloudprops(fname, minlon, maxlon, minlat, maxlat)
     xarrays = read_cloudprops(fname, chans=chans, metadata_only=metadata_only)
     return {"DATA": xarrays, "METADATA": xarrays[[]]}
+
+
+def yeild_test_files():
+    """Yeild test xarray and files for unit testing."""
+    file_path = (
+        environ["GEOIPS_TESTDATA_DIR"]
+        + "/test_data_clavrx/data/\
+himawari9_2023101_0300/clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf"
+    )
+    filelist = glob(file_path)
+    if len(filelist) == 0:
+        raise NameError("No files found.")
+    tmp_xr = call(filelist)
+    return tmp_xr
