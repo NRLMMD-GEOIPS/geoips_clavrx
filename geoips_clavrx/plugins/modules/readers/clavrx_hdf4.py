@@ -179,7 +179,7 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
     return {"DATA": xarrays, "METADATA": xarrays[[]]}
 
 
-def yeild_test_files():
+def get_test_files():
     """Yeild test xarray and files for unit testing."""
     file_path = (
         environ["GEOIPS_TESTDATA_DIR"]
@@ -191,3 +191,8 @@ himawari9_2023101_0300/clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2
         raise NameError("No files found.")
     tmp_xr = call(filelist)
     return tmp_xr
+
+
+def get_test_parameters():
+    """Get test data key and a variable to test."""
+    return {"data_key": "DATA", "data_var": "cld_height_acha"}
