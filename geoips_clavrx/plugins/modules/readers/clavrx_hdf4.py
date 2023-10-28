@@ -20,6 +20,7 @@ import logging
 from datetime import datetime
 import numpy as np
 import xarray as xr
+from os.path import join
 
 LOG = logging.getLogger(__name__)
 
@@ -178,7 +179,7 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
 
 
 def get_test_files(test_data_dir):
-    """Yeild test xarray and files for unit testing."""
+    """Return test xarray and files for unit testing."""
     test_file = join(
         test_data_dir,
         "test_data_clavrx",
