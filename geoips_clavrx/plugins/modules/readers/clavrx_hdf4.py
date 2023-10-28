@@ -20,8 +20,6 @@ import logging
 from datetime import datetime
 import numpy as np
 import xarray as xr
-from os import environ
-from glob import glob
 
 LOG = logging.getLogger(__name__)
 
@@ -188,7 +186,7 @@ def get_test_files(test_data_dir):
         "himawari9_2023101_0300",
         "clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf",
     )
-    tmp_xr = call(test_file)
+    tmp_xr = call([test_file])
     return tmp_xr
 
 

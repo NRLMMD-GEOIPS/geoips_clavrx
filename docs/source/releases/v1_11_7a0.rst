@@ -10,10 +10,11 @@
  | # # # for more details. If you did not receive the license, for more information see:
  | # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
 
-Version 1.11.7a0 (2023-10-06)
+Version 1.11.7a0 (2023-10-27)
 *****************************
 
 * Update code to adhere to newly named geostationary sectors
+* Add reader unit test method
 
 Refactoring Updates
 -------------------
@@ -54,10 +55,10 @@ these newly named sectors.
     modified: tests/scripts/ahi.Temp-11p0.imagery_clean.sh
     modified: tests/scripts/ahi.Temp-3p75.imagery_clean.sh
 
-Unit testing Updates
---------------------
+Add reader unit test method
+---------------------------
 
-Added unit testing for clavrx reader, testing conformity to geoips xarray standards.\
+Added unit testing for clavrx reader, testing conformity to geoips xarray standards.
 
 ::
 
