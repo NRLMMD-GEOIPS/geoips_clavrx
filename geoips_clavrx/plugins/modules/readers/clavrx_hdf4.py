@@ -179,17 +179,16 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
     return {"DATA": xarrays, "METADATA": xarrays[[]]}
 
 
-def get_test_files():
+def get_test_files(test_data_dir):
     """Yeild test xarray and files for unit testing."""
-    file_path = (
-        environ["GEOIPS_TESTDATA_DIR"]
-        + "/test_data_clavrx/data/\
-himawari9_2023101_0300/clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf"
+    test_file = join(
+        test_data_dir,
+        "test_data_clavrx",
+        "data",
+        "himawari9_2023101_0300",
+        "clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf",
     )
-    filelist = glob(file_path)
-    if len(filelist) == 0:
-        raise NameError("No files found.")
-    tmp_xr = call(filelist)
+    tmp_xr = call(test_file)
     return tmp_xr
 
 
