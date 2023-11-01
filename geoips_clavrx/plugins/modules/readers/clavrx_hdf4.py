@@ -20,6 +20,7 @@ import logging
 from datetime import datetime
 import numpy as np
 import xarray as xr
+from os.path import join
 
 LOG = logging.getLogger(__name__)
 
@@ -175,3 +176,21 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
     # istat, outputs= read_cloudprops(fname, minlon, maxlon, minlat, maxlat)
     xarrays = read_cloudprops(fname, chans=chans, metadata_only=metadata_only)
     return {"DATA": xarrays, "METADATA": xarrays[[]]}
+
+
+def get_test_files(test_data_dir):
+    """Return test xarray and files for unit testing."""
+    test_file = join(
+        test_data_dir,
+        "test_data_clavrx",
+        "data",
+        "himawari9_2023101_0300",
+        "clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf",
+    )
+    tmp_xr = call([test_file])
+    return tmp_xr
+
+
+def get_test_parameters():
+    """Get test data key and a variable to test."""
+    return {"data_key": "DATA", "data_var": "cld_height_acha"}
