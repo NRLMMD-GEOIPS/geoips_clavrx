@@ -22,14 +22,20 @@ import numpy as np
 import xarray as xr
 from os.path import join
 
-from geoips.utils.context_managers import import_optional_dependencies
-
 LOG = logging.getLogger(__name__)
 
-with import_optional_dependencies(__file__):
-    """Attempt to import a package and print to LOG.info if the import fails."""
+try:
     from pyhdf.SD import SD, SDC
+except ImportError:
+    print(
+        "Failed import pyhdf.SD/SDC in clavrx_hdf4.py " + "If you need it, install it."
+    )
+try:
     from pyhdf.error import HDF4Error
+except ImportError:
+    print(
+        "Failed import pyhdf error in clavrx_hdf4.py " + "If you need it, install it."
+    )
 
 interface = "readers"
 family = "standard"
