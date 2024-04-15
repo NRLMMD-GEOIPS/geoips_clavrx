@@ -26,7 +26,7 @@ from geoips.utils.context_managers import import_optional_dependencies
 
 LOG = logging.getLogger(__name__)
 
-with import_optional_dependencies(__file__):
+with import_optional_dependencies(loglevel="info"):
     """Attempt to import a package and print to LOG.info if the import fails."""
     from pyhdf.SD import SD, SDC
     from pyhdf.error import HDF4Error
