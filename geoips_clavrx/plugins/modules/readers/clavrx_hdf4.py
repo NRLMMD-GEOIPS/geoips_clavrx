@@ -187,4 +187,4 @@ def get_test_files(test_data_dir):
 
 def get_test_parameters():
     """Get test data key and a variable to test."""
-    return {"data_key": "DATA", "data_var": "cld_height_acha"}
+    return [{"data_key": "DATA", "data_var": "cld_height_acha"}]
