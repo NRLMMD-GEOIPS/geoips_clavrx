@@ -1,0 +1,39 @@
+# clavrx specific setup - modify these if needed
+# This is required for jpeglib.h
+module load gcc-9.3.0/gcc-9.3.0
+
+# Possibly need Python 3.9 (not 100% sure), not Python 3.10.
+# This mamba create command will provide the packages required:
+# mamba create -y -n geoips_clavrx -c conda-forge libsqlite sqlite python=3.9 gcc gxx openblas git git-lfs cmake screen
+
+# Note we never actually got the test script to work - the clavrxorb
+# executable ran without missing libraries, but couldn't find clavrx_options
+# file.  Probaly need to rework the test script to figure out how to
+# actually call clavrx. This was all the test did:
+
+# bash$ ./setup.sh test_clavrx_install
+# 
+#  CLAVR-x:  Option file to be read in: ./clavrx_options
+#   CLAVR-x:  CLAVR-x>>error opening clavrx_options file
+#   STOP 1
+# 
+#   run_clavrxorb has now finished.
+
+# Find the appropriate libraries in your current clavrx build
+# Assumes $GEOIPS_DEPENDENCIES_DIR and geoips environment is already set.
+
+# Like $GEOIPS_DEPENDENCIES_DIR/clavrx/lib/hdf4/hdf-4.2.15/lib
+path=$GEOIPS_DEPENDENCIES_DIR/clavrx/lib/hdf4/hdf-4.2.15/lib
+export LD_LIBRARY_PATH=$path:$LD_LIBRARY_PATH
+
+# Like $GEOIPS_DEPENDENCIES_DIR/clavrx/lib/hdf5/hdf5-1.10.9/lib
+path=$GEOIPS_DEPENDENCIES_DIR/clavrx/lib/hdf5/hdf5-1.10.9/lib
+export LD_LIBRARY_PATH=$path:$LD_LIBRARY_PATH
+
+# Like $GEOIPS_DEPENDENCIES_DIR/clavrx/lib/netcdf/netcdf-c-4.9.0/lib
+path=$GEOIPS_DEPENDENCIES_DIR/clavrx/lib/netcdf/netcdf-c-4.9.0/lib
+export LD_LIBRARY_PATH=$path:$LD_LIBRARY_PATH
+
+# Like $GEOIPS_DEPENDENCIES_DIR/clavrx/lib/rttov/rttov132/lib
+path=$GEOIPS_DEPENDENCIES_DIR/clavrx/lib/rttov/rttov132/lib
+export LD_LIBRARY_PATH=$path:$LD_LIBRARY_PATH
