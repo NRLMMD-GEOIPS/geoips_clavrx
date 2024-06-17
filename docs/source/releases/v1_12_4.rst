@@ -1,0 +1,53 @@
+.. dropdown:: Distribution Statement
+
+ | # # # Distribution Statement A. Approved for public release. Distribution is unlimited.
+ | # # #
+ | # # # Author:
+ | # # # Naval Research Laboratory, Marine Meteorology Division
+ | # # #
+ | # # # This program is free software: you can redistribute it and/or modify it under
+ | # # # the terms of the NRLMMD License included with this program. This program is
+ | # # # distributed WITHOUT ANY WARRANTY; without even the implied warranty of
+ | # # # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the included license
+ | # # # for more details. If you did not receive the license, for more information see:
+ | # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
+
+Version 1.12.4 (2024-05-31)
+***************************
+
+* Automated clavrx installation
+
+Installation Updates
+====================
+
+Automated clavrx installation
+-----------------------------
+
+* Added new automated download and installation methods to 
+  setup depedancies for CLAVRx plugin. 
+
+::
+
+    modified: README.md
+    created: geoips_clavrx/run_clavrxorb.py
+    created: geoips_clavrx/ancillary/ancil_data.py
+    created: geoips_clavrx/clavrx/clavrx_installation_test.py
+    created: geoips_clavrx/clavrx/hdf4_installer.py
+    created: geoips_clavrx/clavrx/hdf5_installer.py
+    created: geoips_clavrx/clavrx/himawari_installer.py
+    created: geoips_clavrx/clavrx/install_clavrx.py
+    created: geoips_clavrx/clavrx/install_utils.py
+    created: geoips_clavrx/clavrx/netcdf_installer.py
+    created: geoips_clavrx/clavrx/rttov_installer.py
+    created: geoips_clavrx/clavrx/user_change_me.py
+    created: geoips_clavrx/test/test_clavrx.py
+    created: setup.sh
+
+Added standard setup files for pyproject.toml poetry install
+------------------------------------------------------------
+
+::
+
+    created: pyproject.toml
+    created: geoips_clavrx/_version.py
+    created: setup/config_clavrx
