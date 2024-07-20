@@ -1,11 +1,11 @@
 documentation:
-- description: Finalize README so installation process works correctly.
+- description: "Finalize README so installation process works correctly."
   title: "Add create_plugin_registries and missing test data to README"
   related-issue: |
     *From GEOIPS/geoips#666: 2024-07-15, bug fixes prior to workshop*
   files:
-    - modified:
-      - README.md
+    modified:
+    - "README.md"
 release:
 - description: |
     All updates until the next release (v1.14.0a0) will be included in
@@ -14,9 +14,9 @@ release:
   related-issue: |
     *From GEOIPS/geoips#666: 2024-07-15, bug fixes prior to workshop*
   files:
-    - modified:
-      - docs/source/releases/v1_14_0a0.rst
-      - docs/source/releases/index.rst
+    modified:
+    - "docs/source/releases/v1_14_0a0.rst"
+    - "docs/source/releases/index.rst"
 installation:
 - description: |
     * Standard .gitignore
@@ -29,9 +29,9 @@ installation:
     *From GEOIPS/geoips#666: 2024-07-15, bug fixes prior to workshop*
   files:
     modified:
-    - .gitignore
-    - pyproject.toml
+    - ".gitignore"
+    - "pyproject.toml"
     moved:
-    - docs/source/releases/CHANGELOG.md -> docs/archive/CHANGELOG.md
+    - "docs/source/releases/CHANGELOG.md -> docs/archive/CHANGELOG.md"
     added:
-    - geoips_clavrx/_version.py
+    - "geoips_clavrx/_version.py"
