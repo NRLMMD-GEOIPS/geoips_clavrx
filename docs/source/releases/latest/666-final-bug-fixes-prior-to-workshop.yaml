@@ -28,10 +28,10 @@ installation:
   related-issue: |
     *From GEOIPS/geoips#666: 2024-07-15, bug fixes prior to workshop*
   files:
-    - modified:
-      - .gitignore
-      - pyproject.toml
-    - moved:
-      - docs/source/releases/CHANGELOG.md -> docs/archive/CHANGELOG.md
-    - added:
-      - geoips_clavrx/_version.py
+    modified:
+    - .gitignore
+    - pyproject.toml
+    moved:
+    - docs/source/releases/CHANGELOG.md -> docs/archive/CHANGELOG.md
+    added:
+    - geoips_clavrx/_version.py
