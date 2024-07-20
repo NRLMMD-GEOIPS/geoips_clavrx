@@ -16,13 +16,13 @@
 Release Notes
 *************
 
-Version 1.14
-------------
+Latest (version on cutting edge of git)
+---------------------------------------
 
 .. toctree::
    :maxdepth: 1
 
-   v1_14_0a0
+   latest
 
 Version 1.12
 ------------
