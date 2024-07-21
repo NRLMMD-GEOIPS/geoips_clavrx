@@ -1,0 +1,17 @@
+bug fix:
+- description: |
+    Add latest.rst to .gitignore because we will now auto-generate it within
+    the doc build, so we do not want to update it within the repo.
+
+    Additionally, add an "empty" version of latest.rst that indicates there are
+    no current changes, and the latest release notes will be auto-generated
+    with new content as changes are made.
+  files:
+    modified:
+    - '.gitignore'
+    added:
+    - 'docs/source/releases/latest.rst'
+  related-issue:
+    number: 666
+    repo_url: 'https://github.com/NRLMMD-GEOIPS/geoips'
+  title: 'Add default latest.rst, and add latest.rst to .gitignore'
