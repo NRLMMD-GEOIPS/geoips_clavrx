@@ -16,6 +16,14 @@
 Release Notes
 *************
 
+Latest (version on cutting edge of git)
+---------------------------------------
+
+.. toctree::
+   :maxdepth: 1
+
+   latest
+
 Version 1.12
 ------------
 
