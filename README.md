@@ -50,6 +50,7 @@ Install geoips_clavrx package
 
     git clone https://github.com/NRLMMD-GEOIPS/geoips_clavrx $GEOIPS_PACKAGES_DIR/geoips_clavrx
     pip install -e $GEOIPS_PACKAGES_DIR/geoips_clavrx
+    create_plugin_registries
 ```
 
 Test geoips_clavrx installation

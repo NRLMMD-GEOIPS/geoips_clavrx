@@ -1,61 +1,40 @@
-[build-system]
-requires = ["setuptools>=61.2", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages]
-find = {namespaces = false}
-
-[tool.setuptools.package-dir]
-"" = "."
-
-[tool.setuptools.package-data]
-"*" = [
-    "plugins/*.yaml",
-    "plugins/*/*.yaml",
-    "plugins/*/*/*.yaml",
-    "plugins/*/*/*/*.yaml",
-    "plugins/*/*/*/*/*.yaml",
-    "plugins/*.txt",
-    "plugins/*/*.txt",
-    "plugins/*/*/*.txt",
-    "plugins/*/*/*/*.txt",
-    "plugins/*/*/*/*/*.txt",
-]
-
-[tool.setuptools.dynamic]
-entry-points = {file = ["entry-points.ini"]}
-
-[tool.setuptools_scm]
-"version_scheme" = "post-release"  # Use current version .postN vs incrementing
-"local_scheme" = "no-local-version"  # Don't include hash, or date, just postN
-"write_to" = "geoips_clavrx/_version.py"  # Write an actual file
-
-[project]
-name = "geoips_clavrx"
+[tool.poetry]
+name = "geoips_clavrx"  # package available at the root of the project
+version = "0.0.0"
+description = "geoips_clavrx GeoIPS Plugin Package"
 authors = []
-description = "CLAVR-x GeoIPS Plugin Package"
 readme = "README.md"
-requires-python = ">=3.9"
 keywords = []
-license = {file = "LICENSE"}
-classifiers = [
+license = "LICENSE"   # required
+classifiers = [ # // list of PyPI trove classifiers to describe the project
     "Programming Language :: Python :: 3",
 ]
-dynamic = ["version"]
+repository = "https://github.com/NRLMMD-GEOIPS/geoips_clavrx" #optional
+#documentation = "set the url"
+include = ["**/*.txt", "**/*.py", "**/*.yaml"]
 
-[project.entry-points."geoips.plugin_packages"]
+# uses current version .postN and not incrementing
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+metadata = false # don't include local-version hash; date doesn't appear by deafult
+style = "pep440" # pep440 is default; can rmeove later on; used for : keeping 0.0.8 as the default install until 0.0.9 is out
+#style = "semver"
+#tag-branch = "feature-poetry"
+strict = false
+pattern = "(?x)^((?P<epoch>\\d+)!)?(?P<base>\\d+(\\.\\d+)*)([-._]?((?P<stage>[a-zA-Z]+)[-._]?(?P<revision>\\d+)?))?(\\+(?P<tagged_metadata>.+))?$"
+
+[tool.poetry-dynamic-versioning.substitution]
+files = ["*/_version.py"]
+
+# This is where you would specify a pre-build script from pyproject.toml/poetry.
+# [tool.poetry.build]
+# generate-setup-file = false  # I have no idea what this does
+# script = "build.py"  # This gets called as a python script prior to running build steps
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"                          # object used to perform the build process
+
+[tool.poetry.plugins."geoips.plugin_packages"]
 "geoips_clavrx" = "geoips_clavrx"
-
-[project.entry-points."geoips.readers"]
-clavrx_hdf4 = "geoips_clavrx.plugins.modules.readers.clavrx_hdf4"
-
-[project.entry-points."geoips.colormappers"]
-cmap_cldFraction = "geoips_clavrx.plugins.modules.colormappers.cmap_cldFraction"
-cmap_cldType = "geoips_clavrx.plugins.modules.colormappers.cmap_cldType"
-cmap_cldMask = "geoips_clavrx.plugins.modules.colormappers.cmap_cldMask"
-cmap_cldHeight = "geoips_clavrx.plugins.modules.colormappers.cmap_cldHeight"
-cmap_cldOpd = "geoips_clavrx.plugins.modules.colormappers.cmap_cldOpd"
-cmap_cldPhase = "geoips_clavrx.plugins.modules.colormappers.cmap_cldPhase"
-cmap_cldTemp = "geoips_clavrx.plugins.modules.colormappers.cmap_cldTemp"
-cmap_IR = "geoips_clavrx.plugins.modules.colormappers.cmap_IR"
-cmap_cldReff = "geoips_clavrx.plugins.modules.colormappers.cmap_cldReff"
