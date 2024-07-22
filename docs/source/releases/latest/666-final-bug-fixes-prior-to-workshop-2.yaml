@@ -14,4 +14,4 @@ bug fix:
   related-issue:
     number: 666
     repo_url: 'https://github.com/NRLMMD-GEOIPS/geoips'
-  title: 'Add default latest.rst, and add latest.rst to .gitignore'
+  title: 'Remove latest.rst, remove latest from index.rst, add latest.rst to .gitignore'
