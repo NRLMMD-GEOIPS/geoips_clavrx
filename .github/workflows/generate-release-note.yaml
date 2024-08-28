@@ -5,16 +5,7 @@ on:
     tags:
       - '*'
 
-  workflow_dispatch:
-    inputs:
-      base_branch:
-        description: 'Base branch for the workflow'
-        required: true
-        default: 'main'
-
 jobs:
   call-generate-release-note:
     uses: NRLMMD-GEOIPS/.github/.github/workflows/generate-release-note.yaml@19-add-brassy-builds-on-tag-to-ci
-    with:
-      base_branch: 'main'
     secrets: inherit
