@@ -1,0 +1,11 @@
+continuous integration:
+- description: |
+    Added a workflow that calls a reusable workflow from the NRLMMD-GEOIPS GitHub
+    repository to build release notes using [brassy](https://github.com/biosafetylvl5/brassy).
+  files:
+    added:
+      - '.github/workflows/generate-release-note.yaml'
+  related-issue:
+    number: 0
+    repo_url: ''
+  title: 'Add workflow to generate release notes using brassy'
