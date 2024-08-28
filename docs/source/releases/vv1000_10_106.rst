@@ -1,0 +1,78 @@
+.. dropdown:: Distribution Statement
+ 
+ | # # # This source code is protected under the license referenced at
+ | # # # https://github.com/NRLMMD-GEOIPS.
+
+Version v1000.10.106 (2024-08-28)
+*********************************
+
+ * *Bug fix*: Remove latest.rst, remove latest from index.rst, add latest.rst to .gitignore
+ * *Documentation*: Add create_plugin_registries and missing test data to README
+ * *Release*: Add release note for v1.14.0a0
+ * *Installation*: Update to standard installation setup
+
+Bug fix
+=======
+
+Remove latest.rst, remove latest from index.rst, add latest.rst to .gitignore
+-----------------------------------------------------------------------------
+
+Add latest.rst to .gitignore because we will now auto-generate it within
+the doc build, so we do not want to update it within the repo.
+
+Additionally, remove empty latest.rst, and latest section from index.rst,
+since these will be auto-generated/updated from build_docs.sh
+
+
+::
+
+    modified: .gitignore
+    modified: docs/source/releases/index.rst
+    deleted: docs/source/releases/latest.rst
+
+Documentation
+=============
+
+Add create_plugin_registries and missing test data to README
+------------------------------------------------------------
+
+Finalize README so installation process works correctly.
+
+::
+
+    modified: README.md
+
+Release
+=======
+
+Add release note for v1.14.0a0
+------------------------------
+
+All updates until the next release (v1.14.0a0) will be included in
+this release note.
+
+
+::
+
+    modified: docs/source/releases/v1_14_0a0.rst
+    modified: docs/source/releases/index.rst
+
+Installation
+============
+
+Update to standard installation setup
+-------------------------------------
+
+* Standard .gitignore
+* poetry-based pyproject.tom
+* poetry-dynamic-versioning _version.py
+* Move CHANGELOG.md to docs/archive, since CHANGELOG.md is not a properly formatted
+  md file, and doc build now supports md to rst.
+
+
+::
+
+    modified: .gitignore
+    modified: pyproject.toml
+    moved: docs/source/releases/CHANGELOG.md -> docs/archive/CHANGELOG.md
+    added: geoips_clavrx/_version.py
