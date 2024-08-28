@@ -17,4 +17,4 @@ jobs:
     uses: NRLMMD-GEOIPS/.github/.github/workflows/generate-release-note.yaml@19-add-brassy-builds-on-tag-to-ci
     with:
       base_branch: 'main'
-      github_token: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
