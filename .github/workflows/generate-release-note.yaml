@@ -12,11 +12,9 @@ on:
         required: true
         default: 'main'
 
-
 jobs:
   call-generate-release-note:
     uses: NRLMMD-GEOIPS/.github/.github/workflows/generate-release-note.yaml@19-add-brassy-builds-on-tag-to-ci
     with:
-      base_branch: ${{ github.event.inputs.base_branch }}
+      base_branch: 'main'
       github_token: ${{ secrets.GITHUB_TOKEN }}
-
