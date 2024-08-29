@@ -3,7 +3,7 @@ name: Call Generate Release Note
 on:
   push:
     tags:
-      - '*'
+      - '[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
   call-generate-release-note:
