@@ -1,14 +1,5 @@
-    # # # Distribution Statement A. Approved for public release. Distribution unlimited.
-    # # #
-    # # # Author:
-    # # # Naval Research Laboratory, Marine Meteorology Division
-    # # #
-    # # # This program is free software: you can redistribute it and/or modify it under
-    # # # the terms of the NRLMMD License included with this program. This program is
-    # # # distributed WITHOUT ANY WARRANTY; without even the implied warranty of
-    # # # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the included license
-    # # # for more details. If you did not receive the license, for more information see:
-    # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
+    # # # This source code is protected under the license referenced at
+    # # # https://github.com/NRLMMD-GEOIPS.
 
 CLAVR-x GeoIPS Plugin Package
 =============================
@@ -51,6 +42,19 @@ Install geoips_clavrx package
     git clone https://github.com/NRLMMD-GEOIPS/geoips_clavrx $GEOIPS_PACKAGES_DIR/geoips_clavrx
     pip install -e $GEOIPS_PACKAGES_DIR/geoips_clavrx
     create_plugin_registries
+```
+
+Install CLAVR-x and required dependencies
+-----------------------------------------
+
+Follow installation of RTTOV on the 
+[NWP Registration](./geoips_clavrx#nwp-saf-free-registration)
+
+Once RTTOV is installed, install CLAVR-x with path to RTTOV file as argument
+
+```bash
+
+    $GEOIPS_PACKAGES_DIR/geoips_clavrx/setup.sh install_clavrx $GEOIPS_DEPENDENCIES_DIR/rttov132.tar.xz
 ```
 
 Test geoips_clavrx installation
