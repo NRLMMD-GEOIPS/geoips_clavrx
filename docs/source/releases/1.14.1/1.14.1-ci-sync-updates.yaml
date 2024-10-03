@@ -5,10 +5,8 @@ Release Process:
   files:
     modified:
     - .github/workflows/brassy-notes.yaml
-    - .github/workflows/codeql.yml
     - .github/workflows/deploy-docs.yaml
     - .github/workflows/lint.yaml
     - .github/workflows/package-and-publish.yaml
     - .github/workflows/tag-and-release.yaml
     - .gitignore
-    - SECURITY.md
