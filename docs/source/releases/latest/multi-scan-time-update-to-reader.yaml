@@ -11,8 +11,8 @@ enhancement:
     which makes use of the multi-scan time functionality.
   files:
     added:
-      - geoips_clavrx/plugins/modules/algorithmsabsdiff_cth.py
-      - tests/scripts/abi.mst.Cloud-Top-Height.imagery_annotated.cth
+      - geoips_clavrx/plugins/modules/algorithms/absdiff_cth.py
+      - tests/scripts/abi.mst.Cloud-Top-Height.imagery_annotated.sh
     modified:
       - geoips_clavrx/plugins/modules/readers/clavrx_hdf4.py
       - geoips_clavrx/plugins/yaml/products/clavrx.yaml
