@@ -189,3 +189,33 @@ spec:
             name: cmap_cldReff
             arguments:
               data_range: [0, 160]
+
+    - name: Absdiff-Cloud-Top-Height
+      source_names: ["clavrx"]
+      docstring: |
+        Absolute difference of Cloud-Top-Height between two CLAVR-x files one timestep
+        apart.
+      family: algorithm_interpolator_colormapper
+      spec:
+        variables: ["cld_height_acha", "latitude", "longitude"]
+        algorithm:
+          plugin:
+            name: absdiff_cth
+            arguments:
+              output_data_range: [0, 20]
+              scale_factor: 0.001
+              min_outbounds: "mask"
+              max_outbounds: "mask"
+              norm: False
+              inverse: False
+        interpolator:
+          plugin:
+            name: interp_nearest
+            arguments: {}
+        colormapper:
+          plugin:
+            name: matplotlib_linear_norm
+            arguments:
+              cmap_source: matplotlib
+              cmap_name: turbo
+              data_range: [0, 20] # in km
