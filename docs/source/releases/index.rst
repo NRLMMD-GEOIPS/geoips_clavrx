@@ -10,15 +10,52 @@
  | # # # for more details. If you did not receive the license, for more information see:
  | # # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
 
-Please see
-https://github.com/NRLMMD-GEOIPS/geoips/blob/main/CHANGELOG_TEMPLATE.rst
-for instructions on updating release notes appropriately
-with each PR.
+.. _release_notes:
 
-The release note that is currently, actively being updated in
-all geoips plugin repositories is referenced in the file:
+*************
+Release Notes
+*************
 
-* https://github.com/NRLMMD-GEOIPS/geoips/blob/main/update_this_release_note
+Version 1.12
+------------
 
-* Please add all release notes for the current PR in the file referenced
-  within ``update_this_release note``.
+.. toctree::
+   :maxdepth: 1
+
+   v1_12_2
+   v1_12_2a0
+   v1_12_1
+
+Version 1.11
+------------
+
+.. toctree::
+   :maxdepth: 1
+
+   v1_11_7
+   v1_11_7a0
+   v1_11_3
+   v1_11_3a0
+   v1_11_0
+
+Version 1.10
+------------
+
+.. toctree::
+   :maxdepth: 1
+
+   v1_10_3
+   v1_10_2
+   v1_10_0
+   v1_10_0a3
+   v1_10_0a2
+   v1_10_0a1
+   v1_10_0a0
+
+Version 1.9
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   v1_9_1
