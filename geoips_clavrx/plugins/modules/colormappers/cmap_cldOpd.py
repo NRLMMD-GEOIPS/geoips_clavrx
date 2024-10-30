@@ -45,7 +45,7 @@ def call(data_range=[-0.2, 8]):
         "black",
     ]
 
-    from matplotlib.colors import ListedColormap, BoundaryNorm
+    from matplotlib.colors import BoundaryNorm, ListedColormap
 
     mpl_cmap = ListedColormap(colorlist, N=len(colorlist))
 

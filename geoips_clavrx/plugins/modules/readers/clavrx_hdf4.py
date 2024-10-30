@@ -9,18 +9,18 @@ S.Yang:  1/19/2023
 
 import logging
 from datetime import datetime
-import numpy as np
-import xarray as xr
 from os.path import join
 
+import numpy as np
+import xarray as xr
 from geoips.utils.context_managers import import_optional_dependencies
 
 LOG = logging.getLogger(__name__)
 
 with import_optional_dependencies(loglevel="info"):
     """Attempt to import a package and print to LOG.info if the import fails."""
-    from pyhdf.SD import SD, SDC
     from pyhdf.error import HDF4Error
+    from pyhdf.SD import SD, SDC
 
 interface = "readers"
 family = "standard"

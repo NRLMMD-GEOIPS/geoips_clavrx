@@ -73,3 +73,6 @@ build = [
 
 [tool.poetry.plugins."geoips.plugin_packages"]
 geoips = "geoips_clavrx"
+
+[tool.isort]
+profile = "black"
