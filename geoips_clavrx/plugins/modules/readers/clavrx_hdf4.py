@@ -143,6 +143,20 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
 
 def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=False):
     """Read CLAVR-x hdf4 cloud properties."""
+    if not self_register == False:
+        logging.warning(
+            f"area_def is set to a non-default value: {area_def},"
+            "\n"
+            "but area_def's value doesn't affect the behaviour of"
+            "clavrx"
+        )  # TODO add note ab what area_def _could_ do
+    if not self_register == False:
+        logging.warning(
+            f"self_register is set to a non-default value: {self_register},"
+            "\n"
+            "but self_register's value doesn't affect the behaviour of"
+            "clavrx"
+        )
     if len(fnames) > 1:
         logging.warning(
             "More than one filename passed to CLAV-RX reader, "
