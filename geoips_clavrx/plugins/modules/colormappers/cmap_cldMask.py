@@ -1,14 +1,5 @@
-# # # Distribution Statement A. Approved for public release. Distribution unlimited.
-# # #
-# # # Author:
-# # # Naval Research Laboratory, Marine Meteorology Division
-# # #
-# # # This program is free software: you can redistribute it and/or modify it under
-# # # the terms of the NRLMMD License included with this program. This program is
-# # # distributed WITHOUT ANY WARRANTY; without even the implied warranty of
-# # # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the included license
-# # # for more details. If you did not receive the license, for more information see:
-# # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
+# # # This source code is protected under the license referenced at
+# # # https://github.com/NRLMMD-GEOIPS.
 
 """Module containing colormap for satellite cloud mask products."""
 import logging
@@ -44,7 +35,7 @@ def call(data_range=[0, 3]):
     ticks = [int(min_val), 1, 2, int(max_val)]
     colorlist = ["ghostwhite", "slategray", "yellow", "red"]
 
-    from matplotlib.colors import ListedColormap, BoundaryNorm
+    from matplotlib.colors import BoundaryNorm, ListedColormap
 
     mpl_cmap = ListedColormap(colorlist, N=len(colorlist))
 

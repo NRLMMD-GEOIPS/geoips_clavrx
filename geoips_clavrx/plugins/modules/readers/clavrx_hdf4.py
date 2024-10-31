@@ -1,14 +1,5 @@
-# # # Distribution Statement A. Approved for public release. Distribution unlimited.
-# # #
-# # # Author:
-# # # Naval Research Laboratory, Marine Meteorology Division
-# # #
-# # # This program is free software: you can redistribute it and/or modify it under
-# # # the terms of the NRLMMD License included with this program. This program is
-# # # distributed WITHOUT ANY WARRANTY; without even the implied warranty of
-# # # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the included license
-# # # for more details. If you did not receive the license, for more information see:
-# # # https://github.com/U-S-NRL-Marine-Meteorology-Division/
+# # # This source code is protected under the license referenced at
+# # # https://github.com/NRLMMD-GEOIPS.
 
 """
 CLAVR-x hdf4 cloud property data reader.
@@ -18,6 +9,7 @@ S.Yang:  1/19/2023
 
 import logging
 from datetime import datetime
+
 import numpy as np
 import xarray as xr
 from os.path import join
@@ -29,8 +21,8 @@ LOG = logging.getLogger(__name__)
 
 with import_optional_dependencies(loglevel="info"):
     """Attempt to import a package and print to LOG.info if the import fails."""
-    from pyhdf.SD import SD, SDC
     from pyhdf.error import HDF4Error
+    from pyhdf.SD import SD, SDC
 
 interface = "readers"
 family = "standard"
@@ -148,10 +140,6 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
             data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
         )
         xarrays[var] = xr.DataArray(data_get_actualvalue)
-        # setup attributes for this var (will be applied later from the
-        #     extracted files
-        # for attrname in attrs:
-        #    xarrays[var].attrs[attrname]=attrs[attrname]
 
     return xarrays
 
@@ -242,32 +230,37 @@ def call_single_time(
         Additional information regarding required attributes and variables
         for GeoIPS-formatted xarray Datasets.
     """
+    if not area_def == False:
+        logging.warning(
+            f"area_def is set to a non-default value: {area_def},"
+            "\n"
+            "but area_def's value doesn't affect the behaviour of"
+            "clavrx"
+        )  # TODO add note ab what area_def _could_ do
+    if not self_register == False:
+        logging.warning(
+            f"self_register is set to a non-default value: {self_register},"
+            "\n"
+            "but self_register's value doesn't affect the behaviour of"
+            "clavrx"
+        )
     fname = fnames[0]
-    # path='$GEOIPS_TESTDATA_DIR/test_data_cloud/data/himawari8/20201201/'
-    # fname = path+'clavrx_H08_202012010700.level2.hdf'
-
-    # print ('test= ', fname)
-
-    # call a subroutine to read cira cloud property file
-    # minlon, maxlon, minlat, maxlat: limit of a terget area
-    # for the 40deg x 50deg W. Pacific region:
-    # minlon, maxlon, minlat, maxlat = [100-150E,10-50N]
-    # istat, outputs= read_cloudprops(fname, minlon, maxlon, minlat, maxlat)
     xarrays = read_cloudprops(fname, chans=chans, metadata_only=metadata_only)
     return {"DATA": xarrays, "METADATA": xarrays[[]]}
 
 
 def get_test_files(test_data_dir):
     """Return test xarray and files for unit testing."""
-    test_file = join(
+    import os
+
+    test_file = os.path.join(
         test_data_dir,
         "test_data_clavrx",
         "data",
         "himawari9_2023101_0300",
         "clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf",
     )
-    tmp_xr = call([test_file])
-    return tmp_xr
+    return call([test_file])
 
 
 def get_test_parameters():
