@@ -12,6 +12,9 @@ from datetime import datetime
 
 import numpy as np
 import xarray as xr
+from os.path import join
+
+from geoips.interfaces import readers
 from geoips.utils.context_managers import import_optional_dependencies
 
 LOG = logging.getLogger(__name__)
@@ -142,8 +145,92 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
 
 
 def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=False):
-    """Read CLAVR-x hdf4 cloud properties."""
-    if not self_register == False:
+    """Read CLAVR-x hdf4 cloud properties for one or more files.
+
+    Parameters
+    ----------
+    fnames : list
+        * List of strings, full paths to files
+    metadata_only : bool, default=False
+        * NOT YET IMPLEMENTED
+        * Return before actually reading data if True
+    chans : list of str, default=None
+        * NOT YET IMPLEMENTED
+        * List of desired channels (skip unneeded variables as needed).
+        * Include all channels if None.
+    area_def : pyresample.AreaDefinition, default=None
+        * NOT YET IMPLEMENTED
+        * Specify region to read
+        * Read all data if None.
+    self_register : str or bool, default=False
+        * NOT YET IMPLEMENTED
+        * register all data to the specified dataset id (as specified in the
+          return dictionary keys).
+        * Read multiple resolutions of data if False.
+
+    Returns
+    -------
+    dict of xarray.Datasets
+        * dictionary of xarray.Dataset objects with required Variables and
+          Attributes.
+        * Dictionary keys can be any descriptive dataset ids.
+
+    See Also
+    --------
+    :ref:`xarray_standards`
+        Additional information regarding required attributes and variables
+        for GeoIPS-formatted xarray Datasets.
+    """
+    return readers.read_data_to_xarray_dict(
+        fnames,
+        call_single_time,
+        metadata_only,
+        chans,
+        area_def,
+        self_register,
+    )
+
+
+def call_single_time(
+    fnames, metadata_only=False, chans=None, area_def=None, self_register=False
+):
+    """Read CLAVR-x hdf4 cloud properties for one file.
+
+    Parameters
+    ----------
+    fnames : list
+        * List of strings, full paths to files
+    metadata_only : bool, default=False
+        * NOT YET IMPLEMENTED
+        * Return before actually reading data if True
+    chans : list of str, default=None
+        * NOT YET IMPLEMENTED
+        * List of desired channels (skip unneeded variables as needed).
+        * Include all channels if None.
+    area_def : pyresample.AreaDefinition, default=None
+        * NOT YET IMPLEMENTED
+        * Specify region to read
+        * Read all data if None.
+    self_register : str or bool, default=False
+        * NOT YET IMPLEMENTED
+        * register all data to the specified dataset id (as specified in the
+          return dictionary keys).
+        * Read multiple resolutions of data if False.
+
+    Returns
+    -------
+    dict of xarray.Datasets
+        * dictionary of xarray.Dataset objects with required Variables and
+          Attributes.
+        * Dictionary keys can be any descriptive dataset ids.
+
+    See Also
+    --------
+    :ref:`xarray_standards`
+        Additional information regarding required attributes and variables
+        for GeoIPS-formatted xarray Datasets.
+    """
+    if not area_def == False:
         logging.warning(
             f"area_def is set to a non-default value: {area_def},"
             "\n"
@@ -156,12 +243,6 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
             "\n"
             "but self_register's value doesn't affect the behaviour of"
             "clavrx"
-        )
-    if len(fnames) > 1:
-        logging.warning(
-            "More than one filename passed to CLAV-RX reader, "
-            "but reader only supports one file at a time. "
-            "Operating on first file passed."
         )
     fname = fnames[0]
     xarrays = read_cloudprops(fname, chans=chans, metadata_only=metadata_only)
