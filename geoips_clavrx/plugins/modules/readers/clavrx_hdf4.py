@@ -9,7 +9,6 @@ S.Yang:  1/19/2023
 
 import logging
 from datetime import datetime
-from os.path import join
 
 import numpy as np
 import xarray as xr
@@ -138,42 +137,35 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
             data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
         )
         xarrays[var] = xr.DataArray(data_get_actualvalue)
-        # setup attributes for this var (will be applied later from the
-        #     extracted files
-        # for attrname in attrs:
-        #    xarrays[var].attrs[attrname]=attrs[attrname]
 
     return xarrays
 
 
 def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=False):
     """Read CLAVR-x hdf4 cloud properties."""
+    if len(fnames) > 1:
+        logging.warning(
+            "More than one filename passed to CLAV-RX reader, "
+            "but reader only supports one file at a time. "
+            "Operating on first file passed."
+        )
     fname = fnames[0]
-    # path='$GEOIPS_TESTDATA_DIR/test_data_cloud/data/himawari8/20201201/'
-    # fname = path+'clavrx_H08_202012010700.level2.hdf'
-
-    # print ('test= ', fname)
-
-    # call a subroutine to read cira cloud property file
-    # minlon, maxlon, minlat, maxlat: limit of a terget area
-    # for the 40deg x 50deg W. Pacific region:
-    # minlon, maxlon, minlat, maxlat = [100-150E,10-50N]
-    # istat, outputs= read_cloudprops(fname, minlon, maxlon, minlat, maxlat)
     xarrays = read_cloudprops(fname, chans=chans, metadata_only=metadata_only)
     return {"DATA": xarrays, "METADATA": xarrays[[]]}
 
 
 def get_test_files(test_data_dir):
     """Return test xarray and files for unit testing."""
-    test_file = join(
+    import os
+
+    test_file = os.path.join(
         test_data_dir,
         "test_data_clavrx",
         "data",
         "himawari9_2023101_0300",
         "clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf",
     )
-    tmp_xr = call([test_file])
-    return tmp_xr
+    return call([test_file])
 
 
 def get_test_parameters():
