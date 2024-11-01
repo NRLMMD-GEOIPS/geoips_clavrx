@@ -138,7 +138,7 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
         data_get_actualvalue = (
             data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
         )
-        xarrays[var] = xr.DataArray(data_get_actualvalue)
+        xarrays[var] = xr.DataArray(data_get_actualvalue, attrs=attrs)
 
     return xarrays
 
