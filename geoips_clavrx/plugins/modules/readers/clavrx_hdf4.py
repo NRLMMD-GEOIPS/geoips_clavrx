@@ -12,7 +12,6 @@ from datetime import datetime
 
 import numpy as np
 import xarray as xr
-from os.path import join
 
 from geoips.interfaces import readers
 from geoips.utils.context_managers import import_optional_dependencies

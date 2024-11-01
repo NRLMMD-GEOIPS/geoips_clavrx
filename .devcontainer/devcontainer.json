@@ -13,7 +13,9 @@
 	},
 	"remoteUser": "geoips_user",
 	"mounts": [
-		"source=/mnt/data1/geoips_testdata,target=/mnt/geoips_testdata,type=bind"
+		"source=/local/share/geoips/test_data,target=/mnt/geoips_testdata,type=bind,readonly",
+		"source=/mnt/data1/geoips_outdirs_temp,target=/output,type=bind",
+		"source=/home/gwynu/geoips/geoips_for_vscode,target=/app/geoips_packages/geoips,type=bind"
 		],
 	"customizations": {
 		"vscode": {
