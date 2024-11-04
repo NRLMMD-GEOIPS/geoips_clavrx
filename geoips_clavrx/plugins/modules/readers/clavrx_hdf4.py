@@ -48,11 +48,7 @@ def parse_metadata(metadatadict):
 
 def read_cloudprops(fname, chans=None, metadata_only=False):
     """Read CLAVR-x Cloud Properties Data."""
-    try:
-        data = SD(fname, SDC.READ)  # read in all data fields
-    except HDF4Error:
-        LOG.info("wrong input hdf file %s", fname)
-        raise
+    data = SD(str(fname), SDC.READ)  # read in all data fields
 
     # selected cloud variables
     # definiation of variables
@@ -124,6 +120,7 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
         data_select = data.select(var)  # select this var
         attrs = data_select.attributes()  # get attributes for this var
         data_get = data_select.get()  # get all data of this var
+        print(var, attrs)
         # mask grids with missing or bad values
         limit1 = attrs["valid_range"][0]
         limit2 = attrs["valid_range"][1]
@@ -182,7 +179,7 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
     """
     return readers.read_data_to_xarray_dict(
         fnames,
-        call_single_time,
+        _call_single_time,
         metadata_only,
         chans,
         area_def,
@@ -190,7 +187,7 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
     )
 
 
-def call_single_time(
+def _call_single_time(
     fnames, metadata_only=False, chans=None, area_def=None, self_register=False
 ):
     """Read CLAVR-x hdf4 cloud properties for one file.
@@ -229,6 +226,7 @@ def call_single_time(
         Additional information regarding required attributes and variables
         for GeoIPS-formatted xarray Datasets.
     """
+    print("Running call_single_time")
     if not area_def == False:
         logging.warning(
             f"area_def is set to a non-default value: {area_def},"
