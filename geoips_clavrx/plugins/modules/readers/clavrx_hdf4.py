@@ -8,7 +8,7 @@ S.Yang:  1/19/2023
 """
 
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import numpy as np
 import xarray as xr
@@ -28,17 +28,19 @@ family = "standard"
 name = "clavrx_hdf4"
 
 
-def parse_metadata(metadatadict):
+def parse_metadata(metadata_in):
     """Parse metadata."""
-    metadata = {}
-    for ii in metadatadict.keys():
-        metadata[ii] = metadatadict[ii]
+    metadata = dict(metadata_in)
 
     # Map GOES-RU-IMAGER to "abi" GeoIPS sensor name
     if metadata["sensor"] == "GOES-RU-IMAGER":
         metadata["sensor"] = "abi"
 
     return metadata
+
+
+def start_year_day_time_to_datetime(year, day, time):
+    return datetime(year, 1, 1) + timedelta(days=day, hours=time)
 
 
 #########################################################################
@@ -73,41 +75,26 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
     #        They should be specified with their definitions.
 
     if chans is None:
-        vars_sel = sorted(data.datasets().keys())
-    elif chans:
-        vars_sel = chans
+        var_names = sorted(data.datasets().keys())
     else:
-        metadata_only = True
+        var_names = chans
 
     # process of all variables
     xarrays = {}
 
     data_metadata = parse_metadata(data.attributes())
 
-    # setup attributes
-    # If start/end datetime happen to vary, adjust here.
-    # start time
-    syr = str(data_metadata["START_YEAR"])
-    sjd = str(data_metadata["START_DAY"])
-    shr = str(int(data_metadata["START_TIME"]))
-    smin = str(int((data_metadata["START_TIME"] - int(shr)) * 60))
-    ssec = str(int(((data_metadata["START_TIME"] - int(shr)) * 60 - int(smin)) * 60))
-    # end time
-    eyr = str(data_metadata["END_YEAR"])
-    ejd = str(data_metadata["END_DAY"])
-    ehr = str(int(data_metadata["END_TIME"]))
-    emin = str(int((data_metadata["END_TIME"] - int(ehr)) * 60))
-    esec = str(int(((data_metadata["END_TIME"] - int(ehr)) * 60 - int(emin)) * 60))
-
-    sdt = datetime.strptime(syr + sjd + shr + smin + ssec, "%Y%j%H%M%S")
-    edt = datetime.strptime(eyr + ejd + ehr + emin + esec, "%Y%j%H%M%S")
-
     xarrays = xr.Dataset()
-    xarrays.attrs["start_datetime"] = sdt
-    xarrays.attrs["end_datetime"] = edt
+
+    for period in ["start", "end"]:
+        xarrays.attrs[period + "_datetime"] = start_year_day_time_to_datetime(
+            data_metadata[period.upper() + "_YEAR"],
+            data_metadata[period.upper() + "_DAY"],
+            data_metadata[period.upper() + "_TIME"],
+        )
     xarrays.attrs["source_name"] = "clavrx"
     xarrays.attrs["platform_name"] = data_metadata["platform"].lower()
-    xarrays.attrs["data_provider"] = "cira"
+    xarrays.attrs["data_provider"] = "CIRA"
     xarrays.attrs["source_file_names"] = data_metadata["FILENAME"]
     xarrays.attrs["sample_distance_km"] = data_metadata["RESOLUTION_KM"]  # 2km
     xarrays.attrs["interpolation_radius_of_influence"] = 3000  # 3km
