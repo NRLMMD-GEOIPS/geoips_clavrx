@@ -5,6 +5,7 @@
 CLAVR-x hdf4 cloud property data reader.
 
 S.Yang:  1/19/2023
+G.Uttmark:  11/05/2024
 """
 
 import logging
@@ -32,6 +33,10 @@ SCALED_ATTRIB = "SCALED"
 SCALE_FACTOR_ATTRIB = "scale_factor"
 ADD_OFFSET_ATTRIB = "add_offset"
 SCALED_FLAG = 1
+FILL_ATTRIB = "_FillValue"
+MISSING_ATTRIB = "actual_missing"
+DIMS = ["y", "x"]
+
 
 SCALING_ATTRIBS = [
     SCALED_ATTRIB,
@@ -41,7 +46,18 @@ SCALING_ATTRIBS = [
 
 
 def parse_metadata(metadata_in):
-    """Parse metadata."""
+    """Parse and correct metadata.
+
+    Parameters
+    ----------
+    metadata_in : dict
+        Input metadata dictionary.
+
+    Returns
+    -------
+    dict
+        Parsed and modified metadata.
+    """
     metadata = dict(metadata_in)
 
     # Map GOES-RU-IMAGER to "abi" GeoIPS sensor name
@@ -52,18 +68,45 @@ def parse_metadata(metadata_in):
 
 
 def year_day_hours_to_datetime(year, day, time):
+    """Convert year, day, and time to a datetime object.
+
+    Parameters
+    ----------
+    year : int
+        The year.
+    day : int
+        Day of the year (1-366).
+    time : float
+        Time in hours.
+
+    Returns
+    -------
+    datetime
+        T
+    """
     return datetime(year, 1, 1) + timedelta(days=day, hours=time)
 
 
 def read_cloudprops(fname, chans=None, metadata_only=False):
     """Read CLAVR-x Cloud Properties Data.
 
+    Parameters
+    ----------
+    fname : str
+        Path to the HDF4 file.
+    chans : list of str, optional
+        List of variables to read. If None, all variables are read.
+    metadata_only : bool, optional
+        If True, only read metadata.
 
+    Returns
+    -------
+    Dict("DATA": xarray.Dataset)
 
-    Returns:
+    Notes
+    -----
 
-    A dictionary containing an xArray Dataset of cloud observation data with
-    variables under key "DATA":
+    Dataset contains cloud observation data with variables:
         - 'latitude': Latitude.
         - 'longitude': Longitude.
         - 'cloud_type': Cloud type.
@@ -80,7 +123,6 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
         - 'temp_3_75um_nom': Brightness temperature at 3.75 µm.
         - 'temp_11_0um_nom': Brightness temperature at 11.0 µm.
         - 'solar_zenith_angle': Solar zenith angle.
-
     """
     data = SD(str(fname), SDC.READ)
     return_dataset = xr.Dataset()
@@ -115,35 +157,94 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
     else:
         var_names = chans
 
+    coords = get_coords(data)
+
     for var in var_names:
         try:
-            sds_select_object = data.select(var)
+            return_dataset[var] = read_dataset_variable(data, var, coords=coords)
         except HDF4Error as e:
             LOG.critical(f"Dataset '{var}' does not exist in file '{fname}'")
             raise e
 
-        attrs = sds_select_object.attributes()
-        data_get = sds_select_object.get()
-
-        limit1, limit2 = _get_limits(var, attrs)
-
-        # mask grids with missing or bad values
-        data_get_mask = np.ma.masked_outside(data_get, limit1, limit2, copy=True)
-
-        # convert the scaled/ofset values into the actual values
-        data_get_actualvalue = (
-            data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
-        )
-        return_dataset[var] = xr.DataArray(
-            data_get_actualvalue, attrs=_scaling_attributes_removed(attrs)
-        )
-
     return return_dataset
 
 
-def _get_limits(var, attrs):
+def get_coords(data, dims=DIMS):
+    """Get coordinate variables.
+
+    Parameters
+    ----------
+    data : pyhdf.SD.SD
+        HDF4 dataset.
+    dims : list of str, optional
+        Dimension names, by default DIMS.
+
+    Returns
+    -------
+    dict
+        Dictionary of coordinate data arrays.
     """
-    Note:
+    lats = read_dataset_variable(data, "latitude", coords=None)
+    longs = read_dataset_variable(data, "longitude", coords=None)
+    return {"latitude": lats, "longitude": longs}
+
+
+def read_dataset_variable(data, var, coords, dims=DIMS):
+    """Read and process a dataset variable.
+
+    Parameters
+    ----------
+    data : pyhdf.SD.SD
+        HDF4 dataset.
+    var : str
+        Variable name to read.
+    coords : dict
+        Coordinates dictionary.
+    dims : list of str, optional
+        Dimension names, by default DIMS.
+
+    Returns
+    -------
+    xarray.DataArray
+        Data array of the variable.
+    """
+    sds_select_object = data.select(var)
+
+    attrs = sds_select_object.attributes()
+    raw_data = sds_select_object.get()
+
+    limit1, limit2 = _get_limits(var, attrs)
+
+    # mask grids with missing or bad values
+    data_get_mask = np.ma.masked_outside(raw_data, limit1, limit2, copy=True)
+
+    # convert the scaled/ofset values into the actual values
+    data_get_actualvalue = data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
+    return xr.DataArray(
+        data_get_actualvalue,
+        attrs=_scaling_attributes_removed(attrs),
+        dims=dims,
+        coords=coords,
+    )
+
+
+def _get_limits(var, attrs):
+    """Get valid data limits for variable.
+
+    Parameters
+    ----------
+    var : str
+        Variable name.
+    attrs : dict
+        Attributes of the variable.
+
+    Returns
+    -------
+    tuple
+        Lower and upper limits for valid data.
+
+    Notes
+    -----
         Values of the attribute 'valid_range' for 'cloud_type', 'cloud_mask',
         and possibly 'cloud_phase' are not valid. They should be specified
         with their definitions; this code does so for 'cloud_type' and 'cloud_mask'.
@@ -157,11 +258,19 @@ def _get_limits(var, attrs):
     return limit1, limit2
 
 
-def _is_var_scaled(attrs: Dict[str, Any]) -> bool:
-    return SCALED_ATTRIB in attrs and attrs[SCALED_ATTRIB] == SCALED_FLAG
+def _scaling_attributes_removed(attrs):
+    """Remove scaling attributes from the attribute dictionary.
 
+    Parameters
+    ----------
+    attrs : dict
+        Attributes of the variable.
 
-def _scaling_attributes_removed(attrs: Dict[str, Any]) -> Dict[str, Any]:
+    Returns
+    -------
+    dict
+        Attributes with scaling attributes removed.
+    """
     return {k: v for k, v in attrs.items() if k not in SCALING_ATTRIBS}
 
 
@@ -272,7 +381,18 @@ def _call_single_time(
 
 
 def get_test_files(test_data_dir):
-    """Return test xarray and files for unit testing."""
+    """Return test xarray and files for unit testing.
+
+    Parameters
+    ----------
+    test_data_dir : str
+        Directory containing test data.
+
+    Returns
+    -------
+    dict
+        Dictionary containing test datasets.
+    """
     import os
 
     test_file = os.path.join(
