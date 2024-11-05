@@ -105,7 +105,6 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
 
     Notes
     -----
-
     Dataset contains cloud observation data with variables:
         - 'latitude': Latitude.
         - 'longitude': Longitude.
