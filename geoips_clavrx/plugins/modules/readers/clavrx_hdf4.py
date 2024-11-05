@@ -39,7 +39,7 @@ def parse_metadata(metadata_in):
     return metadata
 
 
-def start_year_day_time_to_datetime(year, day, time):
+def year_day_hours_to_datetime(year, day, time):
     return datetime(year, 1, 1) + timedelta(days=day, hours=time)
 
 
@@ -49,65 +49,77 @@ def start_year_day_time_to_datetime(year, day, time):
 
 
 def read_cloudprops(fname, chans=None, metadata_only=False):
-    """Read CLAVR-x Cloud Properties Data."""
-    data = SD(str(fname), SDC.READ)  # read in all data fields
+    """Read CLAVR-x Cloud Properties Data.
 
-    # selected cloud variables
-    # definiation of variables
-    # cira_out = {'latitude':latitude, 'longitude':longitude,
-    #     'cloud_type':cld_type,
-    #     'cloud_mask':cld_mask,
-    #     'cloud_phase':cld_phase,
-    #     'cloud_fraction',cld_fract,
-    #     'cld_height_acha':cld_hgt,
-    #     'cld_height_base_acha':cld_hgt_base,
-    #     'cld_height_top_acha':cld_hgt_top,
-    #     'cld_temp_acha':cld_temp,
-    #     'cloud_water_path':cwp,
-    #     'cld_opd_acha':cld_opd,
-    #     'cld_reff_acha':cld_reff,
-    #     'temp_3_75um_nom',tb_3p75,
-    #     'temp_11_0um_nom':tb_11p0,
-    #     'solar_zenith_angle':sza}
 
-    # Note:  Values of the attribute 'valid_range' for cloud_type, cloud_mask,
-    #        cloud_phase(?) are not valid.
-    #        They should be specified with their definitions.
+
+    Returns:
+
+    A dictionary containing an xArray Dataset of cloud observation data with
+    variables under key "DATA":
+        - 'latitude': Latitude.
+        - 'longitude': Longitude.
+        - 'cloud_type': Cloud type.
+        - 'cloud_mask': Cloud mask.
+        - 'cloud_phase': Cloud phase.
+        - 'cloud_fraction': Cloud fraction.
+        - 'cld_height_acha': Cloud height.
+        - 'cld_height_base_acha': Base cloud height.
+        - 'cld_height_top_acha': Top cloud height.
+        - 'cld_temp_acha': Cloud temperature.
+        - 'cloud_water_path': Cloud water path.
+        - 'cld_opd_acha': Cloud optical depth.
+        - 'cld_reff_acha': Effective cloud particle radius.
+        - 'temp_3_75um_nom': Brightness temperature at 3.75 µm.
+        - 'temp_11_0um_nom': Brightness temperature at 11.0 µm.
+        - 'solar_zenith_angle': Solar zenith angle.
+
+    Note:
+        Values of the attribute 'valid_range' for 'cloud_type', 'cloud_mask',
+        and possibly 'cloud_phase' are not valid. They should be specified
+        with their definitions; this code does so for 'cloud_type' and 'cloud_mask'.
+    """
+    data = SD(str(fname), SDC.READ)
+    return_dataset = xr.Dataset()
+
+    data_metadata = parse_metadata(data.attributes())
+
+    # carry along all provided metadata to output dataset
+    for metadata_attr, metadata_attr_value in data_metadata.items():
+        return_dataset.attrs[metadata_attr] = metadata_attr_value
+
+    # Set human readable start/end times
+    for period in ["start", "end"]:
+        return_dataset.attrs[period + "_datetime"] = year_day_hours_to_datetime(
+            data_metadata[period.upper() + "_YEAR"],
+            data_metadata[period.upper() + "_DAY"],
+            data_metadata[period.upper() + "_TIME"],
+        )
+    return_dataset.attrs["source_name"] = "clavrx"
+    return_dataset.attrs["platform_name"] = data_metadata["platform"].lower()
+    return_dataset.attrs["data_provider"] = "CIRA"
+    return_dataset.attrs["source_file_names"] = data_metadata["FILENAME"]
+    return_dataset.attrs["sample_distance_km"] = data_metadata["RESOLUTION_KM"]  # 2km
+    return_dataset.attrs["interpolation_radius_of_influence"] = 3000  # 3km
+
+    # process of all variables
+    if metadata_only:
+        LOG.debug("metadata_only requested, returning without reading data")
+        return return_dataset
 
     if chans is None:
         var_names = sorted(data.datasets().keys())
     else:
         var_names = chans
 
-    # process of all variables
-    xarrays = {}
+    for var in var_names:
+        try:
+            attrs = data.select(var).attributes()
+            data_get = data.select(var).get()
+        except HDF4Error as e:
+            LOG.critical(f"Dataset '{var}' does not exist in file '{fname}'")
+            raise e
 
-    data_metadata = parse_metadata(data.attributes())
-
-    xarrays = xr.Dataset()
-
-    for period in ["start", "end"]:
-        xarrays.attrs[period + "_datetime"] = start_year_day_time_to_datetime(
-            data_metadata[period.upper() + "_YEAR"],
-            data_metadata[period.upper() + "_DAY"],
-            data_metadata[period.upper() + "_TIME"],
-        )
-    xarrays.attrs["source_name"] = "clavrx"
-    xarrays.attrs["platform_name"] = data_metadata["platform"].lower()
-    xarrays.attrs["data_provider"] = "CIRA"
-    xarrays.attrs["source_file_names"] = data_metadata["FILENAME"]
-    xarrays.attrs["sample_distance_km"] = data_metadata["RESOLUTION_KM"]  # 2km
-    xarrays.attrs["interpolation_radius_of_influence"] = 3000  # 3km
-
-    if metadata_only:
-        LOG.info("metadata_only requested, returning without reading data")
-        return xarrays
-
-    for var in vars_sel:
-        data_select = data.select(var)  # select this var
-        attrs = data_select.attributes()  # get attributes for this var
-        data_get = data_select.get()  # get all data of this var
-        print(var, attrs)
         # mask grids with missing or bad values
         limit1 = attrs["valid_range"][0]
         limit2 = attrs["valid_range"][1]
@@ -122,9 +134,9 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
         data_get_actualvalue = (
             data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
         )
-        xarrays[var] = xr.DataArray(data_get_actualvalue, attrs=attrs)
+        return_dataset[var] = xr.DataArray(data_get_actualvalue, attrs=attrs)
 
-    return xarrays
+    return return_dataset
 
 
 def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=False):
