@@ -28,6 +28,18 @@ family = "standard"
 name = "clavrx_hdf4"
 
 
+SCALED_ATTRIB = "SCALED"
+SCALE_FACTOR_ATTRIB = "scale_factor"
+ADD_OFFSET_ATTRIB = "add_offset"
+SCALED_FLAG = 1
+
+SCALING_ATTRIBS = [
+    SCALED_ATTRIB,
+    SCALE_FACTOR_ATTRIB,
+    ADD_OFFSET_ATTRIB,
+]
+
+
 def parse_metadata(metadata_in):
     """Parse metadata."""
     metadata = dict(metadata_in)
@@ -41,11 +53,6 @@ def parse_metadata(metadata_in):
 
 def year_day_hours_to_datetime(year, day, time):
     return datetime(year, 1, 1) + timedelta(days=day, hours=time)
-
-
-#########################################################################
-# READ CLAVR-x CLOUD PROPERTIES
-#########################################################################
 
 
 def read_cloudprops(fname, chans=None, metadata_only=False):
@@ -137,6 +144,14 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
         return_dataset[var] = xr.DataArray(data_get_actualvalue, attrs=attrs)
 
     return return_dataset
+
+
+def _is_var_scaled(attrs: Dict[str, Any]) -> bool:
+    return SCALED_ATTRIB in attrs and attrs[SCALED_ATTRIB] == SCALED_FLAG
+
+
+def _scaling_attributes_removed(attrs: Dict[str, Any]) -> Dict[str, Any]:
+    return {k: v for k, v in attrs.items() if k not in SCALING_ATTRIBS}
 
 
 def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=False):
