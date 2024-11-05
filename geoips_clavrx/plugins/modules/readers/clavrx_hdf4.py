@@ -306,9 +306,9 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
 
     See Also
     --------
-    :ref:`xarray_standards`
-        Additional information regarding required attributes and variables
-        for GeoIPS-formatted xarray Datasets.
+    GeoIPS xarray standards for additional information regarding
+    required attributes and variables
+    for GeoIPS-formatted xarray Datasets.
     """
     return readers.read_data_to_xarray_dict(
         fnames,
