@@ -81,10 +81,6 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
         - 'temp_11_0um_nom': Brightness temperature at 11.0 µm.
         - 'solar_zenith_angle': Solar zenith angle.
 
-    Note:
-        Values of the attribute 'valid_range' for 'cloud_type', 'cloud_mask',
-        and possibly 'cloud_phase' are not valid. They should be specified
-        with their definitions; this code does so for 'cloud_type' and 'cloud_mask'.
     """
     data = SD(str(fname), SDC.READ)
     return_dataset = xr.Dataset()
@@ -121,29 +117,44 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
 
     for var in var_names:
         try:
-            attrs = data.select(var).attributes()
-            data_get = data.select(var).get()
+            sds_select_object = data.select(var)
         except HDF4Error as e:
             LOG.critical(f"Dataset '{var}' does not exist in file '{fname}'")
             raise e
 
+        attrs = sds_select_object.attributes()
+        data_get = sds_select_object.get()
+
+        limit1, limit2 = _get_limits(var, attrs)
+
         # mask grids with missing or bad values
-        limit1 = attrs["valid_range"][0]
-        limit2 = attrs["valid_range"][1]
-        if var == "cloud_type":
-            limit1 = 0
-            limit2 = 13
-        if var == "cloud_mask":
-            limit1 = 0
-            limit2 = 3
         data_get_mask = np.ma.masked_outside(data_get, limit1, limit2, copy=True)
+
         # convert the scaled/ofset values into the actual values
         data_get_actualvalue = (
             data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
         )
-        return_dataset[var] = xr.DataArray(data_get_actualvalue, attrs=attrs)
+        return_dataset[var] = xr.DataArray(
+            data_get_actualvalue, attrs=_scaling_attributes_removed(attrs)
+        )
 
     return return_dataset
+
+
+def _get_limits(var, attrs):
+    """
+    Note:
+        Values of the attribute 'valid_range' for 'cloud_type', 'cloud_mask',
+        and possibly 'cloud_phase' are not valid. They should be specified
+        with their definitions; this code does so for 'cloud_type' and 'cloud_mask'.
+    """
+    if var == "cloud_type":
+        limit1, limit2 = 0, 13
+    elif var == "cloud_mask":
+        limit1, limit2 = 0, 3
+    else:
+        limit1, limit2 = attrs["valid_range"]
+    return limit1, limit2
 
 
 def _is_var_scaled(attrs: Dict[str, Any]) -> bool:
