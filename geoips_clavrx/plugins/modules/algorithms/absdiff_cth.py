@@ -90,7 +90,7 @@ def call(
     try:
         cth1 = np.asarray(xarray_dict["DATA"]["cld_height_acha"][0])
         cth2 = np.asarray(xarray_dict["DATA"]["cld_height_acha"][1])
-    except KeyError as e:
+    except KeyError:
         raise PluginError(
             "Error. Algorithm 'absdiff_cth' was requested to be applied to the incoming"
             " data but the data is missing 'cld_height_acha' from one or more files."
