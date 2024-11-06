@@ -6,6 +6,7 @@ import numpy as np
 import xarray as xr
 
 from geoips.data_manipulations.corrections import apply_data_range
+from geoips.errors import PluginError
 
 LOG = logging.getLogger(__name__)
 
@@ -32,16 +33,14 @@ def call(
     gamma_list=None,
     scale_factor=None,
 ):
-    """Apply data range and requested corrections to a single channel product.
+    """Apply the absolute difference between cloud top height from two different times.
 
-    Data manipulation steps for applying a data range and requested corrections
-    to a single channel product
+    Where cloud top height is 'cld_height_acha' coming from clavrx files.
 
     Parameters
     ----------
-    arrays : list of numpy.ndarray
-        * list of numpy.ndarray or numpy.MaskedArray of channel data
-        * MUST be length one for single_channel algorithm.
+    xarray_dict : dictionary of xarray objects
+        * dictionary of xarray.Datasets (3D in dimensions)
     output_data_range : list of float, default=None
         * list of min and max value for output data product.
         * This is applied LAST after all other corrections/adjustments
@@ -88,8 +87,14 @@ def call(
     lon = np.asarray(xarray_dict["DATA"]["longitude"][0])
     lat = np.asarray(xarray_dict["DATA"]["latitude"][0])
 
-    cth1 = np.asarray(xarray_dict["DATA"]["cld_height_acha"][0])
-    cth2 = np.asarray(xarray_dict["DATA"]["cld_height_acha"][1])
+    try:
+        cth1 = np.asarray(xarray_dict["DATA"]["cld_height_acha"][0])
+        cth2 = np.asarray(xarray_dict["DATA"]["cld_height_acha"][1])
+    except KeyError as e:
+        raise PluginError(
+            "Error. Algorithm 'absdiff_cth' was requested to be applied to the incoming"
+            " data but the data is missing 'cld_height_acha' from one or more files."
+        )
 
     data = np.abs(cth2 - cth1)
 
