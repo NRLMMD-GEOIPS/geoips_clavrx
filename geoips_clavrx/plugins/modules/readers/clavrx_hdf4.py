@@ -144,7 +144,7 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
         )
     return_dataset.attrs["source_name"] = "clavrx"
     return_dataset.attrs["platform_name"] = data_metadata["platform"].lower()
-    return_dataset.attrs["data_provider"] = "CIRA"
+    return_dataset.attrs["data_provider"] = "cira"
     return_dataset.attrs["source_file_names"] = data_metadata["FILENAME"]
     return_dataset.attrs["sample_distance_km"] = data_metadata["RESOLUTION_KM"]  # 2km
     return_dataset.attrs["interpolation_radius_of_influence"] = 3000  # 3km
