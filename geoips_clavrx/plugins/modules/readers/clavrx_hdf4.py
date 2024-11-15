@@ -84,7 +84,10 @@ def year_day_hours_to_datetime(year, day, time):
     datetime
         T
     """
-    return datetime(year, 1, 1) + timedelta(days=day, hours=time)
+    date = datetime(year, 1, 1) + timedelta(days=day, hours=time) - timedelta(days=1)
+    if date.microsecond >= 500000:
+        date = date + timedelta(seconds=1)
+    return date.replace(microsecond=0)
 
 
 def read_cloudprops(fname, chans=None, metadata_only=False):
