@@ -12,12 +12,12 @@
 
 #!/bin/bash
 
-geoips run single_source $GEOIPS_TESTDATA_DIR/reader_tests/data/clavrx/goes16/2024283.1500.1510/*.hdf \
+geoips run single_source $GEOIPS_PACKAGES_DIR/test_data_clavrx/data/goes16_2024283_1501_1506/*.hdf \
     --reader_name clavrx_hdf4 \
     --product_name Absdiff-Cloud-Top-Height \
     --output_formatter imagery_annotated \
     --minimum_coverage 0 \
-    --sector_list goes_east
+    --sector_list conus
 retval=$?
 
 exit $retval
