@@ -12,7 +12,7 @@
 
 #!/bin/bash
 
-geoips run single_source $GEOIPS_PACKAGES_DIR/test_data_clavrx/data/goes16_2024283_1501_1506/*.hdf \
+geoips run single_source $GEOIPS_TESTDATA_DIR/test_data_clavrx/data/goes16_2024283_1501_1506/*.hdf \
     --reader_name clavrx_hdf4 \
     --product_name Absdiff-Cloud-Top-Height \
     --output_formatter imagery_annotated \
