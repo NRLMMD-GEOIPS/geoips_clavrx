@@ -5,13 +5,14 @@
 CLAVR-x hdf4 cloud property data reader.
 
 S.Yang:  1/19/2023
+G.Uttmark:  11/05/2024
 """
 
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
+
 import numpy as np
 import xarray as xr
-from os.path import join
 
 from geoips.interfaces import readers
 from geoips.utils.context_managers import import_optional_dependencies
@@ -20,19 +21,44 @@ LOG = logging.getLogger(__name__)
 
 with import_optional_dependencies(loglevel="info"):
     """Attempt to import a package and print to LOG.info if the import fails."""
-    from pyhdf.SD import SD, SDC
     from pyhdf.error import HDF4Error
+    from pyhdf.SD import SD, SDC
 
 interface = "readers"
 family = "standard"
 name = "clavrx_hdf4"
 
 
-def parse_metadata(metadatadict):
-    """Parse metadata."""
-    metadata = {}
-    for ii in metadatadict.keys():
-        metadata[ii] = metadatadict[ii]
+SCALED_ATTRIB = "SCALED"
+SCALE_FACTOR_ATTRIB = "scale_factor"
+ADD_OFFSET_ATTRIB = "add_offset"
+SCALED_FLAG = 1
+FILL_ATTRIB = "_FillValue"
+MISSING_ATTRIB = "actual_missing"
+DIMS = ["y", "x"]
+
+
+SCALING_ATTRIBS = [
+    SCALED_ATTRIB,
+    SCALE_FACTOR_ATTRIB,
+    ADD_OFFSET_ATTRIB,
+]
+
+
+def parse_metadata(metadata_in):
+    """Parse and correct metadata.
+
+    Parameters
+    ----------
+    metadata_in : dict
+        Input metadata dictionary.
+
+    Returns
+    -------
+    dict
+        Parsed and modified metadata.
+    """
+    metadata = dict(metadata_in)
 
     # Map GOES-RU-IMAGER to "abi" GeoIPS sensor name
     if metadata["sensor"] == "GOES-RU-IMAGER":
@@ -41,110 +67,213 @@ def parse_metadata(metadatadict):
     return metadata
 
 
-#########################################################################
-# READ CLAVR-x CLOUD PROPERTIES
-#########################################################################
+def year_day_hours_to_datetime(year, day, time):
+    """Convert year, day, and time to a datetime object.
+
+    Parameters
+    ----------
+    year : int
+        The year.
+    day : int
+        Day of the year (1-366).
+    time : float
+        Time in hours.
+
+    Returns
+    -------
+    datetime
+        T
+    """
+    date = datetime(year, 1, 1) + timedelta(days=day, hours=time) - timedelta(days=1)
+    if date.microsecond >= 500000:
+        date = date + timedelta(seconds=1)
+    return date.replace(microsecond=0)
 
 
 def read_cloudprops(fname, chans=None, metadata_only=False):
-    """Read CLAVR-x Cloud Properties Data."""
-    try:
-        data = SD(fname, SDC.READ)  # read in all data fields
-    except HDF4Error:
-        LOG.info("wrong input hdf file %s", fname)
-        raise
+    """Read CLAVR-x Cloud Properties Data.
 
-    # selected cloud variables
-    # definiation of variables
-    # cira_out = {'latitude':latitude, 'longitude':longitude,
-    #     'cloud_type':cld_type,
-    #     'cloud_mask':cld_mask,
-    #     'cloud_phase':cld_phase,
-    #     'cloud_fraction',cld_fract,
-    #     'cld_height_acha':cld_hgt,
-    #     'cld_height_base_acha':cld_hgt_base,
-    #     'cld_height_top_acha':cld_hgt_top,
-    #     'cld_temp_acha':cld_temp,
-    #     'cloud_water_path':cwp,
-    #     'cld_opd_acha':cld_opd,
-    #     'cld_reff_acha':cld_reff,
-    #     'temp_3_75um_nom',tb_3p75,
-    #     'temp_11_0um_nom':tb_11p0,
-    #     'solar_zenith_angle':sza}
+    Parameters
+    ----------
+    fname : str
+        Path to the HDF4 file.
+    chans : list of str, optional
+        List of variables to read. If None, all variables are read.
+    metadata_only : bool, optional
+        If True, only read metadata.
 
-    # Note:  Values of the attribute 'valid_range' for cloud_type, cloud_mask,
-    #        cloud_phase(?) are not valid.
-    #        They should be specified with their definitions.
+    Returns
+    -------
+    Dict("DATA": xarray.Dataset)
 
-    if chans is None:
-        vars_sel = sorted(data.datasets().keys())
-    elif chans:
-        vars_sel = chans
-    else:
-        metadata_only = True
-
-    # process of all variables
-    xarrays = {}
+    Notes
+    -----
+    Dataset contains cloud observation data with variables:
+        - 'latitude': Latitude.
+        - 'longitude': Longitude.
+        - 'cloud_type': Cloud type.
+        - 'cloud_mask': Cloud mask.
+        - 'cloud_phase': Cloud phase.
+        - 'cloud_fraction': Cloud fraction.
+        - 'cld_height_acha': Cloud height.
+        - 'cld_height_base_acha': Base cloud height.
+        - 'cld_height_top_acha': Top cloud height.
+        - 'cld_temp_acha': Cloud temperature.
+        - 'cloud_water_path': Cloud water path.
+        - 'cld_opd_acha': Cloud optical depth.
+        - 'cld_reff_acha': Effective cloud particle radius.
+        - 'temp_3_75um_nom': Brightness temperature at 3.75 µm.
+        - 'temp_11_0um_nom': Brightness temperature at 11.0 µm.
+        - 'solar_zenith_angle': Solar zenith angle.
+    """
+    data = SD(str(fname), SDC.READ)
+    return_dataset = xr.Dataset()
 
     data_metadata = parse_metadata(data.attributes())
 
-    # setup attributes
-    # If start/end datetime happen to vary, adjust here.
-    # start time
-    syr = str(data_metadata["START_YEAR"])
-    sjd = str(data_metadata["START_DAY"])
-    shr = str(int(data_metadata["START_TIME"]))
-    smin = str(int((data_metadata["START_TIME"] - int(shr)) * 60))
-    ssec = str(int(((data_metadata["START_TIME"] - int(shr)) * 60 - int(smin)) * 60))
-    # end time
-    eyr = str(data_metadata["END_YEAR"])
-    ejd = str(data_metadata["END_DAY"])
-    ehr = str(int(data_metadata["END_TIME"]))
-    emin = str(int((data_metadata["END_TIME"] - int(ehr)) * 60))
-    esec = str(int(((data_metadata["END_TIME"] - int(ehr)) * 60 - int(emin)) * 60))
+    # carry along all provided metadata to output dataset
+    for metadata_attr, metadata_attr_value in data_metadata.items():
+        return_dataset.attrs[metadata_attr] = metadata_attr_value
 
-    sdt = datetime.strptime(syr + sjd + shr + smin + ssec, "%Y%j%H%M%S")
-    edt = datetime.strptime(eyr + ejd + ehr + emin + esec, "%Y%j%H%M%S")
-
-    xarrays = xr.Dataset()
-    xarrays.attrs["start_datetime"] = sdt
-    xarrays.attrs["end_datetime"] = edt
-    xarrays.attrs["source_name"] = "clavrx"
-    xarrays.attrs["platform_name"] = data_metadata["platform"].lower()
-    xarrays.attrs["data_provider"] = "cira"
-    xarrays.attrs["source_file_names"] = data_metadata["FILENAME"]
-    xarrays.attrs["sample_distance_km"] = data_metadata["RESOLUTION_KM"]  # 2km
-    xarrays.attrs["interpolation_radius_of_influence"] = 3000  # 3km
-
-    if metadata_only:
-        LOG.info("metadata_only requested, returning without reading data")
-        return xarrays
-
-    for var in vars_sel:
-        data_select = data.select(var)  # select this var
-        attrs = data_select.attributes()  # get attributes for this var
-        data_get = data_select.get()  # get all data of this var
-        # mask grids with missing or bad values
-        limit1 = attrs["valid_range"][0]
-        limit2 = attrs["valid_range"][1]
-        if var == "cloud_type":
-            limit1 = 0
-            limit2 = 13
-        if var == "cloud_mask":
-            limit1 = 0
-            limit2 = 3
-        data_get_mask = np.ma.masked_outside(data_get, limit1, limit2, copy=True)
-        # convert the scaled/ofset values into the actual values
-        data_get_actualvalue = (
-            data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
+    # Set human readable start/end times
+    for period in ["start", "end"]:
+        return_dataset.attrs[period + "_datetime"] = year_day_hours_to_datetime(
+            data_metadata[period.upper() + "_YEAR"],
+            data_metadata[period.upper() + "_DAY"],
+            data_metadata[period.upper() + "_TIME"],
         )
-        xarrays[var] = xr.DataArray(data_get_actualvalue)
-        # setup attributes for this var (will be applied later from the
-        #     extracted files
-        # for attrname in attrs:
-        #    xarrays[var].attrs[attrname]=attrs[attrname]
+    return_dataset.attrs["source_name"] = "clavrx"
+    return_dataset.attrs["platform_name"] = data_metadata["platform"].lower()
+    return_dataset.attrs["data_provider"] = "cira"
+    return_dataset.attrs["source_file_names"] = data_metadata["FILENAME"]
+    return_dataset.attrs["sample_distance_km"] = data_metadata["RESOLUTION_KM"]  # 2km
+    return_dataset.attrs["interpolation_radius_of_influence"] = 3000  # 3km
 
-    return xarrays
+    # process of all variables
+    if metadata_only:
+        LOG.debug("metadata_only requested, returning without reading data")
+        return return_dataset
+
+    if chans is None:
+        var_names = sorted(data.datasets().keys())
+    else:
+        var_names = chans
+
+    coords = get_coords(data)
+
+    for var in var_names:
+        try:
+            return_dataset[var] = read_dataset_variable(data, var, coords=coords)
+        except HDF4Error as e:
+            LOG.critical(f"Dataset '{var}' does not exist in file '{fname}'")
+            raise e
+
+    return return_dataset
+
+
+def get_coords(data, dims=DIMS):
+    """Get coordinate variables.
+
+    Parameters
+    ----------
+    data : pyhdf.SD.SD
+        HDF4 dataset.
+    dims : list of str, optional
+        Dimension names, by default DIMS.
+
+    Returns
+    -------
+    dict
+        Dictionary of coordinate data arrays.
+    """
+    lats = read_dataset_variable(data, "latitude", coords=None)
+    longs = read_dataset_variable(data, "longitude", coords=None)
+    return {"latitude": lats, "longitude": longs}
+
+
+def read_dataset_variable(data, var, coords, dims=DIMS):
+    """Read and process a dataset variable.
+
+    Parameters
+    ----------
+    data : pyhdf.SD.SD
+        HDF4 dataset.
+    var : str
+        Variable name to read.
+    coords : dict
+        Coordinates dictionary.
+    dims : list of str, optional
+        Dimension names, by default DIMS.
+
+    Returns
+    -------
+    xarray.DataArray
+        Data array of the variable.
+    """
+    sds_select_object = data.select(var)
+
+    attrs = sds_select_object.attributes()
+    raw_data = sds_select_object.get()
+
+    limit1, limit2 = _get_limits(var, attrs)
+
+    # mask grids with missing or bad values
+    data_get_mask = np.ma.masked_outside(raw_data, limit1, limit2, copy=True)
+
+    # convert the scaled/ofset values into the actual values
+    data_get_actualvalue = data_get_mask * attrs["scale_factor"] + attrs["add_offset"]
+    return xr.DataArray(
+        data_get_actualvalue,
+        attrs=_scaling_attributes_removed(attrs),
+        dims=dims,
+        coords=coords,
+    )
+
+
+def _get_limits(var, attrs):
+    """Get valid data limits for variable.
+
+    Parameters
+    ----------
+    var : str
+        Variable name.
+    attrs : dict
+        Attributes of the variable.
+
+    Returns
+    -------
+    tuple
+        Lower and upper limits for valid data.
+
+    Notes
+    -----
+        Values of the attribute 'valid_range' for 'cloud_type', 'cloud_mask',
+        and possibly 'cloud_phase' are not valid. They should be specified
+        with their definitions; this code does so for 'cloud_type' and 'cloud_mask'.
+    """
+    if var == "cloud_type":
+        limit1, limit2 = 0, 13
+    elif var == "cloud_mask":
+        limit1, limit2 = 0, 3
+    else:
+        limit1, limit2 = attrs["valid_range"]
+    return limit1, limit2
+
+
+def _scaling_attributes_removed(attrs):
+    """Remove scaling attributes from the attribute dictionary.
+
+    Parameters
+    ----------
+    attrs : dict
+        Attributes of the variable.
+
+    Returns
+    -------
+    dict
+        Attributes with scaling attributes removed.
+    """
+    return {k: v for k, v in attrs.items() if k not in SCALING_ATTRIBS}
 
 
 def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=False):
@@ -180,13 +309,13 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
 
     See Also
     --------
-    :ref:`xarray_standards`
-        Additional information regarding required attributes and variables
-        for GeoIPS-formatted xarray Datasets.
+    GeoIPS xarray standards for additional information regarding
+    required attributes and variables
+    for GeoIPS-formatted xarray Datasets.
     """
     return readers.read_data_to_xarray_dict(
         fnames,
-        call_single_time,
+        _call_single_time,
         metadata_only,
         chans,
         area_def,
@@ -194,7 +323,7 @@ def call(fnames, metadata_only=False, chans=None, area_def=None, self_register=F
     )
 
 
-def call_single_time(
+def _call_single_time(
     fnames, metadata_only=False, chans=None, area_def=None, self_register=False
 ):
     """Read CLAVR-x hdf4 cloud properties for one file.
@@ -233,32 +362,49 @@ def call_single_time(
         Additional information regarding required attributes and variables
         for GeoIPS-formatted xarray Datasets.
     """
+    print("Running call_single_time")
+    if not area_def == False:
+        logging.warning(
+            f"area_def is set to a non-default value: {area_def},"
+            "\n"
+            "but area_def's value doesn't affect the behaviour of"
+            "clavrx"
+        )  # TODO add note ab what area_def _could_ do
+    if not self_register == False:
+        logging.warning(
+            f"self_register is set to a non-default value: {self_register},"
+            "\n"
+            "but self_register's value doesn't affect the behaviour of"
+            "clavrx"
+        )
     fname = fnames[0]
-    # path='$GEOIPS_TESTDATA_DIR/test_data_cloud/data/himawari8/20201201/'
-    # fname = path+'clavrx_H08_202012010700.level2.hdf'
-
-    # print ('test= ', fname)
-
-    # call a subroutine to read cira cloud property file
-    # minlon, maxlon, minlat, maxlat: limit of a terget area
-    # for the 40deg x 50deg W. Pacific region:
-    # minlon, maxlon, minlat, maxlat = [100-150E,10-50N]
-    # istat, outputs= read_cloudprops(fname, minlon, maxlon, minlat, maxlat)
     xarrays = read_cloudprops(fname, chans=chans, metadata_only=metadata_only)
     return {"DATA": xarrays, "METADATA": xarrays[[]]}
 
 
 def get_test_files(test_data_dir):
-    """Return test xarray and files for unit testing."""
-    test_file = join(
+    """Return test xarray and files for unit testing.
+
+    Parameters
+    ----------
+    test_data_dir : str
+        Directory containing test data.
+
+    Returns
+    -------
+    dict
+        Dictionary containing test datasets.
+    """
+    import os
+
+    test_file = os.path.join(
         test_data_dir,
         "test_data_clavrx",
         "data",
         "himawari9_2023101_0300",
         "clavrx_H09_20230411_0300_B01_FLDK_DK_R10_S0110.DAT.level2.hdf",
     )
-    tmp_xr = call([test_file])
-    return tmp_xr
+    return call([test_file])
 
 
 def get_test_parameters():

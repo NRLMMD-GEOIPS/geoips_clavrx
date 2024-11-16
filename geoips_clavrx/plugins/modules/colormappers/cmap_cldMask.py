@@ -35,7 +35,7 @@ def call(data_range=[0, 3]):
     ticks = [int(min_val), 1, 2, int(max_val)]
     colorlist = ["ghostwhite", "slategray", "yellow", "red"]
 
-    from matplotlib.colors import ListedColormap, BoundaryNorm
+    from matplotlib.colors import BoundaryNorm, ListedColormap
 
     mpl_cmap = ListedColormap(colorlist, N=len(colorlist))
 
