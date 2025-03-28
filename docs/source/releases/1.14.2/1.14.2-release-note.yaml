@@ -1,7 +1,7 @@
 documentation:
- - title: Add release note for version 1.14.1
+ - title: Add release note for version 1.14.2
    description: |
-     *From GEOIPS#562: 2024-09-26, 1.14.1 updates*
+     *From GEOIPS#715: 2024-11-18, 1.14.2 updates*
 
      Release note on release branch to force tag/release, package/publish,
      and deploy docs.
@@ -9,6 +9,8 @@ documentation:
      Additionally add any updated files from geoips_ci/sync
    files:
      added:
-       - docs/source/releases/latest/1.14.1-release-note.yaml
+       - docs/source/releases/latest/1.14.2-release-note.yaml
      modified:
        - geoips_ci/sync updated files
+   related-issue:
+     number: 715
