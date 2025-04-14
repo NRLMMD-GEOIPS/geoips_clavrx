@@ -1,4 +1,4 @@
-    # # # This source code is protected under the license referenced at
+    # # # This source code is subject to the license referenced at
     # # # https://github.com/NRLMMD-GEOIPS.
 
 CLAVR-x GeoIPS Plugin Package
@@ -43,6 +43,14 @@ Install geoips_clavrx package
     pip install -e $GEOIPS_PACKAGES_DIR/geoips_clavrx
     create_plugin_registries
 ```
+
+Install CLAVR-x and required dependencies
+-----------------------------------------
+
+Follow installation of full pipeline on the 
+[CLAVRx pipeline](./geoips_clavrx/README.md) docs
+
+
 
 Install CLAVR-x and required dependencies
 -----------------------------------------

@@ -14,19 +14,19 @@ else
     export GEOIPS_VERS=`git -C $CURRENT_CONFIGPATH/.. tag --sort=-creatordate | grep -v osr | head -n 1`
 fi
 
-export GEOIPS_BASEDIR=`dirname $CURRENT_CONFIGPATH`
-export GEOIPS_BASEDIR=`dirname $GEOIPS_BASEDIR`
-export GEOIPS_BASEDIR=`dirname $GEOIPS_BASEDIR`
+export GEOIPS_BASE=`dirname $CURRENT_CONFIGPATH`
+export GEOIPS_BASE=`dirname $GEOIPS_BASE`
+export GEOIPS_BASE=`dirname $GEOIPS_BASE`
 # clavrx specific setup, bonobo1 tested - modify these if needed
 
 ###############################################
 # Set the GeoIPS required env vars (based on install location)
 export GEOIPS_MODIFIED_BRANCH=dev
-export GEOIPS_PACKAGES_DIR=$GEOIPS_BASEDIR/geoips_packages
-export GEOIPS_TESTDATA_DIR=$GEOIPS_BASEDIR/test_data
-export GEOIPS_DEPENDENCIES_DIR=$GEOIPS_BASEDIR/geoips_dependencies
+export GEOIPS_PACKAGES_DIR=$GEOIPS_BASE/geoips_packages
+export GEOIPS_TESTDATA_DIR=$GEOIPS_BASE/test_data
+export GEOIPS_DEPENDENCIES_DIR=$GEOIPS_BASE/geoips_dependencies
 export GEOIPS_ACTIVE_BRANCH=dev
-export GEOIPS_OUTDIRS=$GEOIPS_BASEDIR/geoips_outdirs
+export GEOIPS_OUTDIRS=$GEOIPS_BASE/geoips_outdirs
 
 ###############################################
 # Initialize existing conda
