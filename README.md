@@ -52,6 +52,14 @@ Follow installation of full pipeline on the
 
 
 
+Install CLAVR-x and required dependencies
+-----------------------------------------
+
+Follow installation of full pipeline on the 
+[CLAVRx pipeline](./geoips_clavrx/README.md) docs
+
+
+
 Test geoips_clavrx installation
 -------------------------------
 ```bash
