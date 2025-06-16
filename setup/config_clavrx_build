@@ -17,7 +17,7 @@ fi
 export GEOIPS_BASE=`dirname $CURRENT_CONFIGPATH`
 export GEOIPS_BASE=`dirname $GEOIPS_BASE`
 export GEOIPS_BASE=`dirname $GEOIPS_BASE`
-# clavrx specific setup, bonobo1 tested - modify these if needed
+# clavrx specific setup, internal tested - modify these if needed
 
 ###############################################
 # Set the GeoIPS required env vars (based on install location)
