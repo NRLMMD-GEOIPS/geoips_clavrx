@@ -119,7 +119,7 @@ def install_clavrx(
         install_parent_dir, hdf4_ver, tarball_dir, compiler_flags=None, overwrite=False
     )
     hdf4_end = datetime.now()
-    print(f"Total time to install HDF4: {hdf4_end-hdf4_start}\n")
+    print(f"Total time to install HDF4: {hdf4_end - hdf4_start}\n")
 
     print("Installing HDF5 (with C and F90+ Bindings)...")
     hdf5_start = datetime.now()
@@ -127,7 +127,7 @@ def install_clavrx(
         install_parent_dir, hdf5_ver, tarball_dir, compiler_flags=None, overwrite=False
     )
     hdf5_end = datetime.now()
-    print(f"Total time to install HDF5: {hdf5_end-hdf5_start}\n")
+    print(f"Total time to install HDF5: {hdf5_end - hdf5_start}\n")
 
     print("Installing NetCDF4 (with C and F90+ Bindings)...")
     netcdf_start = datetime.now()
@@ -141,19 +141,19 @@ def install_clavrx(
         overwrite=False,
     )
     netcdf_end = datetime.now()
-    print(f"Total time to install NetCDF: {netcdf_end-netcdf_start}\n")
+    print(f"Total time to install NetCDF: {netcdf_end - netcdf_start}\n")
 
     himawari_start = datetime.now()
     print("Installing the Himawari Library...")
     himawari_path = install_libHimawari(install_parent_dir)
     himawari_end = datetime.now()
-    print(f"Total time to install Himawari: {himawari_end-himawari_start}\n")
+    print(f"Total time to install Himawari: {himawari_end - himawari_start}\n")
 
     rttov_start = datetime.now()
     print("Installing the RTTOV library...")
     rttov_path = install_rttov(install_parent_dir, rttov_tar, hdf5_ver, overwrite=False)
     rttov_end = datetime.now()
-    print(f"Total time to install RTTOV: {rttov_end-rttov_start}\n")
+    print(f"Total time to install RTTOV: {rttov_end - rttov_start}\n")
 
     os.chdir(clavrx_install_dir)
 
@@ -215,13 +215,13 @@ def install_clavrx(
     run_shell_command("./admin build", "building CLAVR-x", env=env)
 
     clavrx_end = datetime.now()
-    print(f"Total time to build and install CLAVRx: {clavrx_end-clavrx_start}\n")
+    print(f"Total time to build and install CLAVRx: {clavrx_end - clavrx_start}\n")
 
     end = datetime.now()
 
     print(
         f"CLAVRx installation complete! \n \
-        (Total time to build and install all necessary libraries: {end-start})"
+        (Total time to build and install all necessary libraries: {end - start})"
     )
     os.chdir(os.pardir)
 

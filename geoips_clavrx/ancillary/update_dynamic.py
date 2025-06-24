@@ -122,7 +122,7 @@ def fetch_dynamic(user_date=None):
     elif os.path.exists(f"{dynamic_dir}/snow/hires/{snow}"):
         print("Snow map file already downloaded.")
     else:
-        print(f"{i+1}) {snow}: \n")
+        print(f"{i + 1}) {snow}: \n")
         print(url + "\n\n")
         open(f"{dynamic_dir}/snow/hires/{snow}", "wb").write(r.content)
 
@@ -152,7 +152,7 @@ def fetch_dynamic(user_date=None):
     if os.path.exists(f"{dynamic_dir}/oisst_nc/{year}/{oisst}"):
         print("AVHRR SST file already downloaded.")
     else:
-        print(f"{i+2}) {oisst}:\n")
+        print(f"{i + 2}) {oisst}:\n")
         print(url + "\n\n")
         open(f"{dynamic_dir}/oisst_nc/{year}/{oisst}", "wb").write(r.content)
 
