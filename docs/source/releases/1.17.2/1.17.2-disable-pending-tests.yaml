@@ -1,0 +1,20 @@
+bug fix:
+- title: 'Disable clavrx preproc tests.'
+  description: |
+    * Andrew actively working on re-enabling the CLAVR-x build, disable tests for now.
+  files:
+    deleted:
+    - ''
+    moved:
+    - ''
+    added:
+    - ''
+    modified:
+    - 'tests/integration_tests/test_geoips_clavrx.py'
+  related-issue:
+    internal: geoips#959 - 1.17.2 bug fixes
+  date:
+    start: 2025-11-03
+    finish: 2025-11-03
+
+

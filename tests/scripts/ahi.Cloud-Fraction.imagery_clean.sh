@@ -14,7 +14,7 @@ run_procflow \
     --output_formatter imagery_clean \
     --compare_path "$output_dir/ahi.<product>.imagery_clean" \
     --minimum_coverage 0 \
-    --sector_list himawari
+    --sector_list test_himawari_eqc_3km_landocean
 retval=$?
 
 exit $retval
