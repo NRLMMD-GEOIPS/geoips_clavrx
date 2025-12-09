@@ -19,7 +19,13 @@ base_integ_test_calls = [
     "$repopath/tests/scripts/abi.Cloud-Fraction.imagery_clean.sh",
 ]
 
-# Exhaustive test of all remaining functionality in this repo (excluding base test).
+# Linting integration tests, ensure code and documentation are correctly formatted.
+lint_integ_test_calls = [
+    "$geoips_repopath/tests/utils/check_code.sh all $repopath",
+    "$geoips_repopath/docs/build_docs.sh $repopath $pkgname html_only",
+]
+
+# Exhaustive test of all remaining functionality in this repo (excluding base+lint).
 full_integ_test_calls = [
     "$geoips_repopath/tests/utils/check_code.sh all $repopath",
     "$geoips_repopath/docs/build_docs.sh $repopath $pkgname html_only",
@@ -73,6 +79,28 @@ def setup_environment():
 @pytest.mark.integration
 @pytest.mark.parametrize("script", base_integ_test_calls)
 def test_integ_base_test_script(base_setup: None, script: str):  # noqa: F811
+    """
+    Run integration test scripts by executing specified shell commands.
+
+    Parameters
+    ----------
+    script : str
+        Shell command to execute as part of the integration test. The command may
+        contain environment variables which will be expanded before execution.
+
+    Raises
+    ------
+    subprocess.CalledProcessError
+        If the shell command returns a non-zero exit status.
+    """
+    setup_environment()
+    run_script_with_bash(script)
+
+
+@pytest.mark.lint
+@pytest.mark.integration
+@pytest.mark.parametrize("script", lint_integ_test_calls)
+def test_integ_lint_test_script(base_setup: None, script: str):  # noqa: F811
     """
     Run integration test scripts by executing specified shell commands.
 
