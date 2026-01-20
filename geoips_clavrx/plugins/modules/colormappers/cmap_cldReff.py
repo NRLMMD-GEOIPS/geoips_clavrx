@@ -2,6 +2,7 @@
 # # # https://github.com/NRLMMD-GEOIPS.
 
 """Module containing colormap for effective radius of cloud particles product."""
+
 import logging
 
 LOG = logging.getLogger(__name__)

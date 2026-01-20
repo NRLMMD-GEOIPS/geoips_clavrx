@@ -2,6 +2,7 @@
 # # # https://github.com/NRLMMD-GEOIPS.
 
 """Module containing colormap for satellite cloud type products."""
+
 import logging
 
 LOG = logging.getLogger(__name__)

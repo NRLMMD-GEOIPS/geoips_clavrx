@@ -152,11 +152,9 @@ def install_netcdf(
     if os.path.isfile(get_netcdf_verify_path(netcdf_dir)) and not overwrite:
         hdf5_verify_path = get_hdf5_verify_path(hdf5_dir)
         if not os.path.isfile(hdf5_verify_path):
-            logging.critical(
-                f"{hdf5_verify_path} is missing.\
+            logging.critical(f"{hdf5_verify_path} is missing.\
                 HDF5 must be installed prior to netCDF.\
-                This is unexpected if using the provided install_clavrx.py"
-            )
+                This is unexpected if using the provided install_clavrx.py")
             sys.exit()
         else:
             logging.info(f"Using existing netcdf installation at {netcdf_dir}")
