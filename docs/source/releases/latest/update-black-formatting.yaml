@@ -2,7 +2,7 @@ continuous integration:
 - title: 'Update code base for Black 2026 style - see Black 26.1.0 release notes for details.'
   description: 'Please make sure you update your local Black install as old versions will produce different results.'
   files:
-    added:
+    added: []
     modified:
     - 'geoips_clavrx/ancillary/update_dynamic.py'
     - 'geoips_clavrx/clavrx/install_clavrx.py'
@@ -20,8 +20,8 @@ continuous integration:
     - 'geoips_clavrx/plugins/modules/readers/clavrx_netcdf4.py'
     - 'geoips_clavrx/run_clavrxorb.py'
     - 'geoips_clavrx/test/test_clavrx.py'
-    deleted:
-    moved:
+    deleted: []
+    moved: []
   related-issue:
     number: null
     repo_url: ''
