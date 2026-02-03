@@ -72,13 +72,11 @@ def check_compiler(arch):
         # bit to check what gcc version is available, if not > 6. Problem. exit.
         p = Popen(["gfortran", "--version"], stdout=PIPE, stderr=PIPE)
         p.wait()
-        (so, se) = p.communicate()
+        so, se = p.communicate()
 
         if int(so.split()[3].decode("utf-8").split(".")[0]) < 6:
-            LOG.critical(
-                "Compiler too old. Need something that can do f2008.\
-                Tested with gcc 9.3, but might work with gcc >= 6"
-            )
+            LOG.critical("Compiler too old. Need something that can do f2008.\
+                Tested with gcc 9.3, but might work with gcc >= 6")
             sys.exit()
 
 
@@ -109,10 +107,8 @@ def get_compiler_flags(arch):
         compiler_flags["FC"] = "gfortran"
         compiler_flags["CC"] = "gcc"
         compiler_flags["CXX"] = "g++"
-        compiler_flags["FCFLAGS1"] = (
-            "-fimplicit-none -ffree-form -fPIC -fopenmp \
+        compiler_flags["FCFLAGS1"] = "-fimplicit-none -ffree-form -fPIC -fopenmp \
         -fno-second-underscore -frecord-marker=4 -std=f2008"
-        )
         compiler_flags["FCFLAGS2"] = f" -lgomp -I{gcc_gomp_path} -L{gcc_lib_path}"
         compiler_flags["LDFLAGS"] = "-Wall -g -shared -lgomp"
         compiler_flags["F2PY_COMPILER"] = "gnu95"

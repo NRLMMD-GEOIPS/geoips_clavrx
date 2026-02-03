@@ -13,7 +13,6 @@ from datetime import datetime
 # geoips packages
 from geoips_clavrx.clavrx.install_utils import run_shell_command
 
-
 LOG = logging.getLogger(__name__)
 
 log_path = os.environ["GEOIPS_OUTDIRS"] + "/clavrx_run_{}.log".format(
@@ -37,10 +36,8 @@ geoips_dependencies_dir = os.getenv("GEOIPS_DEPENDENCIES_DIR")
 def get_env(clavrx_dir, netcdf_dir, hdf4_dir, hdf5_dir):
     """Set environment variables for testing."""
     environ = dict(os.environ)
-    environ["LD_LIBRARY_PATH"] = (
-        f"{netcdf_dir}/lib:{hdf4_dir}/lib:\
+    environ["LD_LIBRARY_PATH"] = f"{netcdf_dir}/lib:{hdf4_dir}/lib:\
     {hdf5_dir}/lib:{environ.get('LD_LIBRARY_PATH', '')}"
-    )
     # Not sure if NCDIR and NFDIR are required, but can't hurt
     environ["NCDIR"] = netcdf_dir
     environ["NFDIR"] = netcdf_dir

@@ -2,6 +2,7 @@
 # # # https://github.com/NRLMMD-GEOIPS.
 
 """Satellite cloud fraction product colormap."""
+
 import logging
 
 LOG = logging.getLogger(__name__)
