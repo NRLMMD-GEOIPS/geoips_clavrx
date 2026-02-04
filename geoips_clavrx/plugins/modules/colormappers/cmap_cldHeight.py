@@ -2,6 +2,7 @@
 # # # https://github.com/NRLMMD-GEOIPS.
 
 """Module containing colormap for cloud Height product."""
+
 import logging
 
 LOG = logging.getLogger(__name__)

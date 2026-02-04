@@ -22,7 +22,6 @@ from rttov_installer import install_rttov
 from install_utils import run_shell_command, which, get_mamba_env
 from user_change_me import user_change_me
 
-
 env_dir = get_mamba_env()
 
 
@@ -102,16 +101,12 @@ def install_clavrx(
     )
 
     if registration_prompt == "n":
-        print(
-            "\nInstructions to the free registration process as well as downloading\
-            the rttov tar file can be found in the README.md file"
-        )
+        print("\nInstructions to the free registration process as well as downloading\
+            the rttov tar file can be found in the README.md file")
         sys.exit()
     elif registration_prompt == "y":
-        print(
-            "\nInstalling CLAVRx and its prerequisite libraries...\
-            (approx. 30 minutes to 1 hour to complete)\n"
-        )
+        print("\nInstalling CLAVRx and its prerequisite libraries...\
+            (approx. 30 minutes to 1 hour to complete)\n")
 
     print("Installing HDF4 (with C and Fortran Bindings)...")
     hdf4_start = datetime.now()

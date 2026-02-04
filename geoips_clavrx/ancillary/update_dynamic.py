@@ -14,7 +14,6 @@ import sys
 from itertools import chain
 from glob import glob
 
-
 LOG = logging.getLogger(__name__)
 
 

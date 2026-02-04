@@ -2,6 +2,7 @@
 # # # https://github.com/NRLMMD-GEOIPS.
 
 """Colormap for IR Brightness Temperatures."""
+
 import logging
 
 LOG = logging.getLogger(__name__)

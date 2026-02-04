@@ -122,10 +122,8 @@ def run_clavrxorb(clavrx_dir, hdf4_dir, hdf5_dir, netcdf_dir, test_inst):
         lines[6] = "default  !E1 ALG ACHA\n"
         lines[19] = "2 !E2 RTM rtm option  (0=crtm,1=pfast, (2=rttov))\n"
         lines[22] = "0   !E2 MASK read auxilary cloud mask 1b (0 = don't read)\n"
-        lines[39] = (
-            "2 1 1 !E6 native res sample(0)/average(1),\
+        lines[39] = "2 1 1 !E6 native res sample(0)/average(1),\
         average+stats(2), X_stride(>=1), Y_Stride (>=1))\n"
-        )
         lines[13] = "0   !E2 OUTPUT format flag (0= hdf4, 1 = netcdf4)\n"
         lines[41] = "1 1 1 1 1 1    !E6 chan on flags of channels 7,8,9,10,11,12\n"
         lines[42] = "1 1 1 1 1 1    !E6 chan on flags of channels 13,14,15,16,17,18\n"
