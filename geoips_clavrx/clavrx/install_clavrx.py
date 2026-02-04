@@ -214,10 +214,8 @@ def install_clavrx(
 
     end = datetime.now()
 
-    print(
-        f"CLAVRx installation complete! \n \
-        (Total time to build and install all necessary libraries: {end-start})"
-    )
+    print(f"CLAVRx installation complete! \n \
+        (Total time to build and install all necessary libraries: {end-start})")
     os.chdir(os.pardir)
 
     print()
