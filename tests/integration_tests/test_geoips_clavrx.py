@@ -78,7 +78,9 @@ def setup_environment():
 @pytest.mark.base
 @pytest.mark.integration
 @pytest.mark.parametrize("script", base_integ_test_calls)
-def test_integ_base_test_script(base_setup: None, script: str):  # noqa: F811
+def test_integ_base_test_script(
+    base_setup: None, script: str, fail_on_missing_data: bool  # noqa: F811
+):
     """
     Run integration test scripts by executing specified shell commands.
 
@@ -94,13 +96,15 @@ def test_integ_base_test_script(base_setup: None, script: str):  # noqa: F811
         If the shell command returns a non-zero exit status.
     """
     setup_environment()
-    run_script_with_bash(script)
+    run_script_with_bash(script, fail_on_missing_data)
 
 
 @pytest.mark.lint
 @pytest.mark.integration
 @pytest.mark.parametrize("script", lint_integ_test_calls)
-def test_integ_lint_test_script(base_setup: None, script: str):  # noqa: F811
+def test_integ_lint_test_script(
+    base_setup: None, script: str, fail_on_missing_data: bool  # noqa: F811
+):
     """
     Run integration test scripts by executing specified shell commands.
 
@@ -116,13 +120,15 @@ def test_integ_lint_test_script(base_setup: None, script: str):  # noqa: F811
         If the shell command returns a non-zero exit status.
     """
     setup_environment()
-    run_script_with_bash(script)
+    run_script_with_bash(script, fail_on_missing_data)
 
 
 @pytest.mark.full
 @pytest.mark.integration
 @pytest.mark.parametrize("script", full_integ_test_calls)
-def test_integ_full_test_script(base_setup: None, script: str):  # noqa: F811
+def test_integ_full_test_script(
+    base_setup: None, script: str, fail_on_missing_data: bool  # noqa: F811
+):
     """
     Run integration test scripts by executing specified shell commands.
 
@@ -138,7 +144,7 @@ def test_integ_full_test_script(base_setup: None, script: str):  # noqa: F811
         If the shell command returns a non-zero exit status.
     """
     setup_environment()
-    run_script_with_bash(script)
+    run_script_with_bash(script, fail_on_missing_data)
 
 
 # 20251103 This is actively being addressed, will not work at the moment.
@@ -146,7 +152,9 @@ def test_integ_full_test_script(base_setup: None, script: str):  # noqa: F811
 @pytest.mark.disabled
 @pytest.mark.external_preprocessing
 @pytest.mark.parametrize("script", preprocess_integ_test_calls)
-def test_integ_preprocess_test_script(base_setup: None, script: str):  # noqa: F811
+def test_integ_preprocess_test_script(
+    base_setup: None, script: str, fail_on_missing_data: bool  # noqa: F811
+):
     """
     Run integration test scripts by executing specified shell commands.
 
@@ -162,4 +170,4 @@ def test_integ_preprocess_test_script(base_setup: None, script: str):  # noqa: F
         If the shell command returns a non-zero exit status.
     """
     setup_environment()
-    run_script_with_bash(script)
+    run_script_with_bash(script, fail_on_missing_data)
