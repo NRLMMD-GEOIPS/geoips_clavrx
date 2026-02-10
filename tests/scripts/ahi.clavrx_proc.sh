@@ -22,7 +22,7 @@ run_procflow \
     --product_name Cloud-Fraction \
     --output_formatter imagery_clean \
     --minimum_coverage 0 \
-    --sector_list himawari
+    --sector_list test_himawari_eqc_3km_landocean
 
 
 retval=$?

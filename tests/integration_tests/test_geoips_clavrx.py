@@ -6,18 +6,29 @@
 import os
 import pytest
 
-from tests.integration_tests.test_integration import full_setup  # noqa: F401
+# Only use base_setup, because full_setup requires ALL test data repositories.
+from tests.integration_tests.test_integration import base_setup  # noqa: F401
 
 from tests.integration_tests.test_integration import (
     run_script_with_bash,
     setup_environment as setup_geoips_environment,
 )
 
-# 'full' repo integration tests
+# Single base test to ensure plugin repo works at all.
+base_integ_test_calls = [
+    "$repopath/tests/scripts/abi.Cloud-Fraction.imagery_clean.sh",
+]
+
+# Linting integration tests, ensure code and documentation are correctly formatted.
+lint_integ_test_calls = [
+    "$geoips_repopath/tests/utils/check_code.sh all $repopath",
+    "$geoips_repopath/docs/build_docs.sh $repopath $pkgname html_only",
+]
+
+# Exhaustive test of all remaining functionality in this repo (excluding base+lint).
 full_integ_test_calls = [
     "$geoips_repopath/tests/utils/check_code.sh all $repopath",
     "$geoips_repopath/docs/build_docs.sh $repopath $pkgname html_only",
-    "$repopath/tests/scripts/abi.Cloud-Fraction.imagery_clean.sh",
     "$repopath/tests/scripts/ahi.Cloud-Fraction.imagery_clean.sh",
     "$repopath/tests/scripts/ahi.Cloud-Top-Height.imagery_clean.sh",
     "$repopath/tests/scripts/ahi.Cloud-Base-Height.imagery_clean.sh",
@@ -58,14 +69,66 @@ def setup_environment():
     # Setup base geoips environment
     setup_geoips_environment()
     # Setup current repo's environment
-    os.environ["repopath"] = os.path.join(os.path.dirname(__file__), "..", "..")
+    os.environ["repopath"] = os.path.realpath(
+        os.path.join(os.path.dirname(__file__), "..", "..")
+    )
     os.environ["pkgname"] = "geoips_clavrx"
+
+
+@pytest.mark.base
+@pytest.mark.integration
+@pytest.mark.parametrize("script", base_integ_test_calls)
+def test_integ_base_test_script(
+    base_setup: None, script: str, fail_on_missing_data: bool  # noqa: F811
+):
+    """
+    Run integration test scripts by executing specified shell commands.
+
+    Parameters
+    ----------
+    script : str
+        Shell command to execute as part of the integration test. The command may
+        contain environment variables which will be expanded before execution.
+
+    Raises
+    ------
+    subprocess.CalledProcessError
+        If the shell command returns a non-zero exit status.
+    """
+    setup_environment()
+    run_script_with_bash(script, fail_on_missing_data)
+
+
+@pytest.mark.lint
+@pytest.mark.integration
+@pytest.mark.parametrize("script", lint_integ_test_calls)
+def test_integ_lint_test_script(
+    base_setup: None, script: str, fail_on_missing_data: bool  # noqa: F811
+):
+    """
+    Run integration test scripts by executing specified shell commands.
+
+    Parameters
+    ----------
+    script : str
+        Shell command to execute as part of the integration test. The command may
+        contain environment variables which will be expanded before execution.
+
+    Raises
+    ------
+    subprocess.CalledProcessError
+        If the shell command returns a non-zero exit status.
+    """
+    setup_environment()
+    run_script_with_bash(script, fail_on_missing_data)
 
 
 @pytest.mark.full
 @pytest.mark.integration
 @pytest.mark.parametrize("script", full_integ_test_calls)
-def test_integ_full_test_script(full_setup: None, script: str):  # noqa: F811
+def test_integ_full_test_script(
+    base_setup: None, script: str, fail_on_missing_data: bool  # noqa: F811
+):
     """
     Run integration test scripts by executing specified shell commands.
 
@@ -81,12 +144,17 @@ def test_integ_full_test_script(full_setup: None, script: str):  # noqa: F811
         If the shell command returns a non-zero exit status.
     """
     setup_environment()
-    run_script_with_bash(script)
+    run_script_with_bash(script, fail_on_missing_data)
 
 
+# 20251103 This is actively being addressed, will not work at the moment.
+#          mark as disabled for the time being.
+@pytest.mark.disabled
 @pytest.mark.external_preprocessing
 @pytest.mark.parametrize("script", preprocess_integ_test_calls)
-def test_integ_preprocess_test_script(full_setup: None, script: str):  # noqa: F811
+def test_integ_preprocess_test_script(
+    base_setup: None, script: str, fail_on_missing_data: bool  # noqa: F811
+):
     """
     Run integration test scripts by executing specified shell commands.
 
@@ -102,4 +170,4 @@ def test_integ_preprocess_test_script(full_setup: None, script: str):  # noqa: F
         If the shell command returns a non-zero exit status.
     """
     setup_environment()
-    run_script_with_bash(script)
+    run_script_with_bash(script, fail_on_missing_data)

@@ -1,0 +1,65 @@
+bug fix:
+  - title: "Use landocean tiny sectors for ABI and AHI CLAVR-x test scripts"
+    description: |
+      Use the standard geoips tiny test sectors
+
+      * test_goeseast_eqc_3km_landocean
+      * test_himawari_eqc_3km_landocean
+
+      for the CLAVR-x GOES-16 and himawari-9 test scripts. This update did not require new tiny
+      sectors, because for these tests we do not care about day or night contents
+      of the datasets, but just want a tiny sector with coverage for GOES-16 and
+      himawari-9.
+
+      NOTE the mst script is not actually called, and the test data appears to not exist
+      (points to 'reader_tests' GEOIPS_TESTDATA_DIR directory).  Removed test script,
+      please re-add using supported test dataset, and add to integration test if needed.
+    files:
+      deleted:
+        - "tests/outputs/abi.Cloud-Fraction.imagery_clean/20230411.160020.goes-16.clavrx.Cloud-Fraction.goes_east.71p70.cira.10p0.png"
+        - "tests/outputs/ahi.Cloud-Base-Height.imagery_clean/20230411.030000.him9.clavrx.Cloud-Base-Height.himawari.47p95.cira.10p0.png"
+        - "tests/outputs/ahi.Cloud-Fraction.imagery_clean/20230411.030000.him9.clavrx.Cloud-Fraction.himawari.71p70.cira.10p0.png"
+        - "tests/outputs/ahi.Cloud-Mask.imagery_clean/20230411.030000.him9.clavrx.Cloud-Mask.himawari.71p70.cira.10p0.png"
+        - "tests/outputs/ahi.Cloud-Optical-Depth.imagery_clean/20230411.030000.him9.clavrx.Cloud-Optical-Depth.himawari.69p44.cira.10p0.png"
+        - "tests/outputs/ahi.Cloud-Phase.imagery_clean/20230411.030000.him9.clavrx.Cloud-Phase.himawari.33p41.cira.10p0.png"
+        - "tests/outputs/ahi.Cloud-Temp-ACHA.imagery_clean/20230411.030000.him9.clavrx.Cloud-Temp-ACHA.himawari.48p00.cira.10p0.png"
+        - "tests/outputs/ahi.Cloud-Top-Height.imagery_clean/20230411.030000.him9.clavrx.Cloud-Top-Height.himawari.48p00.cira.10p0.png"
+        - "tests/outputs/ahi.Cloud-Type.imagery_clean/20230411.030000.him9.clavrx.Cloud-Type.himawari.71p70.cira.10p0.png"
+        - "tests/outputs/ahi.Effective-Radius.imagery_clean/20230411.030000.him9.clavrx.Effective-Radius.himawari.48p00.cira.10p0.png"
+        - "tests/outputs/ahi.Temp-11p0.imagery_clean/20230411.030000.him9.clavrx.Temp-11p0.himawari.71p70.cira.10p0.png"
+        - "tests/outputs/ahi.Temp-3p75.imagery_clean/20230411.030000.him9.clavrx.Temp-3p75.himawari.71p70.cira.10p0.png"
+        - "tests/scripts/abi.mst.Cloud-Top-Height.imagery_annotated.sh"
+      moved:
+        - ""
+      added:
+        - "tests/outputs/abi.Cloud-Fraction.imagery_clean/20230113.000000.goes-16.clavrx.Cloud-Fraction.test_goeseast_eqc_3km_landocean.100p00.cira.3p0.png"
+        - "tests/outputs/ahi.Cloud-Base-Height.imagery_clean/20230411.030000.him9.clavrx.Cloud-Base-Height.test_himawari_eqc_3km_landocean.98p70.cira.3p0.png"
+        - "tests/outputs/ahi.Cloud-Fraction.imagery_clean/20230411.030000.him9.clavrx.Cloud-Fraction.test_himawari_eqc_3km_landocean.100p00.cira.3p0.png"
+        - "tests/outputs/ahi.Cloud-Mask.imagery_clean/20230411.030000.him9.clavrx.Cloud-Mask.test_himawari_eqc_3km_landocean.100p00.cira.3p0.png"
+        - "tests/outputs/ahi.Cloud-Optical-Depth.imagery_clean/20230411.030000.him9.clavrx.Cloud-Optical-Depth.test_himawari_eqc_3km_landocean.100p00.cira.3p0.png"
+        - "tests/outputs/ahi.Cloud-Phase.imagery_clean/20230411.030000.him9.clavrx.Cloud-Phase.test_himawari_eqc_3km_landocean.3p29.cira.3p0.png"
+        - "tests/outputs/ahi.Cloud-Temp-ACHA.imagery_clean/20230411.030000.him9.clavrx.Cloud-Temp-ACHA.test_himawari_eqc_3km_landocean.98p70.cira.3p0.png"
+        - "tests/outputs/ahi.Cloud-Top-Height.imagery_clean/20230411.030000.him9.clavrx.Cloud-Top-Height.test_himawari_eqc_3km_landocean.98p70.cira.3p0.png"
+        - "tests/outputs/ahi.Cloud-Type.imagery_clean/20230411.030000.him9.clavrx.Cloud-Type.test_himawari_eqc_3km_landocean.100p00.cira.3p0.png"
+        - "tests/outputs/ahi.Effective-Radius.imagery_clean/20230411.030000.him9.clavrx.Effective-Radius.test_himawari_eqc_3km_landocean.98p70.cira.3p0.png"
+        - "tests/outputs/ahi.Temp-11p0.imagery_clean/20230411.030000.him9.clavrx.Temp-11p0.test_himawari_eqc_3km_landocean.100p00.cira.3p0.png"
+        - "tests/outputs/ahi.Temp-3p75.imagery_clean/20230411.030000.him9.clavrx.Temp-3p75.test_himawari_eqc_3km_landocean.100p00.cira.3p0.png"
+      modified:
+        - "tests/scripts/abi.Cloud-Fraction.imagery_clean.sh"
+        - "tests/scripts/ahi.Cloud-Base-Height.imagery_clean.sh"
+        - "tests/scripts/ahi.Cloud-Fraction.imagery_clean.sh"
+        - "tests/scripts/ahi.Cloud-Mask.imagery_clean.sh"
+        - "tests/scripts/ahi.Cloud-Optical-Depth.imagery_clean.sh"
+        - "tests/scripts/ahi.Cloud-Phase.imagery_clean.sh"
+        - "tests/scripts/ahi.Cloud-Temp-ACHA.imagery_clean.sh"
+        - "tests/scripts/ahi.Cloud-Top-Height.imagery_clean.sh"
+        - "tests/scripts/ahi.Cloud-Type.imagery_clean.sh"
+        - "tests/scripts/ahi.Effective-Radius.imagery_clean.sh"
+        - "tests/scripts/ahi.Temp-11p0.imagery_clean.sh"
+        - "tests/scripts/ahi.Temp-3p75.imagery_clean.sh"
+        - "tests/scripts/ahi.clavrx_proc.sh"
+    related-issue:
+      internal: geoips_clavrx#65 - update to use abi and ahi tiny sectors
+    date:
+      start: 2025-11-05
+      finish: 2025-12-04
