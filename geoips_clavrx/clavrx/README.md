@@ -1,8 +1,84 @@
     # # # This source code is subject to the license referenced at
     # # # https://github.com/NRLMMD-GEOIPS.
 
-Depolying SSEC CLAVRx pipeline
-==============================
+Installing CLAVRx prebuilt
+==========================
+
+# Installing CLAVRx prebuilt binary
+
+CLAVRx pre-built binaries can be installed with running:
+```bash
+    python $GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/install_clavrx.py
+```
+
+This installs a pre-built binary with RTTOV support from the SSEC WISC
+GitLab repository.
+
+Building CLAVR-x from scratch with RTTOV support
+will be supported in a future GeoIPS release.  Outdated build instructions included
+below for reference.
+
+Running the CLAVR-x pipeline on input data
+==========================================
+
+Each of these GeoIPS wrapper scripts for installing and running CLAVR-x are fully
+configurable via command line arguments.  Please call any of the below wrapper
+script with --help for all supported arguments.
+
+* `install_clavrx.py --help`
+* `get_ancildata_static.py --help`
+* `update_ancildata_dynamic.py --help`
+* `run_clavrx.py --help`
+
+Calling all scripts below without additional arguments will install in the GeoIPS
+standard locations, which will allow completing the clarvx proc through geoips
+integration test scripts successfully.
+
+# Setup static ancillary data
+
+After installing the pre-built binary, users can easily run the pipeline.
+Ancillary data is needed to run the pipeline, and can easily be installed 
+with the following command.
+
+```bash
+python $GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/get_ancildata_static.py
+```
+
+# Download relevant dynamic ancillary data
+
+For running any processing, users must install dynamic ancillary data
+surrounding the datetime of the observation. For observations near
+00Z it is recommeneded to install both the day of observation and the
+surrounding dates (EX: AHI data of 20251125T0100Z, download both 20251125T
+and 20251124T dynamic data).
+
+Calling `update_ancildata_dynamic.py` with no arguments will download the current
+dynamic ancillary data.
+
+```bash
+python $GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/update_ancildata_dynamic.py
+python $GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/update_ancildata_dynamic.py YYYYMMDD
+```
+
+# Run processing on data
+
+For running processing, execute the following command on all the input files.
+Calling with no additional arguments will use the standard geoips locations for all
+ancillary data, clavrx configuration files, etc. Please call `run_clavrx.py --help`
+for supported arguments to configure your run as needed.
+
+```bash
+$GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/run_clavrx.py <input_files>
+```
+
+Outputs are produced in the following folder by default:
+
+```bash
+$GEOIPS_OUTDIRS/preprocessed/clavrx/
+```
+
+Depolying SSEC CLAVRx pipeline (outdated, will be reimplemented at a later date)
+================================================================================
 
 # NWP SAF Free Registration
 
@@ -56,8 +132,8 @@ If there is still no confirmation within an hour, email: admin@nwp-saf.eumetsat.
 - You will need to use the path to the rttov tar file as an arg to the CLAVR-x setup script,
   so don't forget where you put it!
 
-Building CLAVRx from scratch
-============================
+Building CLAVRx from scratch (outdated)
+=======================================
 
 Install RTTOV tar file from instructions above
 ----------------------------------------------
@@ -72,7 +148,7 @@ Start in a completely clean bash enviroment, before sourcing config_clavrx_build
 
 ```bash
   source $GEOIPS_PACKAGES_DIR/geoips_clavrx/setup/config_clavrx_build # Get current base conda env, and vars
-  conda create -y -n clavrx_build -c conda-forge python=3.10 openblas git gcc=9.5 gxx=9.5 imagemagick gfortran curl
+  conda create -y -n clavrx_build -c conda-forge python=3.10 openblas git gcc=9.5 gxx=9.5 imagemagick gfortran curl hdf5 libnetcdf
   conda activate clavrx_build
 ```
 
