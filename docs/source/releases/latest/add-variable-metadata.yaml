@@ -1,0 +1,12 @@
+bug fix:
+- title: 'Fix readable_variables attribute assignment in CLAVR-X reader'  
+  description: 'Sets the `readable_variables` attribute to the list of available variables in the CLAVR-X HDF4 file and assigns it before the metadata-only return, so that `metadata_only=True` calls still return the list of readable variables.'  
+  files:  
+    modified:  
+      - 'geoips_clavrx/plugins/modules/readers/clavrx_hdf4.py'  
+  related-issue:  
+    number: null  
+    repo_url: ''  
+  date:  
+    start: '2026-02-10'  
+    finish: '2026-02-11'  

@@ -149,13 +149,15 @@ def read_cloudprops(fname, chans=None, metadata_only=False):
     return_dataset.attrs["sample_distance_km"] = data_metadata["RESOLUTION_KM"]  # 2km
     return_dataset.attrs["interpolation_radius_of_influence"] = 3000  # 3km
 
+    return_dataset.attrs["readable_variables"] = sorted(data.datasets().keys())
+
     # process of all variables
     if metadata_only:
         LOG.debug("metadata_only requested, returning without reading data")
         return return_dataset
 
     if chans is None:
-        var_names = sorted(data.datasets().keys())
+        var_names = return_dataset.attrs["readable_variables"]
     else:
         var_names = chans
 
