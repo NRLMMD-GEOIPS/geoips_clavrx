@@ -54,11 +54,11 @@ def fetch_static(ancillary_data_directory, validate_only=False):
             without error.
             Do you want to proceed with local install? (y/n): """))
 
-    if static_prompt == "n":
+    if static_prompt.lower() == "y":
+        print("Started downloading static data, this may take a while....")
+    else:
         print("\nEither link static data or install on system.")
         sys.exit(1)
-    elif static_prompt == "y":
-        print("Started downloading static data, this may take a while....")
 
     static_url = "ftp://epscloud.ssec.wisc.edu/clavrx_ancil_data/static"
     print("Downloading static data from {}".format(static_url))
