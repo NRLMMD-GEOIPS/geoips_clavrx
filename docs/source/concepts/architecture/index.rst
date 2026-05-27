@@ -7,7 +7,7 @@ Architecture
 ************
 
 This document describes the architecture of the ``geoips_clavrx`` plugin, which integrates
-the CLAVR-x cloud product retrieval algorithm into the GeoIPS imagery production framework.
+the CLAVR-x cloud product retrieval algorithm into GeoIPS.
 
 Overview
 ========
