@@ -59,7 +59,7 @@ def parse_metadata(metadata_in):
         Parsed and modified metadata.
     """
     metadata = dict(metadata_in)
-
+    LOG.debug(metadata_in, metadata)
     # Map GOES-RU-IMAGER to "abi" GeoIPS sensor name
     if metadata["sensor"] == "GOES-RU-IMAGER":
         metadata["sensor"] = "abi"

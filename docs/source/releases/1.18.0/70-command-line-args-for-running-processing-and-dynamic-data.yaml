@@ -1,0 +1,79 @@
+realtime:
+- title: 'Use argparse to add command line arguments to update_dynamic and run_clavrx scripts'
+  description: |
+    Enables clavr-x processing to be called by realtime processing schedulers.
+  files:
+    deleted:
+    - ''
+    moved:
+    - ''
+    added:
+    - ''
+    modified:
+    - 'geoips_clavrx/ancillary/update_dynamic.py'
+    - 'geoips_clavrx/clavrx/install_clavrx.py'
+    - 'geoips_clavrx/clavrx/run_clavrx.py'
+  date:
+    start: 2025-12-16
+    finish: 2026-02-09
+installation:
+- title: 'Consolidated all clavrx external preprocessing scripts in geoips_clavrx/clavrx, separate static and dynamic ancildata retrieval'
+  description: |
+    * All scripts required to build, install, setup, and run the external clavrx processing
+      should be under the geoips_clavrx/clavrx directory, since these are not
+      geoips plugin package specific utilities, but only for the external clavrx package.
+    * We could further rearrange into subdirectories within the clavrx directory, but
+      these utilities should all stay within the clavrx directory.
+    * Completely separate static and dynamic ancillary data scripts.
+  files:
+    deleted:
+    - ''
+    moved:
+    - 'geoips_clavrx/clavrx/get_ancildata_static.py <- geoips_clavrx/ancillary/ancil_data.py'
+    added:
+    - ''
+    modified:
+    - ''
+  date:
+    start: 2026-02-13
+    finish: 2026-02-16
+documentation:
+- title: 'Update README.md and geoips_clavrx/clavrx/README.md for updated installation and execution process'
+  description: |
+    * Removed setup.sh, no longer used
+    * Moved geoips_clavrx/README.md to geoips_clavrx/clavrx/README.md - is the README for the external clavrx buid,
+      so should be in the clavrx directory.
+    * Identify required environment variables for installation and test in README.md
+    * Identify separation between CLAVR-x preprocessing and GeoiPS CLAVR-x plugin package processing.
+    * Note in clavrx/README.md that no arguments to installation, setup, and execution scripts for
+      clavrx will put everything in consistent default locations, but --help will provide the
+      supported command line arguments
+  files:
+    deleted:
+    - 'setup.sh'
+    moved:
+    - 'geoips_clavrx/README.md -> geoips_clavrx/clavrx/README.md'
+    added:
+    - ''
+    modified:
+    - 'README.md'
+    - 'geoips_clavrx/clavrx/README.md'
+  date:
+    start: 2026-02-13
+    finish: 2026-02-16
+- title: 'Add consistent command line arguments and informative help for all clavrx install and setup scripts'
+  description: |
+    * Consistent arguments for clavrx executable path, ancillary data path, etc in all
+      clavrx setup scripts.
+  files:
+    deleted:
+    - ''
+    moved:
+    - ''
+    added:
+    - ''
+    modified:
+    - 'geoips_clavrx/clavrx/get_ancildata_static.py'
+  date:
+    start: 2026-02-13
+    finish: 2026-02-16

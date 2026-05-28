@@ -1,0 +1,35 @@
+enhancement:
+- title: 'Simplified installation and clavrx_netcdf4 reader.'
+  description: 'Simplified installation build, via a pre-built binary,
+  and added simple instructions for running CLAVR-x processing. Added 
+  clavrx_netcdf4 reader.'
+  files:
+    deleted:
+    - 'geoips_clavrx/clavrx/hdf4_installer.py'
+    - 'geoips_clavrx/clavrx/hdf5_installer.py'
+    - 'geoips_clavrx/clavrx/himawari_installer.py'
+    - 'geoips_clavrx/clavrx/install_utils.py'
+    - 'geoips_clavrx/clavrx/netcdf_installer.py'
+    - 'geoips_clavrx/clavrx/rttov_installer.py'
+    - 'geoips_clavrx/clavrx/user_change_me.py'
+    - 'geoips_clavrx/run_clavrxorb.py'
+    moved:
+    - ''
+    added:
+    - 'geoips_clavrx/clavrx/clavrx_options'
+    - 'geoips_clavrx/clavrx/file_list'
+    - 'geoips_clavrx/clavrx/level2_list'
+    - 'geoips_clavrx/clavrx/run_clavrx.py'
+    modified:
+    - 'geoips_clavrx/ancillary/ancil_data.py'
+    - 'geoips_clavrx/ancillary/update_dynamic.py'
+    - 'geoips_clavrx/clavrx/install_clavrx.py'
+    - 'geoips_clavrx/plugins/modules/readers/clavrx_hdf4.py'
+    - 'geoips_clavrx/plugins/modules/readers/clavrx_netcdf4.py'
+    - 'geoips_clavrx/plugins/yaml/products/clavrx.yaml'
+    - 'geoips_clavrx/README.md'
+    - 'geoips_clavrx/test/test_clavrx.py'
+    - 'setup.sh'
+  date:
+    start: 2025-11-20
+    finish: 2025-12-15
