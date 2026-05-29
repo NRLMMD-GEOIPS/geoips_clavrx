@@ -3,10 +3,13 @@
    # # # This source code is subject to the license referenced at
    # # # https://github.com/NRLMMD-GEOIPS.
 
-GeoIPS CLAVR-x API Reference
-****************************
+Functionality
+*************
 
-.. automodule:: geoips_clavrx
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. toctree::
+    :maxdepth: 1
+
+    products/index
+    cli/index
+    readers/index
+    examples/index
