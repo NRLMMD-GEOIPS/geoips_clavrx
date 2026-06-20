@@ -1,0 +1,18 @@
+installation:
+- title: Allow passing if static ancillary data / clavrx executable exist rather than failing.
+  description: |
+    During GeoIPS Site Install, ensure we do not fail if the static ancillary data
+    or clavrx executable already exist.  Add option for --pass_if_exists.
+  files:
+    modified:
+    - 'geoips_clavrx/clavrx/get_ancildata_static.py'
+    - 'geoips_clavrx/clavrx/install_clavrx.py'
+    deleted:
+    - ''
+    moved:
+    - ''
+  related-issue:
+    internal: geoips#1067 - 1.19.0 updates
+  date:
+    start: 2026-06-01
+    finish: 2026-06-01

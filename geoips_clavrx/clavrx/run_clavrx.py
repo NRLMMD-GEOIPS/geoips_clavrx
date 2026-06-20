@@ -18,6 +18,8 @@ import sys
 from datetime import datetime
 from subprocess import Popen, PIPE, STDOUT
 
+import tomlkit
+
 # geoips libs
 from geoips.filenames.base_paths import PATHS as gpaths
 
@@ -27,20 +29,21 @@ dt_pattern = {
     "AHI": (r"_\d{8}", "%Y%m%d"),
     "MODIS": (r"A\d{7}", "%Y%j"),
     "VIIRS": (r"d\d{8}", "%Y%m%d"),
+    "FCI": (r"_\d{12}", "%Y%m%d%H%M%S"),
 }
-
 # possibles instrument search patterns
 inst_mapping = {
     "ABI": "ABI",
-    "HS": "AHI",
+    "HS_H0": "AHI",
     "MOD": "MODIS",
     "MYD": "MODIS",
     "NPP": "VIIRS",
     "J02": "VIIRS",
     "J01": "VIIRS",
+    "FCI": "FCI",
 }
 
-fmap = {"ABI": "C01_", "AHI": "HS_", "MODIS": "KM", "VIIRS": "GMTCO"}
+fmap = {"ABI": "C01_", "AHI": "HS_", "MODIS": "KM", "VIIRS": "GMTCO", "FCI": "0001.nc"}
 
 
 def get_inst(filelist):
@@ -71,6 +74,52 @@ def get_inst(filelist):
     return inst_avail, datetime_res
 
 
+def run_pseg(pseg_wrapper, runtime_directory):
+    """Run pseg processing.
+
+    Similar to running classic clavrx just with pseg wrapper.
+
+    Input
+    -----
+    pseg_wrapper: run_pseg.py, python script to be called
+    runtime_directory: folder, directory to run pseg and clavrx
+
+    Output
+    ------
+    None: exit with bash code if processing fails
+    """
+    retval = 0
+    pseg_command = ["python", pseg_wrapper]
+    with Popen(pseg_command, stdout=PIPE, stderr=STDOUT, cwd=runtime_directory) as proc:
+        for sr in iter(proc.stdout.readline, b""):
+            logline = sr.decode("utf-8").rstrip()
+            print(logline)
+            # this is not effective against missing files, core dumps, etc..
+            if "STOP" in logline:
+                print("Found STOP in log line, probably failed")
+                retval = 1
+
+    # Go through the pseg stdout and stderr log outputs
+    stdout_log = os.path.join(runtime_directory, "clavrx_parent.stdout")
+    stderr_log = os.path.join(runtime_directory, "clavrx_parent.stderr")
+    if (not os.path.exists(stdout_log)) and (not os.path.exists(stderr_log)):
+        # PSEG remove logs if it finishes
+        return 0
+
+    for logf in [stdout_log, stderr_log]:
+        print(f"Log output {logf}:")
+        with open(logf, "r", encoding="utf-8") as file:
+            for line in file:
+                # line still contains the trailing newline character '\n'
+                logline = line.strip()
+                print(logline)
+                if "STOP" in logline:
+                    print(f"ALERT Found STOP in {logf}, probably failed")
+                    retval = 1
+
+    return retval
+
+
 def proc_wrap(
     filelist,
     inst,
@@ -80,6 +129,7 @@ def proc_wrap(
     template_options_file,
     ancillary_data_directory,
     outdir,
+    pseg_flag=False,
 ):
     """Run clavrx processing for the instrument.
 
@@ -100,6 +150,8 @@ def proc_wrap(
         raise FileNotFoundError(
             f"Cannot find ancillary_data_directory: {ancillary_data_directory}"
         )
+    if pseg_flag and not (os.path.isdir(os.path.dirname(clavrx_exec) + "/pseg/")):
+        raise FileNotFoundError("No PSEG directory")
     # setup input filelist
     flist = os.path.join(runtime_directory, "file_list")
     # setup output dir
@@ -139,34 +191,34 @@ def proc_wrap(
     # This is the required location for the clavrx_options file that is used by
     # run_clavrxorb.  We are using our passed in template file, which may contain
     # comments (any line preceded by '#'), environment variables, and the specific
-    # [run_clavrx_ancillary_data_directory_command_line_argument] line (which will
-    # be replaced with the
+    # ancil_dir key (which will be replaced with the
     # --ancillary_data_directory command line argument).  Comments
     # will be stripped, environment variables expanded, and --ancillary_data_directory
     # updated prior to writing the template options file to this mandatory
     # --runtime_directory location.
-    ofile = os.path.join(runtime_directory, "clavrx_options")
+    ofile = os.path.join(runtime_directory, "clavrx_options.toml")
     if not os.path.exists(template_options_file):
         print(
             f"Template options file not found: {template_options_file} "
             "Please pass in valid template_options_file."
         )
         raise FileNotFoundError("CLAVR-x template options file doesn't exist")
-
-    with open(template_options_file, "r") as template_fobj:
-        olines = template_fobj.readlines()
-    # Remove commented lines, and expand environment variables
-    olines = [os.path.expandvars(line) for line in olines if line[0] != "#"]
-    # Replace ancillary data directory and empty lines. Make sure ancillary data
-    # directory has a trailing /!
-    olines = [
-        line.replace(
-            "[run_clavrx_ancillary_data_directory_command_line_argument]",
-            ancillary_data_directory + "/",
+    # tomlkit automatically removes comments
+    print(template_options_file)
+    with open(template_options_file, "rb") as template_fobj:
+        olines = tomlkit.load(template_fobj)
+    # ancil_dir check
+    if "ancil_dir" not in olines.keys():
+        raise KeyError(
+            "ancil_dir key not found in options file {}".format(template_options_file)
         )
-        for line in olines
-        if line.strip() != ""
-    ]
+    # Replace ancillary data directory, make sure it has trailing slash
+    olines["ancil_dir"] = ancillary_data_directory + "/"
+
+    if inst == "FCI":
+        olines["ecm_lut"] = "ecm2_lut_fci_default.nc"
+    else:
+        olines["ecm_lut"] = "default"
     print(
         "\n**Writing template to final clavrx_options in runtime_directory\n"
         f"        {template_options_file} {ofile}"
@@ -174,7 +226,7 @@ def proc_wrap(
     # Write out the final clavrx_options file, to the clavrx runtime directory.
     # CLAVR-x requires clavrx_options to exist in the same directory it runs from.
     with open(ofile, "w") as final_fobj:
-        final_fobj.writelines(olines)
+        tomlkit.dump(olines, final_fobj)
 
     print(
         "\n**Copying level2_list to runtime_directory\n"
@@ -188,12 +240,64 @@ def proc_wrap(
         f"        {clavrx_exec}\n"
         "runtime_directory contents:\n"
     )
-    print(os.listdir(runtime_directory))
+    if pseg_flag:
+        pseg_path = os.path.join(os.path.dirname(clavrx_exec), "pseg")
+        # This is where we run EVERYTHING from.
+        pseg_runtime_path = os.path.join(runtime_directory, "pseg")
+
+        print(pseg_runtime_path)
+        if not os.path.isdir(pseg_runtime_path):
+            print("No runtime dir found, making dir.")
+            os.makedirs(pseg_runtime_path)
+
+        # If you installed with --pseg, this should exist. If not, fail.
+        if not os.path.exists(pseg_path):
+            raise FileNotFoundError(
+                f"PSEG not found, please install in {pseg_path} directory."
+            )
+
+        # Copy over run_pseg.py  tracer_utils.py
+        shutil.copy(os.path.join(pseg_path, "run_pseg.py"), pseg_runtime_path + "/")
+        shutil.copy(os.path.join(pseg_path, "tracer_utils.py"), pseg_runtime_path + "/")
+
+        # Copy all the individual clavrx required files into pseg runtime path.
+        # clavrx_options.toml to clavrx_options
+        shutil.copy(
+            os.path.join(runtime_directory, "clavrx_options.toml"),
+            os.path.join(pseg_runtime_path, "clavrx_options.toml"),
+        )
+        # run_clavrxorb to clavrxorb
+        shutil.copy(clavrx_exec, os.path.join(pseg_runtime_path, "clavrxorb"))
+        # level2_list to level2_list
+        shutil.copy(
+            os.path.join(runtime_directory, "level2_list"),
+            os.path.join(pseg_runtime_path, "level2_list"),
+        )
+        # file_list to file_list
+        shutil.copy(
+            os.path.join(runtime_directory, "file_list"),
+            os.path.join(pseg_runtime_path, "file_list"),
+        )
+
+        # This is the pseg executable, which uses the above values by default.
+        pseg_executable = os.path.join(runtime_directory, "pseg", "run_pseg.py")
+        print(f"Attempting to run {pseg_executable} from:")
+        print(pseg_runtime_path)
+
+        # Run from the new pseg runtime path.
+        retval = run_pseg(pseg_executable, pseg_runtime_path)
+        print(f"Exiting retval '{retval}' from {pseg_executable}")
+
+        # Fail if non-zero return.
+        sys.exit(retval)
+
+    # If not pseg, just run clavrx directly.
     retval = 0
     with Popen([clavrx_exec], stdout=PIPE, stderr=STDOUT) as proc:
         for sr in iter(proc.stdout.readline, b""):
             logline = sr.decode("utf-8").rstrip()
             print(logline)
+            # this is not effective against missing files, core dumps, etc..
             if "STOP" in logline:
                 print("Found STOP in log line, probably failed")
                 retval = 1
@@ -271,12 +375,11 @@ if __name__ == "__main__":
             gpaths["GEOIPS_PACKAGES_DIR"],
             "geoips_clavrx",
             "clavrx",
-            "clavrx_options_template",
+            "clavrx_options_template.toml",
         ),
         help="""Template CLAVR-x options file that allows optional references to
           environment variables, commented lines preceded by '#', and
-          optional [run_clavrx_ancillary_data_directory_command_line_argument]
-          line that will be replaced with the
+          [ancil_data] value that will be replaced with the
           --ancillary_data_directory argument.
 
           run_clavrx.py will:
@@ -284,7 +387,7 @@ if __name__ == "__main__":
           * remove commented lines
           * remove empty lines
           * expand environment variables
-          * replace '[run_clavrx_ancillary_data_directory_command_line_argument]'
+          * replace '[ancil_data]' value
             with --ancillary_data_directory argument
 
           prior to writing to the run_clavrxorb --runtime_directory (run_clavrxorb
@@ -314,16 +417,15 @@ if __name__ == "__main__":
           file to the be full path to the clavrx ancillary data directory.
 
           run_clavrx.py will replace
-          '[run_clavrx_ancillary_data_directory_command_line_argument]' with the
+          'ancil_dir' value with the
           --ancillary_data_directory command line argument if
-          * [run_clavrx_ancillary_data_directory_command_line_argument]
-            exists in clavrx_options_template, and
+          * [ancil_data] exists in clavrx_options_template, and
           * --ancillary_data_directory is passed into run_clavrx.py at the command line.
 
-          If [run_clavrx_ancillary_data_directory_command_line_argument]
+          If [ancil_data]
           does not exist in clavrx_options_template, or
           --ancillary_data_directory is not passed in at the command line, then the
-          first non-commented/non-empty line of clavrx_options_template must be a
+          ancil_data key of clavrx_options_template must be a
           valid path to the ancillary data directory (with or without environment
           variables).
 
@@ -357,6 +459,9 @@ if __name__ == "__main__":
                          full path to level2_list explicitly passed into run_clavrx.py)
           * file_list (auto-generated within run_clavrx.py)""",
     )
+    parser.add_argument(
+        "-p", "--pseg", required=False, action="store_true", help="Run PSEG"
+    )
     args = parser.parse_args()
 
     inst, sdt = get_inst(args.input_files)
@@ -370,4 +475,5 @@ if __name__ == "__main__":
         template_options_file=args.template_options_file,
         ancillary_data_directory=args.ancillary_data_directory,
         outdir=args.output_directory,
+        pseg_flag=args.pseg,
     )

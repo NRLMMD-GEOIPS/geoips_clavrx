@@ -1,0 +1,22 @@
+installation:
+- title: Bug fixes to get pseg included in the integration tests.
+  description: |
+    Run pseg for ABI, AHI, and FCI integration tests.  Continue running non-pseg clavrx
+    for viirs and modis (since they don't take as long).
+
+    Add pseg arg to clavrx_proc_to_geoips.sh integration test script, additionally
+    must include install clavrx and install static ancillary data calls with pseg
+    arg to geoips site_install.sh to ensure clavrx is installed with pseg.
+  files:
+    modified:
+    - 'geoips_clavrx/clavrx/run_clavrx.py'
+    - 'tests/scripts/clavrx_proc_to_geoips.sh'
+    deleted:
+    - ''
+    moved:
+    - ''
+  related-issue:
+    internal: geoips#1067 - 1.19.0 updates
+  date:
+    start: 2026-06-01
+    finish: 2026-06-01

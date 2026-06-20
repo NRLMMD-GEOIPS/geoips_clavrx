@@ -11,7 +11,7 @@ import subprocess
 from geoips.filenames.base_paths import PATHS as gpaths
 
 
-def fetch_static(ancillary_data_directory, validate_only=False):
+def fetch_static(ancillary_data_directory, validate_only=False, pass_if_exists=False):
     """Fetch CLAVR-x static ancillary data.
 
     This includes static ancillary datasets required to run CLAVR-x.  This does not
@@ -22,8 +22,12 @@ def fetch_static(ancillary_data_directory, validate_only=False):
     # must both be contained in the ancillary_data_directory.
     static_data_directory = os.path.join(ancillary_data_directory, "static")
 
-    if os.path.isdir(static_data_directory) and validate_only:
-        print("SUCCESS Static data directory already available and validate_only True!")
+    if os.path.isdir(static_data_directory) and (validate_only or pass_if_exists):
+        print(
+            "SUCCESS Static data directory already available and "
+            "validate_only/pass_if_exists True! Not updating contents, "
+            "manually update static ancillary data if required."
+        )
         sys.exit(0)
     elif validate_only:
         print("FAILED static data dir does not exist, and requested validate only")
@@ -83,7 +87,10 @@ def fetch_static(ancillary_data_directory, validate_only=False):
     )
     os.rmdir(os.path.join(ancillary_data_directory, "epscloud.ssec.wisc.edu"))
 
-    # ??
+    # Steps to clean up static data for processing use
+    # VIIRS links
+
+    # LUTS link
     subprocess.run(
         [
             "cp",
@@ -91,6 +98,17 @@ def fetch_static(ancillary_data_directory, validate_only=False):
             f"{static_data_directory}/luts/ecm2/nb_cloud_mask_calipso_prior.nc",
         ]
     )
+
+    # FCI static unpack
+    subprocess.run(
+        [
+            "unzip",
+            "-d",
+            f"{static_data_directory}/fci/",
+            f"{static_data_directory}/fci/FCI-latitude-longitude-grids.zip",
+        ]
+    )
+
     print("Finished downloading static data")
 
 
@@ -151,5 +169,22 @@ if __name__ == "__main__":
           then re-run this script without the validate_only flag.
           """,
     )
+    parser.add_argument(
+        "--pass_if_exists",
+        action="store_true",
+        help="""If --pass_if_exists passed in, do not fail if static ancillary
+          data directory exists, and download if it does not exist.  This allows
+          rerunning the installation script without failing due to existing static
+          data directory.
+
+          Note this script will never update an existing static data directory. In
+          order to update an existing static data directory, you must manually remove,
+          then re-run this script without the validate_only flag.
+          """,
+    )
     args = parser.parse_args()
-    fetch_static(args.ancillary_data_directory, validate_only=args.validate_only)
+    fetch_static(
+        args.ancillary_data_directory,
+        validate_only=args.validate_only,
+        pass_if_exists=args.pass_if_exists,
+    )

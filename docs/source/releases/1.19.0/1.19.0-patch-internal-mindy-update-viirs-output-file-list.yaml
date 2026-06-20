@@ -1,0 +1,19 @@
+testing:
+- title: Update viirs geoips test image output filename
+  description: |
+    Slight change in coverage from CLAVR-x 2 to 3, unsure why, updating expected
+    output filename to ensure we are producing what we expect at this time. Slight
+    change in coverage and image contents may be due to PFAAST coordinate changes.
+  files:
+    modified:
+    - 'tests/scripts/clavrx_proc_to_geoips.sh'
+    deleted:
+    - ''
+    moved:
+    - ''
+  related-issue:
+    internal: geoips#1067 - 1.19.0 updates
+  date:
+    start: 2026-06-03
+    finish: 2026-06-03
+

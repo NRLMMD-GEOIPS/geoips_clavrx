@@ -24,6 +24,31 @@ spec:
             arguments:
               data_range: [0, 1.0]
 
+    - name: Ice-Cloud-Prob
+      source_names: ["clavrx"]
+      docstring: |
+        Ice cloud probability from clavrx.
+      product_defaults: CLAVR-x-Base
+      spec:
+        variables: ["ice_cloud_probability"]
+        colormapper:
+          plugin:
+            name: matplotlib_linear_norm
+            arguments:
+              cmap_name: Blues
+
+    - name: Ice-Prob-ACHA
+      source_names: ["clavrx"]
+      docstring: |
+        Ice cloud probability from clavrx ACHA processing.
+      product_defaults: CLAVR-x-Base
+      spec:
+        variables: ["ice_prob_acha"]
+        colormapper:
+          plugin:
+            name: matplotlib_linear_norm
+            arguments:
+              cmap_name: Blues
     - name: Cloud-Type
       source_names: ["clavrx"]
       docstring: |

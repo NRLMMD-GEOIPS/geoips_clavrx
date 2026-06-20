@@ -65,6 +65,7 @@ preprocess_integ_test_calls = [
     "$repopath/tests/scripts/clavrx_proc_to_geoips.sh abi",
     "$repopath/tests/scripts/clavrx_proc_to_geoips.sh modis",
     "$repopath/tests/scripts/clavrx_proc_to_geoips.sh viirs",
+    "$repopath/tests/scripts/clavrx_proc_to_geoips.sh fci",
 ]
 
 
