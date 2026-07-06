@@ -1,0 +1,206 @@
+## More detailed documentation for each option can be found at: https://gitlab.ssec.wisc.edu/clavrx/clavrx-dev
+
+# Placeholder path
+# always gets replaced by --ancillary_data_directory command line arg
+ancil_dir = "/test_ancil_datadir/" # (string: directory path)
+
+# Radiative transfer model (RTM)
+rtm = "rttov"  # Possible values: "crtm", "pfaast", "rttov"
+co2_ppm = 400.0  # Only used by RTTOV. Negative values mean use O3-only coefficients
+
+# NWP model
+#   "off"              unsure if this is still supported
+#   "gfs 12h"          GFS 12-hourly model (RECOMMENDED)
+#   "cfsr"       
+#   "merra"      
+#   "gfs 3h"           GFS 3-hourly model. A.K.A. GFS AIT (DEPRECATED)
+#   "era5"             ERA5 model at 0.25 degree resolution
+#   "erai"             ERA-Interim (DEPRECATED)
+#   "gfs fv3"          GFS FV3 model (DEPRECATED)
+#   "geos"       
+#   "ncep reanalysis"  NCEP Reanalysis (DEPRECATED)
+nwp_model = "gfs 12h"  # Possible values: "off", "gfs 12h", "cfsr", "merra", "era5", "geos", "geosit"
+
+# Number of scan line to process each segment (integer)
+scan_lines = 200 
+
+# DCOMP Mode
+#  0: off
+#  1: 0.65um + 1.6um
+#  2: 0.65um + 2.2um
+#  3: 0.65um + 3.9um
+#  9: Process all modes. Output into variables with _1, _2, _3 suffixes
+dcomp_mode = 9  # Possible values: 0, 1, 2, 3, 9 (off, 1.6um, 2.2um, 3.9um, all)
+
+# ACHA Mode
+# Impossible ACHA modes will result in an error.
+# Naming scheme:
+#  067 - 6.7um
+#  085 - 8.5um
+#  110 - 11um
+#  120 - 12um
+#  133 - 13.3um
+# Combos:
+#  "default"  - The default ACHA mode for the sensor
+#  "110"
+#  "110_120"
+#  "110_133"
+#  "110_120_133"
+#  "067_110_120"
+#  "067_110_133"
+#  "085_110_120"
+acha_mode = "default"
+
+# Enterprise Cloud Mask Look-Up Table (LUT)
+# Either "default" or the filename of the LUT file in $ANCIL_DIR/static/luts/ecm2/
+ecm_lut = "default"
+
+# Temporary directory path prefix
+temp_prefix = "./temp_dir"  # (string)
+
+# Verbosity
+verbosity = "verbose"  # Possible values: "quiet", "error", "minimal", "warning", "default", "verbose"
+
+# WMO ID
+# If presented with input data that is a composite of satellites, we filter out only the data associated with this WMO ID
+# This is only used for ISCCP-NG L1g products, and will not impact other L1g products
+filter_wmo_id = 271  # only used for ISCCP-NG L1g, won't impact other L1g products
+
+# Cloud Mask
+# Options:
+#  "bcm" - Baseline Cloud Mask
+#  "ecm2" - Enterprise Cloud Mask v2
+cloud_mask = "ecm2"  # Possible values: "bcm", "ecm2"
+ccl_mode = "top+base"  # Possible values: "off", "top-only", "top+base", "top+base+lower"
+ccl_type = "NOAT"  # Possible values: "NOAT", "ISCCP", "NCEP"
+asos_enable = false  # Possible values: true, false
+nlcomp_enable = false  # Possible values: true, false
+aerosol_enable = false  # Possible values: true, false
+output_enable = true  # Possible values: true, false
+output_format = "netcdf4"  # Possible values: "hdf4", "netcdf4"
+process_cloud = true # Possible values: true, false
+sasrab_enable = false  # Possible values: true, false
+nwp_mode = "minimal"  # Possible values: "minimal", "all"
+nav_option = "l1b"  # Possible values: "l1b", "external", "reposnx"
+sfc_emiss = "rttov"  # Possible values: "umd", "rttov", "seebor"
+compress_output = true  # Possible values: true, false
+aux_cloud_mask = 2  # Possible values: 0, 1, 2, 3
+use_sea_ir_emiss = true  # Possible values: true, false
+hires_sfc_type = 0  # Possible values: 0, 1
+land_mask = true  # Possible values: true, false
+coast_mask = true  # Possible values: true, false
+elevation = true  # Possible values: true, false
+volcano = false  # Possible values: true, false
+snow_mask = "ims"  # Possible values: "no", "ims", "globsnow"
+dark_composite = false
+lrc = true  # Possible values: true, false
+smooth_nwp = true  # Possible values: true, false
+process_undetected = false  # Possible values: true, false
+
+## avhrr
+ref_cal = "instfile"  # Possible values: "l1b", "instfile"
+therm_cal = 0  # Possible values: 0, 1
+
+## bounds 
+bounds_enable = false
+bounds_north = 90.0  # (float)
+bounds_south = -90.0  # (float)
+bounds_west = -180.0  # (float)
+bounds_east = 180.0  # (float)
+bounds_satzen_min = 0.0  # (float)
+bounds_satzen_max = 85.0  # (float)
+bounds_solzen_min = 0.0  # (float)
+bounds_solzen_max = 180.0  # (float)
+bounds_name = "WI"  # (string)
+
+## sampling
+sample_mode = "average+stats"  # Possible values: "sample", "average", "average+stats"
+sample_x_stride = 1  # (integer)
+sample_y_stride = 1  # (integer)
+sample_x_offset = 0  # (integer)
+sample_y_offset = 0  # (integer)
+
+## MODIS channels
+ch01_enable = true  # 0.65um
+ch02_enable = true  # 0.86um
+ch03_enable = true  # 0.47um
+ch04_enable = true  # 0.55um
+ch05_enable = true  # 1.24um
+ch06_enable = true  # 1.6um
+ch07_enable = true  # 2.1um
+ch08_enable = true  # 0.41um ocean-color
+ch09_enable = true  # 0.44um ocean-color
+ch10_enable = true  # 0.49um ocean-color
+ch11_enable = true  # 0.53um ocean-color
+ch12_enable = true  # 0.55um ocean-color
+ch13_enable = true  # 0.66um ocean-color
+ch14_enable = true  # 0.67um ocean-color
+ch15_enable = true  # 0.74um ocean-color
+ch16_enable = true  # 0.86um ocean-color
+ch17_enable = true  # 0.89um
+ch18_enable = true  # 0.93um
+ch19_enable = true  # 0.92um
+ch20_enable = true  # 3.8um
+ch21_enable = true  # 3.9um
+ch22_enable = true  # 3.9um
+ch23_enable = true  # 4.0um
+ch24_enable = true  # 4.4um
+ch25_enable = true  # 4.5um
+ch26_enable = true  # 1.37um cirrus
+ch27_enable = true  # 6.5um
+ch28_enable = true  # 7.2um
+ch29_enable = true  # 8.4um
+ch30_enable = true  # 9.6um
+ch31_enable = true  # 10.8um
+ch32_enable = true  # 11.8um
+ch33_enable = true  # 13.2um
+ch34_enable = true  # 13.5um
+ch35_enable = true  # 13.8um
+ch36_enable = true  # 14.1um
+
+## ABI new channels
+ch37_enable = true  # 6.2um (ABI Band 8)
+ch38_enable = true  # 10.4um (ABI Band 13)
+
+## VIIRS I-bands
+ch39_enable = true  # 0.64um (VIIRS I1)
+ch40_enable = true  # 0.86um (VIIRS I2)
+ch41_enable = true  # 1.6um (VIIRS I3)
+ch42_enable = true  # 3.8um (VIIRS I4)
+ch43_enable = true  # 11.45um (VIIRS I5)
+
+## VIIRS DNB
+ch44_enable = true  # 0.7um (VIIRS DNB)
+
+## Spare
+ch45_enable = true
+
+## CALIOP matchup
+caliop_enable = false
+caliop_dir = "./"  # Path to CALIOP collocation files
+
+## NUCAPS
+nucaps_enable = false
+
+static_dark_sky = false
+
+## ACHA Dump
+acha_dump_x = 0
+acha_dump_y = 0
+
+
+## VIIRS I-bands
+use_ibands_instead = false
+
+use_ir_cloud_type = false
+
+output_unscaled_reflectance = false
+
+use_modis_clearsky_albedo = 1  # (integer)
+
+#--- GOES ABI/GVAR Climate Work
+#--- Assume 4km vis if flag is false
+gvar_1km_vis = false
+
+## Sounder Fusion
+fusion = false  # Enable sounder fusion

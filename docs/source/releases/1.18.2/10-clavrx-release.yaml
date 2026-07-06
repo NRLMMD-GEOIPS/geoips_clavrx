@@ -1,0 +1,24 @@
+bug fix:
+- title: 'Update CLAVR-x processing to newest version and PSEG utility'
+  description: 'Updated hooks, configs, and pre-built binary to use the latest stable
+  release of CLAVR-x. Added feature to use SSEC WISC PSEG utility.'
+  files:
+    deleted:
+    - 'geoips_clavrx/clavrx/clavrx_options_template'
+    moved:
+    - ''
+    added:
+    - 'docs/source/releases/latest/10-clavrx-release.yaml'
+    - 'geoips_clavrx/clavrx/clavrx_options_template.toml'
+    - 'geoips_clavrx/clavrx/full_l2_list'
+    modified:
+    - 'geoips_clavrx/clavrx/get_ancildata_static.py'
+    - 'geoips_clavrx/clavrx/install_clavrx.py'
+    - 'geoips_clavrx/clavrx/README.md'
+    - 'geoips_clavrx/clavrx/run_clavrx.py'
+    - 'geoips_clavrx/plugins/yaml/products/clavrx.yaml'
+    - 'tests/integration_tests/test_geoips_clavrx.py'
+    - 'tests/scripts/clavrx_proc_to_geoips.sh'
+  date:
+    start: 2026-04-20
+    finish: 2026-04-20

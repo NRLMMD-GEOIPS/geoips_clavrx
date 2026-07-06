@@ -8,7 +8,7 @@ Installing CLAVRx prebuilt
 
 CLAVRx pre-built binaries can be installed with running:
 ```bash
-    python $GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/install_clavrx.py
+    python $GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/install_clavrx.py
 ```
 
 This installs a pre-built binary with RTTOV support from the SSEC WISC
@@ -41,7 +41,7 @@ Ancillary data is needed to run the pipeline, and can easily be installed
 with the following command.
 
 ```bash
-python $GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/get_ancildata_static.py
+python $GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/get_ancildata_static.py
 ```
 
 # Download relevant dynamic ancillary data
@@ -56,8 +56,8 @@ Calling `update_ancildata_dynamic.py` with no arguments will download the curren
 dynamic ancillary data.
 
 ```bash
-python $GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/update_ancildata_dynamic.py
-python $GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/update_ancildata_dynamic.py YYYYMMDD
+python $GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/update_ancildata_dynamic.py
+python $GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/update_ancildata_dynamic.py YYYYMMDD
 ```
 
 # Run processing on data
@@ -68,7 +68,7 @@ ancillary data, clavrx configuration files, etc. Please call `run_clavrx.py --he
 for supported arguments to configure your run as needed.
 
 ```bash
-$GEOIPS_PACKAGES_DIR/geoips_clavrx/clavrx/run_clavrx.py <input_files>
+$GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/run_clavrx.py <input_files>
 ```
 
 Outputs are produced in the following folder by default:
@@ -76,6 +76,24 @@ Outputs are produced in the following folder by default:
 ```bash
 $GEOIPS_OUTDIRS/preprocessed/clavrx/
 ```
+
+Running CLAVR-x pipeline with PSEG utility 
+==========================================
+
+Optionally, users can install PSEG, a multiprocessing wrapper for running CLAVR-x, this
+reduces runtimes significantly for all sensors at the cost of compute strain. To install
+PSEG and run it within processing, users can follow the steps below:
+
+```bash
+$GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/install_clavrx.py -p
+```
+
+Running CLAVR-x with PSEG is as simple as adding the -p flag to the processing call.
+
+```bash
+$GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/run_clavrx.py <runtime_args> -p
+```
+
 
 Depolying SSEC CLAVRx pipeline (outdated, will be reimplemented at a later date)
 ================================================================================

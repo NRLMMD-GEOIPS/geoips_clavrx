@@ -12,6 +12,8 @@
 # Allows running command and failing appropriately
 geoips_check=". $GEOIPS_PACKAGES_DIR/geoips/setup/check_system_requirements.sh"
 
+date -u
+
 if [[ "$1" == *"help"* || -z $GEOIPS_ANCILDAT || -z $GEOIPS_OUTDIRS || -z $GEOIPS_PACKAGES_DIR || -z $GEOIPS_DEPENDENCIES_DIR || -z $GEOIPS_TESTDATA_DIR ]]; then
     echo ""
     echo "Must set the following environment variables for clavrx tests"
@@ -66,10 +68,11 @@ fi
 # Common arguments for all data types.  Using standard geoips installation locations
 # for testing purposes.
 # Currently tested gitlab build artifact
-remote_clavrx_exec="https://gitlab.ssec.wisc.edu/clavrx/clavrx-dev/-/jobs/117757/artifacts/raw/run/bin/clavrxorb?inline=false"
+# previous stable binary version (CLAVR-x v2) was from job #117757
+remote_clavrx_exec="https://gitlab.ssec.wisc.edu/clavrx/clavrx-dev/-/jobs/135947/artifacts/raw/run/bin/clavrxorb?inline=false"
 ancillary_data_directory=$GEOIPS_ANCILDAT/clavrx
 runtime_directory=$GEOIPS_OUTDIRS/scratch/clavrx_runtime
-template_options_file=$GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/clavrx_options_template
+template_options_file=$GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/clavrx_options_template.toml
 level2_list=$GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/level2_list
 clavrx_output_directory=$GEOIPS_OUTDIRS/preprocessed/clavrx
 clavrx_exec=$GEOIPS_DEPENDENCIES_DIR/clavrx/run_clavrxorb
@@ -82,8 +85,9 @@ if [[ "$1" == "ahi" ]]; then
     input_files=$GEOIPS_TESTDATA_DIR/test_data_clavrx/data/clavrx_input/ahi_h09_20240606/HS_H09_20240606_1210_*_FLDK_*_*.DAT
     sector_list=test_himawari_eqc_3km_landocean
     # This exact file should be produced.
-    clavrx_output=$clavrx_output_directory/clavrx_H09_20240606_1210_B01_FLDK_DK_R10_S0110.DAT.level2.hdf
+    clavrx_output=$clavrx_output_directory/clavrx_H09_20240606_1210_B01_FLDK_DK_R10_S0110.DAT.level2.nc
     geoips_product="Cloud-Fraction"
+    pseg_arg="--pseg"
     geoips_output=$GEOIPS_OUTDIRS/preprocessed/annotated_imagery/Tests-x-Himawari/x-x-x/Cloud-Fraction/clavrx/20240606.121000.him9.clavrx.Cloud-Fraction.test_himawari_eqc_3km_landocean.100p00.cira.3p0.png
 elif [[ "$1" == "abi" ]]; then
     download_dtg=20240606
@@ -91,7 +95,8 @@ elif [[ "$1" == "abi" ]]; then
     input_files=$GEOIPS_TESTDATA_DIR/test_data_clavrx/data/clavrx_input/goes16_20240607/OR_ABI-L1b-RadF-M6C*_G16_s20241581200194_e20241581209*_c20241581209*.nc
     sector_list=test_goeseast_eqc_3km_landocean
     # This exact file should be produced.
-    clavrx_output=$clavrx_output_directory/clavrx_OR_ABI-L1b-RadF-M6C01_G16_s20241581200194.level2.hdf
+    clavrx_output=$clavrx_output_directory/clavrx_OR_ABI-L1b-RadF-M6C01_G16_s20241581200194.level2.nc
+    pseg_arg="--pseg"
     geoips_product="Cloud-Fraction"
     geoips_output=$GEOIPS_OUTDIRS/preprocessed/annotated_imagery/Tests-x-Goes_East/x-x-x/Cloud-Fraction/clavrx/20240606.120019.goes-16.clavrx.Cloud-Fraction.test_goeseast_eqc_3km_landocean.100p00.cira.3p0.png
 elif [[ "$1" == "modis" ]]; then
@@ -100,7 +105,10 @@ elif [[ "$1" == "modis" ]]; then
     input_files=$GEOIPS_TESTDATA_DIR/test_data_clavrx/data/clavrx_input/modis_20240607/MOD0*.A2024159.1300.061.2024159135*.NRT.hdf
     sector_list=australia
     # This exact file should be produced.
-    clavrx_output=$clavrx_output_directory/clavrx_MOD021KM.A2024159.1300.061.2024159135957.NRT.level2.hdf
+    clavrx_output=$clavrx_output_directory/clavrx_MOD021KM.A2024159.1300.061.2024159135957.NRT.level2.nc
+    # Do not use pseg with viirs/modis since they do not take as long, so we are testing
+    # both options.
+    pseg_arg=""
     geoips_product="Cloud-Fraction"
     geoips_output=$GEOIPS_OUTDIRS/preprocessed/annotated_imagery/Australia-x-Continental/x-x-x/Cloud-Fraction/clavrx/20240607.130000.terra.clavrx.Cloud-Fraction.australia.23p91.cira.2p0.png
 elif [[ "$1" == "viirs" ]]; then
@@ -109,9 +117,24 @@ elif [[ "$1" == "viirs" ]]; then
     input_files=$GEOIPS_TESTDATA_DIR/test_data_clavrx/data/clavrx_input/viirs_20240720/*_npp_d20240720_t1641384_e1647188_b65962_c20240723002*_cspp_dev.h5
     sector_list=w_pacific
     # This exact file should be produced.
-    clavrx_output=$clavrx_output_directory/clavrx_npp_d20240720_t1641384_e1647188_b6596_b65962_c20240723002845007097_cspp_dev.h5.level2.hdf
+    clavrx_output=$clavrx_output_directory/clavrx_npp_d20240720_t1641384_e1647188_b6596_b65962_c20240723002845007097_cspp_dev.h5.level2.nc
+    # Do not use pseg with viirs/modis since they do not take as long, so we are testing
+    # both options.
+    pseg_arg=""
     geoips_product="Cloud-Temp-ACHA"
-    geoips_output=$GEOIPS_OUTDIRS/preprocessed/annotated_imagery/x-x-Western_Pacific/x-x-x/Cloud-Temp-ACHA/clavrx/20240720.164138.snpp.clavrx.Cloud-Temp-ACHA.w_pacific.11p38.cira.3p0.png
+    # Note the coverage and the contents of this image changed slightly from CLAVR-x 2
+    # to CLAVR-x 3.  We are unsure why (possibly due to PFAAST coordinate changes).
+    geoips_output=$GEOIPS_OUTDIRS/preprocessed/annotated_imagery/x-x-Western_Pacific/x-x-x/Cloud-Temp-ACHA/clavrx/20240720.164138.snpp.clavrx.Cloud-Temp-ACHA.w_pacific.11p55.cira.3p0.png
+elif [[ "$1" == "fci" ]]; then
+    download_dtg=20260315
+    input_files=$GEOIPS_TESTDATA_DIR/test_data_clavrx/data/clavrx_input/fci_20260315/*nc 
+    sector_list=meteosat_africa
+    pseg_arg="--pseg"
+    # pseg_arg=""
+    # This exact file should be produced.
+    clavrx_output=$clavrx_output_directory/clavrx_meteosat12_SAT%_CMT_2026_074_1600.level2.nc
+    geoips_product="Cloud-Type"
+    geoips_output=$GEOIPS_OUTDIRS/preprocessed/annotated_imagery/Africa-x-Meteosat-Africa/x-x-x/Cloud-Type/clavrx/20260315.160006.meteosat-12.clavrx.Cloud-Type.meteosat_africa.100p00.cira.3p0.png
 else
     echo "Usage: $0 [instrument]"
     echo "Where instrument one of:"
@@ -119,6 +142,7 @@ else
     echo "  abi"
     echo "  modis"
     echo "  viirs"
+    echo "  fci"
     exit 1
 fi
 
@@ -153,7 +177,9 @@ command_update_ancildata_dynamic="python $GEOIPS_PACKAGES_DIR/geoips_clavrx/geoi
 command_run_clavrx="python $GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clavrx/run_clavrx.py \
   --input_files $input_files \
   --runtime_directory $runtime_directory \
+  $pseg_arg
   --template_options_file $template_options_file \
+  --ancillary_data_directory $ancillary_data_directory \
   --level2_list $level2_list \
   --output_directory $clavrx_output_directory \
   --clavrx_exec $clavrx_exec"
@@ -164,7 +190,7 @@ command_run_clavrx="python $GEOIPS_PACKAGES_DIR/geoips_clavrx/geoips_clavrx/clav
 #     --compare_path "$GEOIPS_PACKAGES_DIR/geoips_clavrx/tests/outputs/ahi.clavrx.<product>.imagery_clean" \
 command_run_geoips="geoips run single_source \
     $clavrx_output \
-    --reader_name clavrx_hdf4 \
+    --reader_name clavrx_netcdf4 \
     --product_name $geoips_product \
     --output_formatter imagery_clean \
     --minimum_coverage 0 \
@@ -214,9 +240,11 @@ echo "**************************************************************************
 echo "********************************************************************************"
 echo "################################################################################"
 echo "***Install clavrx executable where GeoIPS can find it!"
+date -u
 $geoips_check run_command "$command_install_clavrx" no_logfile_redirect
 echo "################################################################################"
 echo "Removing expected clavrx output and expected geoips output, if they exist, to ensure a clean test."
+date -u
 echo rm -fv $clavrx_output
 echo rm -fv $geoips_output
 rm -fv $clavrx_output
@@ -225,40 +253,48 @@ echo "##########################################################################
 
 echo "################################################################################"
 echo "Running static ancillary data check."
+date -u
 # This will print the command to terminal and exit 1 if the command fails.
 $geoips_check run_command "$command_validate_ancildata_static" no_logfile_redirect
 echo "################################################################################"
 
 echo "################################################################################"
 echo "Running dynamic ancillary data update"
+date -u
 # This will print the command to terminal and exit 1 if the command fails.
 $geoips_check run_command "$command_update_ancildata_dynamic" no_logfile_redirect
 echo "################################################################################"
 
 echo "################################################################################"
 echo "Running clavrx!"
+date -u
 # This will print the command to terminal and exit 1 if the command fails.
 $geoips_check run_command "$command_run_clavrx" no_logfile_redirect
 echo "################################################################################"
 
 echo "################################################################################"
 echo "Running geoips on clavrx output!"
+date -u
 $geoips_check run_command "$command_run_geoips" no_logfile_redirect
 echo "################################################################################"
 
 echo "################################################################################"
 echo "Checking for geoips outputs!"
+date -u
 ls -l $runtime_directory/*
 ls -l $geoips_output
 ls -l $clavrx_output
 echo ""
 if [[ -e $geoips_output ]]; then
+    date -u
     echo "SUCCESS Expected geoips output exists, all clavrx and geoips tests passed!!"
     retval=0
 else
+    date -u
     echo "FAILED Expected geoips output does not exist!"
     echo "        Expected $geoips_output"
     retval=1
 fi
 echo "################################################################################"
+date -u
 exit $retval

@@ -9,19 +9,21 @@ appropriate location for the GeoIPS wrappers to run CLAVR-x appropriately.
 
 import os
 import requests
-import sys
-
+import subprocess
 import argparse
 
 # Geoips packages
 from geoips.filenames.base_paths import PATHS as gpaths
 
 
-def install_clavrx(src_exec, dest_exec, validate_only=False):
+def install_clavrx(src_exec, dest_exec, validate_only=False, pass_if_exists=False):
     """Installs clavrx using pre-built executable."""
-    if os.path.exists(dest_exec) and validate_only:
-        print("SUCCESS! CLAVR-x executable exists and validate_only True!")
-        sys.exit(0)
+    if os.path.exists(dest_exec) and (validate_only or pass_if_exists):
+        print(
+            "SUCCESS! CLAVR-x executable exists and validate_only/pass_if_exists True!"
+        )
+        # sys.exit(0)
+        return
     elif validate_only:
         print("FAILED File does not exist, and validate_only requested, failing.")
         print("Please run this script again without the validate_only flag.")
@@ -59,6 +61,14 @@ def install_clavrx(src_exec, dest_exec, validate_only=False):
     return None
 
 
+def install_pseg(dest_exec):
+    """Install PSEG tool for CLAVR-x."""
+    git_link = "https://gitlab.ssec.wisc.edu/clavrx/pseg.git"
+    subprocess.run(["git", "clone", git_link], cwd=os.path.dirname(dest_exec))
+
+    return None
+
+
 if __name__ == "__main__":
     """Run installer."""
     parser = argparse.ArgumentParser(
@@ -86,13 +96,14 @@ if __name__ == "__main__":
           """,
         formatter_class=argparse.RawTextHelpFormatter,
     )
+    # Previous stable pre-built binary was from job #117757
     parser.add_argument(
         "--source_prebuilt_clavrx_exec",
         type=str,
         required=False,
         default=(
             "https://gitlab.ssec.wisc.edu/clavrx/clavrx-dev/-"
-            "/jobs/117757/artifacts/raw/run/bin/clavrxorb?inline=false"
+            "/jobs/135947/artifacts/raw/run/bin/clavrxorb?inline=false"
         ),
         help="""Full path to original pre-built clavrx executable.
 
@@ -142,9 +153,33 @@ if __name__ == "__main__":
           replace an existing executable.
           """,
     )
+    parser.add_argument(
+        "-p",
+        "--pseg",
+        action="store_true",
+        dest="pseg",
+        help="Install parellel segmentation wrapper (PSEG) for running CLAVR-x.",
+    )
+    parser.add_argument(
+        "--pass_if_exists",
+        action="store_true",
+        help="""If --pass_if_exists passed in, do not fail if CLAVR-x executable exists,
+          and download if it does not exist.  This allows rerunning the installation
+          script without failing due to existing CLAVR-x executable.
+
+          Note this script will never update an existing CLAVR-x executable. In
+          order to update an existing CLAVR-x executable, you must manually remove,
+          then re-run this script without the validate_only flag.
+          """,
+    )
     args = parser.parse_args()
     install_clavrx(
         args.source_prebuilt_clavrx_exec,
         args.dest_geoips_clavrx_exec,
         args.validate_only,
+        args.pass_if_exists,
     )
+    if args.pseg:
+        print("Installing PSEG utility")
+        install_pseg(args.dest_geoips_clavrx_exec)
+    print("Finished downloading CLAVR-x")
